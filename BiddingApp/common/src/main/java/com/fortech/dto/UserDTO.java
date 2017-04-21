@@ -8,6 +8,7 @@ public class UserDTO {
 	private String email;
 	private String accountName;
 	private String password;
+	private boolean status;
 	private String roles;
 	
 	public int getId() {
@@ -66,5 +67,11 @@ public class UserDTO {
 	}
 	public UserDTO() {
 		super();
+	}
+	public boolean getStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 }

@@ -1,21 +1,27 @@
 package com.biddingapp.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @NamedQuery(name="findAllUsersWithName", query= "SELECT u FROM UserEntity u WHERE u.accountName = :accountName")
 @Table(name="users")
 
-public class UserEntity {
+public class UserEntity implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name= "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(name= "first_name")
@@ -30,6 +36,10 @@ public class UserEntity {
 	private String accountName;
 	
 	private String password;
+	
+	@Column(name= "is_activated")
+	private boolean status;
+	
 	private String roles;
 	
 	public int getId() {
@@ -67,6 +77,12 @@ public class UserEntity {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}	
+	public boolean getStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 	public String getRoles() {
 		return roles;
@@ -74,7 +90,7 @@ public class UserEntity {
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
-	public UserEntity(int id, String firstName, String lastName, String email, String accountName, String password,
+	public UserEntity(int id, String firstName, String lastName, String email, String accountName, String password,boolean isActive,
 			String roles) {
 		super();
 		this.id = id;

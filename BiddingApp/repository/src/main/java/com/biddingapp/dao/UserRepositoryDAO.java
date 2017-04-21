@@ -17,10 +17,12 @@ import javax.transaction.Transaction;
 import com.biddingapp.entities.RegistrationEntities;
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.UserRepository;
+import com.fortech.dto.RegistrationDTO;
+import com.fortech.dto.UserDTO;
 
 @Stateless
 @Remote(UserRepository.class)
-public class UserRepositoryDAO implements UserRepository<UserEntity> {
+public class UserRepositoryDAO implements UserRepository {
 
 	private static final String PERSISTENCE_UNIT_NAME = "BiddingApp";
 
@@ -36,29 +38,28 @@ public class UserRepositoryDAO implements UserRepository<UserEntity> {
 		this.entityManager = entityManager;
 	}
 
-	public void add(UserEntity userEntity) {
-		entityManager.getTransaction().begin();
-		entityManager.persist(userEntity);
-		entityManager.getTransaction().commit();
+	public void addUser(RegistrationEntities registerEntity) {
+		entityManager.persist(registerEntity);
 	}
 
-	public void remove(int id) {
+	public void removeUser(int id) {
 		UserEntity userEntity = entityManager.find(UserEntity.class, id);
 		if (userEntity != null) {
-			entityManager.getTransaction().begin();
 			entityManager.remove(userEntity);
-			entityManager.getTransaction().commit();
 		}
 	}
 
-	public void update(UserEntity userEntity) {
-		entityManager.getTransaction().begin();
+	public void updateUser(RegistrationDTO userEntity) {
 		entityManager.persist(userEntity);
-		entityManager.getTransaction().commit();
 	}
 
-	public UserEntity findbyID(int id) {
+	public UserEntity findUserbyID(int id) {
 		return entityManager.find(UserEntity.class, id);
+	}
+
+	public UserEntity findRegistrationbyID(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public boolean isValidUser(String accountName){
@@ -92,4 +93,11 @@ public class UserRepositoryDAO implements UserRepository<UserEntity> {
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
+
+	@Override
+	public int getIdByActivationKey(String activationKey) {
+		RegistrationEntities registrationEntities= (RegistrationEntities) entityManager.createNamedQuery("registrationdetails").setParameter("activationKey", activationKey).getSingleResult();
+		return registrationEntities.getId();
+	}
 }
+

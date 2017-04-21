@@ -5,7 +5,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import com.biddingapp.entities.Roles;
 import com.biddingapp.entities.UserEntity;
 
 public class UserUtilities {

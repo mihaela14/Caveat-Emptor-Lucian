@@ -1,4 +1,4 @@
-package com.biddingapp.entities;
+package com.biddingapp.utilities;
 
 public enum Roles {
 	USER,
