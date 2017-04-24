@@ -52,8 +52,8 @@ public class RegistrationEntities implements Serializable{
 	public UserEntity getUserid() {
 		return user;
 	}
-	public void setUserid(UserEntity userid) {
-		this.user = userid;
+	public void setUserid(UserEntity user) {
+		this.user = user;
 	}
 	public String getActivationKey() {
 		return activationKey;
@@ -61,7 +61,4 @@ public class RegistrationEntities implements Serializable{
 	public void setActivationKey(String activationKey) {
 		this.activationKey = activationKey;
 	}
-	
-	
-
 }

@@ -2,23 +2,19 @@ package com.biddingapp.ejbeans;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import com.biddingapp.login.LoginValidation;
-import com.biddingapp.repositories.UserRepository;
 
 @ManagedBean(name = "login")
 @SessionScoped
-public class UserSessionBean {
+public class UserLoginBean {
 
 	@EJB
 	private LoginValidation loginValidation;
-
-	@PostConstruct
-	public void init() {
-		System.err.println("Init!!!!!");
-	}
 
 	private String message = "Enter username and password";
 	private String accountName;
@@ -57,13 +53,21 @@ public class UserSessionBean {
 	}
 
 	public String loginUser(){
-		boolean loginState= getLoginValidation().validateUsernamePassword(accountName, password);
-		if (!loginState) {
-			message = "Invalid login";
-			return "login";
+		
+		boolean validUser = loginValidation.isValidUser(accountName);
+		boolean validPassword = loginValidation.isValidPassword(password, accountName);
+		
+		if (validUser && validPassword) {
+			if(loginValidation.isAccountActivated(accountName)){
+				message = "Successfully logged in";
+				return "success";
+			}else
+				message = "Your account is not activated";
+			return "notActivated";
 		} else {
-			message = "Successfully logged in";
-			return "success";
+			message = "Invalid login";
+			System.out.println("It worked !!!");
+			return "login";
 		}
 	}
 }

@@ -53,6 +53,12 @@ public class UserDTO {
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
+	public boolean getStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 	
 	public UserDTO(int id, String firstName, String lastName, String email, String accountName, String password,
 			String roles) {
@@ -68,10 +74,5 @@ public class UserDTO {
 	public UserDTO() {
 		super();
 	}
-	public boolean getStatus() {
-		return status;
-	}
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
+
 }

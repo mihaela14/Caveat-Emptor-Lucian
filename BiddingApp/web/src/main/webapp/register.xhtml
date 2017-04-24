@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://java.sun.com/jsf/core">
+
+<h:head>
+	<title>registration Form</title>
+	<ui:include src="registration-imports.xhtml" />
+</h:head>
+
+<h:body>
+
+	<div class="container">
+		<form id="registrationForm" class="form-horizontal">
+			<div class="row">
+				<div class="col-sm-6 col-md-4 col-md-offset-4">
+					<h2 class="text-center registration-title">Create an account</h2>
+					<div class="account-wall">
+						<img class="profile-img"
+							src="resources/img/Individual-Member-Icon.gif" alt=""></img> <br />
+						<h:form class="form-signin" id="register-form">
+							<div
+								class="registration-field form-group #{!name.valid ? 'has-error' : 'none'}">
+								<h:outputLabel value="First Name:" class="registration-label"
+									name="first-name" />
+								<h:inputText value="#{registration.firstName}"
+									id="registerFirstName" class="registration-input"
+									required="true" requiredMessage="*Please enter your first name"
+									validatorMessage="*Not a valid first name">
+									<f:validateLength minimum="3" maximum="20" />
+								</h:inputText>
+							</div>
+							<div
+								class="registration-field form-group #{!name.valid ? 'has-error' : 'none'}">
+								<h:outputLabel value="Last Name:" class="registration-label"
+									name="last-name" />
+								<h:inputText value="#{registration.lastName}"
+									id="registerLastName" class="registration-input"
+									required="true" requiredMessage="*Please enter your last name"
+									validatorMessage="*Not a valid last name">
+									<f:validateLength minimum="3" maximum="20" />
+								</h:inputText>
+							</div>
+							<div
+								class="registration-field form-group #{!name.valid ? 'has-error' : 'none'}">
+								<h:outputLabel value="Email :" class="registration-emaillabel"
+									name="email" />
+								<h:inputText value="#{registration.email}" id="registerEmail"
+									class="registration-input" required="true"
+									requiredMessage="*Please enter your email"
+									validatorMessage="*Email name is not valid">>
+									<f:validateRegex
+										pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"></f:validateRegex>
+								</h:inputText>
+							</div>
+							<div
+								class="registration-field form-group #{!name.valid ? 'has-error' : 'none'}">
+								<h:outputLabel value="Username :" class="registration-label"
+									name="username" />
+								<h:inputText value="#{registration.accountName}"
+									id="registerUsername"
+									class="registration-input" required="true" 
+									requiredMessage="*Please enter your username"
+									validator="#{registration.isValidUsername}">
+								</h:inputText>
+							</div>
+							<div class="registration-field">
+								<h:outputLabel value="Password:"
+									class="registration-passwordlabel" />
+								<h:inputSecret value="#{registration.password}"
+									id="inputPassword" class="registration-input" required="true"
+									requiredMessage="*Please enter your password"
+									validatorMessage="*Password is not valid">
+									<f:validateLength minimum="5" />
+								</h:inputSecret>
+							</div>
+							<br />
+							<h:commandButton id="contactbtn"
+								class="btn btn-info btn-lg btn-block" name="username"
+								value="Submit" action="#{registration.register}"
+								update="register-form"></h:commandButton>
+							<a href="#" class="pull-right need-help">Need help? </a>
+							<span class="clearfix"></span>
+
+							<div class="clearfix">
+								<h:message for="registerFirstName" style="color:red;"
+									class="left" />
+								<h:message for="registerLastName" style="color:red;"
+									class="left" />
+								<h:message for="registerEmail" style="color:red;" class="left" />
+								<h:message for="registerUsername"
+									style="color:red;" class="left" />
+								<h:message for="inputPassword" style="color:red;" class="left" />
+							</div>
+						</h:form>
+					</div>
+					<a href="login.xhtml" class="text-center new-account">Already
+						registered ?</a>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</h:body>
+</html>
