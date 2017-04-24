@@ -15,7 +15,7 @@ public class RegistrationDTO {
 		this.id = id;
 	}
 	public Timestamp getActivationExpiry() {
-		return activationExpiry;
+		return (Timestamp) activationExpiry.clone();
 	}
 	public void setActivationExpiry(Timestamp activationExpiry) {
 		this.activationExpiry = activationExpiry;

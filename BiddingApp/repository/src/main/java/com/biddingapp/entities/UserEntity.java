@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 public class UserEntity implements Serializable{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8440621083714539644L;
 
 	@Id
 	@Column(name= "ID")
@@ -40,6 +40,7 @@ public class UserEntity implements Serializable{
 	@Column(name= "is_activated")
 	private boolean status;
 	
+	@Column(name= "roles")
 	private String roles;
 	
 	public int getId() {

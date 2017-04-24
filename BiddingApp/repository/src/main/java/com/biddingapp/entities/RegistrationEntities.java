@@ -18,8 +18,8 @@ import javax.persistence.Table;
 @NamedQuery(name="findbyActivationKey", query= "SELECT u FROM RegistrationEntities u WHERE u.activationKey = :activationKey")
 @Table(name= "registrationdetails")
 public class RegistrationEntities implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 6235077046751294393L;
 
 	@Id
 	@Column(name= "ID")	
@@ -43,7 +43,7 @@ public class RegistrationEntities implements Serializable{
 		this.id = id;
 	}
 	public Timestamp getActivationExpiry() {
-		return activationExpiry;
+		return (Timestamp) activationExpiry.clone();
 	}
 	public void setActivationExpiry(Timestamp activationExpiry) {
 		this.activationExpiry = activationExpiry;

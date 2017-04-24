@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.biddingapp.entities.RegistrationEntities;
@@ -38,7 +39,7 @@ public class RegisterValidation {
 		return new Timestamp(System.currentTimeMillis() + 24 * HOUR);
 	}
 
-	
+
 	public void registerUser(UserDTO userRegistrationDto, String key) {
 		RegistrationEntities registration = new RegistrationEntities();
 
@@ -49,7 +50,7 @@ public class RegisterValidation {
 		userRepository.addRegistration(registration);
 	}
 
-	
+
 	public UserEntity populate(UserDTO userdto) {
 		UserEntity user = new UserEntity();
 		user.setFirstName(userdto.getFirstName());
@@ -62,26 +63,34 @@ public class RegisterValidation {
 		return user;
 	}
 
-	
+
 	public boolean activateUserByKey(String key) {
-		RegistrationEntities findUserbyFK = userRepository.getUserByActivationKey(key);
+		try{
 
-		if (findUserbyFK != null) {
-			findUserbyFK.getUserid().setStatus(true);
-			userRepository.updateUser(findUserbyFK.getUserid());
-			userRepository.removeRegistration(findUserbyFK.getId());
-			return true;
+			RegistrationEntities findUserbyFK = userRepository.getUserByActivationKey(key);
+
+			if (findUserbyFK != null) {
+				findUserbyFK.getUserid().setStatus(true);
+				userRepository.updateUser(findUserbyFK.getUserid());
+				userRepository.removeRegistration(findUserbyFK.getId());
+				return true;
+			}
+			
+		}catch(NoResultException nre){
+			return false;
 		}
-
 		return false;
 	}
-	
-	
+
+
+
 	public boolean isDuplicateUsername(String accountName){
-		
-		if(userRepository.findAllUsersWithName(accountName)!=null){
+		try{
+			userRepository.findAllUsersWithName(accountName);
 			return true;
+			
+		}catch(NoResultException nre){
+			return false;	
 		}
-		return false;	
 	}
 }

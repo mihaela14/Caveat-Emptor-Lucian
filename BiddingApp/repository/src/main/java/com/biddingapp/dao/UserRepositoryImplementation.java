@@ -36,19 +36,19 @@ public class UserRepositoryImplementation implements UserRepository {
 		this.entityManager = entityManager;
 	}
 
-	
+
 	@Override
 	public void addUser(UserEntity userEntity) {
 		entityManager.persist(userEntity);
 	}
 
-	
+
 	@Override
 	public void addRegistration(RegistrationEntities registrationEntity) {
 		entityManager.persist(registrationEntity);
 	}
 
-	
+
 	@Override
 	public void removeUser(int id) {
 		UserEntity userEntity = entityManager.find(UserEntity.class, id);
@@ -56,7 +56,7 @@ public class UserRepositoryImplementation implements UserRepository {
 			entityManager.remove(userEntity);
 		}
 	}
-	
+
 
 	@Override
 	public void removeRegistration(int id) {
@@ -65,33 +65,29 @@ public class UserRepositoryImplementation implements UserRepository {
 			entityManager.remove(registerEntity);
 		}
 	}
-	
-	
+
+
 	@Override
 	public void updateUser(UserEntity userEntity) {
 		entityManager.merge(userEntity);
 	}
 
-	
+
 	@Override
 	public UserEntity findUserbyID(int id) {
 		return entityManager.find(UserEntity.class, id);
 	}
 
-	
+
 	@Override
-	public RegistrationEntities getUserByActivationKey(String activationKey) {
+	public RegistrationEntities getUserByActivationKey(String activationKey) throws NoResultException{
 		RegistrationEntities registrationEntities;
-		try {
 			registrationEntities = (RegistrationEntities) entityManager.createNamedQuery("findbyActivationKey")
 					.setParameter("activationKey", activationKey).getSingleResult();
-		} catch (NoResultException nre) {
-			return null;
-		}
 		return registrationEntities;
 	}
 
-	
+
 	@Override
 	public boolean getStatusbyUsername(String accountName) {
 		UserEntity userEntity = (UserEntity) entityManager.createNamedQuery("findAllUsersWithName")
@@ -99,15 +95,11 @@ public class UserRepositoryImplementation implements UserRepository {
 		return userEntity.getStatus();
 	}
 
-	
+
 	@Override
-	public UserEntity findAllUsersWithName(String accountName){
+	public UserEntity findAllUsersWithName(String accountName) throws NoResultException{
 		UserEntity userEntity;
-		try{
-			userEntity= (UserEntity) entityManager.createNamedQuery("findAllUsersWithName").setParameter("accountName", accountName).getSingleResult();
-		}catch(NoResultException nre){
-			return null;
-		}
+		userEntity= (UserEntity) entityManager.createNamedQuery("findAllUsersWithName").setParameter("accountName", accountName).getSingleResult();
 		return userEntity;
 	}
 }

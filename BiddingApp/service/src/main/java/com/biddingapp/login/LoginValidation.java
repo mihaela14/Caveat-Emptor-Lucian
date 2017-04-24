@@ -20,16 +20,20 @@ public class LoginValidation {
 
 	@PersistenceContext(unitName= PERSISTENCE_UNIT_NAME)
 	private EntityManager entityManager;
-	
+
 	public boolean isValidUser(String accountName){
-		
+
 		UserEntity userEntity = userRepository.findAllUsersWithName(accountName);
-		if(userEntity == null){
-			return false;
-		}else if(userEntity.getAccountName().equals(accountName)){
-			return true;
+		try{
+
+			if(userEntity.getAccountName().equals(accountName)){
+				return true;
+			}else{
+				return false;
+			}
+		}catch(NoResultException nre){
+			return false;			
 		}
-		return false;
 	}
 
 
@@ -43,7 +47,7 @@ public class LoginValidation {
 		}
 		return false;
 	}
-	
+
 
 
 	public boolean isAccountActivated(String accountName){
@@ -52,7 +56,7 @@ public class LoginValidation {
 		return false;
 	}
 
-	
+
 	public UserRepository getUserRepository() {
 		return userRepository;
 	}
