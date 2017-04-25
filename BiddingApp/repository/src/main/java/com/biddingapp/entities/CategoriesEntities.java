@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,14 +29,11 @@ public class CategoriesEntities implements Serializable{
 	private String name;
 
 	private String description;
-
-	@Column(name="parent_id", updatable= false, insertable= false)
-	private int parentId;
 	
 	@ManyToOne
 	private CategoriesEntities parent;
 
-	@OneToMany(mappedBy="parent")
+	@OneToMany(mappedBy="parent", fetch=FetchType.EAGER)
 	private List<CategoriesEntities>children;
 
 	public int getId() {
@@ -56,12 +54,6 @@ public class CategoriesEntities implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getParentId() {
-		return parentId;
-	}
-	public void setParentId(int parentId) {
-		this.parentId = parentId;
-	}
 	public List<CategoriesEntities> getChildren() {
 		return children;
 	}
@@ -74,7 +66,6 @@ public class CategoriesEntities implements Serializable{
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.parentId = parentId;
 	}
 	public CategoriesEntities() {
 		super();

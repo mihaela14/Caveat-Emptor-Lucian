@@ -46,7 +46,6 @@ public class CategoriesService {
 			dto.setId(entity.getId());
 			dto.setName(entity.getName());
 			dto.setDescription(entity.getDescription());
-			dto.setParentId(entity.getParentId());
 
 			if(entity.getChildren() != null){
 				List<CategoriesDTO> childListDto = new ArrayList<>();

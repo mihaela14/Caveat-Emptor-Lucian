@@ -57,7 +57,7 @@ public class CategoriesBean {
 		this.categoriesService = categoriesService;
 	}
 	
-
+	
 	public String getJsonInput(){
 		System.out.println("Bean");
 		String script= categoriesService.getTreeStructure();
