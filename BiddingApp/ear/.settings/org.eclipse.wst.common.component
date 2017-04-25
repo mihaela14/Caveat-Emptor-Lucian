@@ -50,6 +50,9 @@
         <dependent-module archiveName="common-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/common/common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="gson-2.2.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/google/code/gson/gson/2.2.2/gson-2.2.2.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="mysql-connector-java-6.0.6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>

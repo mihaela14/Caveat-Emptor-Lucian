@@ -6,7 +6,7 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<title>Caveat Emptor</title>
+	<title>Bidding App</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="X-UA-Compatible" content="IE-edge" />
 	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
@@ -17,47 +17,17 @@
 <h:body>
 	<div class="container">
 		<div class="navbar navbar-inverse">
-			<div class="navbar-brand"></div>
+			<div class="navbar-brand">Bidding App</div>
 		</div>
 
-		<div id="tree"></div>
+		<div id="tree" />
 	</div>
 
-	<script>function getTree() {
-		  return [
-		          {
-		        	    text: "Parent 1",
-		        	    nodes: [
-		        	      {
-		        	        text: "Child 1",
-		        	        nodes: [
-		        	          {
-		        	            text: "Grandchild 1"
-		        	          },
-		        	          {
-		        	            text: "Grandchild 2"
-		        	          }
-		        	        ]
-		        	      },
-		        	      {
-		        	        text: "Child 2"
-		        	      }
-		        	    ]
-		        	  },
-		        	  {
-		        	    text: "Parent 2"
-		        	  },
-		        	  {
-		        	    text: "Parent 3"
-		        	  },
-		        	  {
-		        	    text: "Parent 4"
-		        	  },
-		        	  {
-		        	    text: "Parent 5"
-		        	  }
-		        	];
-		}
+	<script>function getTree(){
+		        	var tree= [${categories.treeInput}];
+		        	return tree;
+		        	}
+
 	
 	jQuery(document).ready(function ($) {
 		$('#tree').treeview({data: getTree()});

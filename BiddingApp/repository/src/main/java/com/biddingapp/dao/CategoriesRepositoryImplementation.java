@@ -50,10 +50,9 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 	@Override
 	public CategoriesEntities findCategorybyName(String name) {
 		CategoriesEntities categoriesEntities;
-		categoriesEntities = (CategoriesEntities) entityManager.createNamedQuery("findbyActivationKey")
+		categoriesEntities = (CategoriesEntities) entityManager.createNamedQuery("findCategorybyName")
 				.setParameter("name", name).getSingleResult();
 	return categoriesEntities;
-
 	}
 }
 
