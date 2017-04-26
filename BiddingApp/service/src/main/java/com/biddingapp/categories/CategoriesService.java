@@ -87,6 +87,8 @@ public class CategoriesService {
 		Tree tree= getTreeDto(categoriesRoot);	
 		String jsonInput= new Gson().toJson(tree);
 		
+		jsonInput=jsonInput.replaceAll(",\"nodes\":\\[\\]", "");
+		
 		return jsonInput;
 
 	}

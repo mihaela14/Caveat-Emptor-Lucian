@@ -5,36 +5,30 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
+<ui:component>
+	<h:head>
+		<title>Bidding App</title>
+		<ui:include src="categories-imports.xhtml" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="X-UA-Compatible" content="IE-edge" />
+		<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
 
-<h:head>
-	<title>Bidding App</title>
-	<ui:include src="notActivated-imports.xhtml" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="X-UA-Compatible" content="IE-edge" />
-	<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+		<script src="https://code.jquery.com/jquery-3.2.1.js" />
+		<script src="resources/js/bootstrap-treeview.min.js" />
+	</h:head>
+	
+	<h:body>
+		<div id="tree" />
 
-	<script src="https://code.jquery.com/jquery-3.2.1.js" />
-	<script src="resources/js/bootstrap-treeview.min.js" />
-</h:head>
-<h:body>
-	<div class="container">
-		<div class="row account-wall">
-			<div class="col-sm-6 col-md-4 col-md-offset-4">
-				<div id="tree" />
-			</div>
-		</div>
-	</div>
-
-	<script>function getTree(){
-		        	var tree= [${categories.treeInput}];
+		<script>function getTree(index, children){
+		        	var tree= [${categories.treeInput}][index][children];
 		        	return tree;
 		        	}
-
 	
 	jQuery(document).ready(function ($) {
-		$('#tree').treeview({data: getTree()});
+		$('#tree').treeview({data: getTree(0,"nodes")});
 	});
 	</script>
-
-</h:body>
+	</h:body>
+</ui:component>
 </html>

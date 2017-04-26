@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<ui:component>
+	<h:head>
+		<title>Categories operations</title>
+		<ui:include src="notActivated-imports.xhtml" />
+	</h:head>
+
+	<h:body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-2">
+					<button type="button" class="btn btn-info">Create a
+						category</button>
+				</div>
+
+				<div class="col-md-4">
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search" />
+						</div>
+						<button type="submit" class="btn btn-info">Submit</button>
+					</form>
+				</div>
+			</div>
+			<br />
+			<ol class="breadcrumb">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">Library</a></li>
+				<li class="active">Data</li>
+			</ol>
+			<h:outputLabel value="User Name:" class="login-label" name="username" />
+			<h:inputText type="text" class="form-control" id="usr" />
+			<br />
+			<h:outputLabel value="Description:" class="login-label"
+				name="descriptions" />
+			<h:inputTextarea class="form-control" rows="5" id="comment"/>
+			<div class="row">
+				<br />
+				<div class="col-md-1">
+					<button type="button" class="btn btn-info">Save</button>
+				</div>
+				<div class="col-md">
+					<button type="button" class="btn btn-info">Remove</button>
+				</div>
+			</div>
+		</div>
+	</h:body>
+</ui:component>
+</html>
