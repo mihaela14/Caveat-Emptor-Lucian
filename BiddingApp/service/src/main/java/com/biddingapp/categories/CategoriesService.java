@@ -65,7 +65,7 @@ public class CategoriesService {
 		Tree tree= new Tree();
 		
 		if(dto != null){
-			tree.setName(dto.getName());
+			tree.setText(dto.getName());
 			
 			if(dto.getChildren() != null){
 				List<Tree> treeList = new ArrayList<>();
@@ -74,6 +74,7 @@ public class CategoriesService {
 					Tree treeChild= getTreeDto(children);
 					treeList.add(treeChild);
 				}
+				tree.setNodes(treeList);
 			}
 		}
 		return tree;
@@ -82,9 +83,8 @@ public class CategoriesService {
 	
 	public String getTreeStructure(){
 		
-		CategoriesEntities root= getRoot();
-		CategoriesDTO categoriesDTO= getDto(root);	
-		Tree tree= getTreeDto(categoriesDTO);	
+		CategoriesDTO categoriesRoot= getDto(getRoot());	
+		Tree tree= getTreeDto(categoriesRoot);	
 		String jsonInput= new Gson().toJson(tree);
 		
 		return jsonInput;

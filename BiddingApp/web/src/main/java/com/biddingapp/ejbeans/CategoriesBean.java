@@ -19,6 +19,10 @@ public class CategoriesBean {
 	
 	@ManagedProperty(value = "treeInput")
 	private String treeInput;
+
+	@EJB
+	private CategoriesService categoriesService;
+	
 	
 	public String getTreeInput() {
 		setTreeInput(getJsonInput());
@@ -27,11 +31,6 @@ public class CategoriesBean {
 	public void setTreeInput(String treeInput) {
 		this.treeInput = treeInput;
 	}
-
-
-	@EJB
-	private CategoriesService categoriesService;
-	
 	public int getId() {
 		return id;
 	}
