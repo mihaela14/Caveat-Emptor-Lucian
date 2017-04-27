@@ -27,7 +27,7 @@
 				<div class="col-md-4">
 					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search" />
+							<input type="text" class="form-control" placeholder="Search for category" />
 						</div>
 						<button type="submit" class="btn btn-info">Submit</button>
 					</form>
@@ -39,19 +39,19 @@
 				<li><a href="#">Library</a></li>
 				<li class="active">Data</li>
 			</ol>
-			<h:outputLabel value="User Name:" class="login-label" name="username" />
-			<h:inputText type="text" class="form-control" id="usr" />
+			<h:outputLabel value="Name:" class="login-label" name="name" />
+			<h:inputText value="#{categoriesOperation.name}" type="text" class="form-control" id="category-name" />
 			<br />
 			<h:outputLabel value="Description:" class="login-label"
 				name="descriptions" />
-			<h:inputTextarea class="form-control" rows="5" id="comment" />
+			<h:inputTextarea value="#{categoriesOperation.description}" class="form-control" rows="5" id="description" />
 			<div class="row">
 				<br />
 				<div class="col-md-1">
-					<button type="button" class="btn btn-info">Save</button>
+					<h:commandButton class="btn btn-info" value="Save" id="save-button"></h:commandButton>
 				</div>
 				<div class="col-md">
-					<button type="button" class="btn btn-info">Remove</button>
+					<h:commandButton class="btn btn-info" id="remove-button" value="Remove"></h:commandButton>
 				</div>
 			</div>
 		</div>

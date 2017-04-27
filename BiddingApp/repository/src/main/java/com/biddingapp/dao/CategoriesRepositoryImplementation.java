@@ -3,6 +3,7 @@ package com.biddingapp.dao;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.biddingapp.entities.CategoriesEntities;
@@ -48,7 +49,7 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 	}
 
 	@Override
-	public CategoriesEntities findCategorybyName(String name) {
+	public CategoriesEntities findCategorybyName(String name) throws NoResultException{
 		CategoriesEntities categoriesEntities;
 		categoriesEntities = (CategoriesEntities) entityManager.createNamedQuery("findCategorybyName")
 				.setParameter("name", name).getSingleResult();

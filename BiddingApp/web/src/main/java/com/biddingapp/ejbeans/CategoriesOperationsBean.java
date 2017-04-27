@@ -2,41 +2,22 @@ package com.biddingapp.ejbeans;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.persistence.Column;
 
 import com.biddingapp.categories.CategoriesService;
-import com.biddingapp.register.RegisterValidation;
+import com.fortech.dto.CategoriesDTO;
+import com.fortech.dto.UserDTO;
 
-@ManagedBean(name = "categories")
+@ManagedBean(name = "categoriesOperation")
 @SessionScoped
-public class CategoriesBean {
+public class CategoriesOperationsBean {
 
-	private int id;
 	private String name;
 	private String description;
-	
-	@ManagedProperty(value = "treeInput")
-	private String treeInput;
 
 	@EJB
 	private CategoriesService categoriesService;
 	
-	
-	public String getTreeInput() {
-		setTreeInput(getJsonInput());
-		return treeInput;
-	}
-	public void setTreeInput(String treeInput) {
-		this.treeInput = treeInput;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -55,11 +36,21 @@ public class CategoriesBean {
 	public void setCategoriesService(CategoriesService categoriesService) {
 		this.categoriesService = categoriesService;
 	}
-		
-	public String getJsonInput(){
-		System.out.println("Bean");
-		String script= categoriesService.getTreeStructure();
-		return script;
+	
+	public void removeCategory(){
+		categoriesService.deleteCategory(name);
 	}
+	
+	public void addCategory(){
+		categoriesService.createCategory(getDto());
+	}
+	
+	public CategoriesDTO getDto() {
+		CategoriesDTO createDto= new CategoriesDTO();
+		createDto.setName(name);
+		createDto.setDescription(description);
+		return createDto;
+	}
+
 }
 

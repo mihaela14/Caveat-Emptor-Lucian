@@ -9,9 +9,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.biddingapp.entities.CategoriesEntities;
+import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.CategoriesRepository;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.dto.CategoriesDTO;
+import com.fortech.dto.UserDTO;
 import com.google.gson.Gson;
 
 @Stateless
@@ -60,16 +62,16 @@ public class CategoriesService {
 		return dto;
 	}
 
-	
+
 	public Tree getTreeDto(CategoriesDTO dto){
 		Tree tree= new Tree();
-		
+
 		if(dto != null){
 			tree.setText(dto.getName());
-			
+
 			if(dto.getChildren() != null){
 				List<Tree> treeList = new ArrayList<>();
-				
+
 				for(CategoriesDTO children: dto.getChildren()){
 					Tree treeChild= getTreeDto(children);
 					treeList.add(treeChild);
@@ -80,17 +82,35 @@ public class CategoriesService {
 		return tree;
 	}
 
-	
+
 	public String getTreeStructure(){
-		
+
 		CategoriesDTO categoriesRoot= getDto(getRoot());	
 		Tree tree= getTreeDto(categoriesRoot);	
 		String jsonInput= new Gson().toJson(tree);
-		
-		jsonInput=jsonInput.replaceAll(",\"nodes\":\\[\\]", "");
-		
-		return jsonInput;
 
+		jsonInput=jsonInput.replaceAll(",\"nodes\":\\[\\]", "");
+
+		return jsonInput;
 	}
 
+
+	public void deleteCategory(String name){
+		CategoriesEntities categoriesEntities= categoriesRepository.findCategorybyName(name);
+		categoriesRepository.removeCategory(categoriesEntities.getId());
+	}
+
+
+	public void createCategory(CategoriesDTO categoriesDto){
+		CategoriesEntities categoriesEntities= populate(categoriesDto);
+		categoriesRepository.addCategory(categoriesEntities);
+	}
+	
+	
+	public CategoriesEntities populate(CategoriesDTO categoriesdto) {
+		CategoriesEntities categoriesEntities = new CategoriesEntities();
+		categoriesEntities.setName(categoriesdto.getName());
+		categoriesEntities.setDescription(categoriesdto.getDescription());
+		return categoriesEntities;
+	}
 }
