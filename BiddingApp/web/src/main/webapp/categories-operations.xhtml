@@ -8,12 +8,18 @@
 	<h:head>
 		<title>Categories operations</title>
 		<ui:include src="notActivated-imports.xhtml" />
+		<style>
+.navbar-left {
+	position: relative;
+	margin-top: 2px;
+}
+</style>
 	</h:head>
 
 	<h:body>
 		<div class="container">
-			<div class="row">
-				<div class="col-md-2">
+			<div class="row top-buttons">
+				<div class="col-md-2 create-button">
 					<button type="button" class="btn btn-info">Create a
 						category</button>
 				</div>
@@ -38,7 +44,7 @@
 			<br />
 			<h:outputLabel value="Description:" class="login-label"
 				name="descriptions" />
-			<h:inputTextarea class="form-control" rows="5" id="comment"/>
+			<h:inputTextarea class="form-control" rows="5" id="comment" />
 			<div class="row">
 				<br />
 				<div class="col-md-1">

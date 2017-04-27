@@ -2,10 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head>
+<h:head>
+	<h:link rel="stylesheet" type="text/css"
+		src="template/commonStyles.xhtml" />
+	<style>
+.operations-body {
+	position: absolute;
+	margin-top: -25px;
+}
+</style>
+</h:head>
 <h:body>
 	<div>
 		<ui:insert name="header">
@@ -13,18 +21,7 @@
 		</ui:insert>
 	</div>
 
-	<div class="container">
-		<div class="navbar">
-		<b:navBar>
-			<b:navbarLinks>
-				<b:navLink value="Bidding" href="#"></b:navLink>
-				<b:navLink value="Items" href="#"></b:navLink>
-				<b:navLink value="Categories" href="#"></b:navLink>
-				<b:navLink value="Users" href="#"></b:navLink>
-				<b:navLink value="Account" href="#"></b:navLink>
-			</b:navbarLinks>
-		</b:navBar>
-		</div>
+	<div class="container operations-body">
 		<div class="row">
 			<div class="col-md-3">
 				<ui:insert name="content">
@@ -37,12 +34,6 @@
 				</ui:insert>
 			</div>
 		</div>
-
-		<!-- 		<div> -->
-		<!-- 			<ui:insert name="footer"> -->
-		<!-- 				<ui:include src="/templates/footer.xhtml" /> -->
-		<!-- 			</ui:insert> -->
-		<!-- 		</div> -->
 	</div>
 </h:body>
 </html>

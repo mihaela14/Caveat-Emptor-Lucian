@@ -2,13 +2,35 @@
 <h:html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
 
-<h:head></h:head>
+<h:head>
+</h:head>
 <h:body>
-
 	<ui:composition>
-		<h1>Default Header</h1>
+		<ui:include src="/templates/header-imports.xhtml" />
+		<div class="nav-header">
+			<div class="navbar">
+				<b:navBar brand="Caveat Emptor" brandHref="#">
+					<b:navbarLinks>
+						<b:navLink value="Bidding" href="#"></b:navLink>
+						<b:navLink value="Items" href="#"></b:navLink>
+						<b:navLink value="Categories" href="#"></b:navLink>
+						<b:navLink value="Users" href="#"></b:navLink>
+						<b:navLink value="Account" href="#"></b:navLink>
+					</b:navbarLinks>
+				</b:navBar>
+			</div>
+		</div>
+
+		<style>
+.nav-header {
+	width: 76%;
+	position: relative;
+	right: -0.5%;
+}
+</style>
 	</ui:composition>
 
 </h:body>
