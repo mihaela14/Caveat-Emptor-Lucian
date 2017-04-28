@@ -1,8 +1,11 @@
 package com.biddingapp.ejbeans;
 
+import java.io.IOException;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import com.biddingapp.categories.CategoriesService;
 import com.fortech.dto.CategoriesDTO;
@@ -51,6 +54,5 @@ public class CategoriesOperationsBean {
 		createDto.setDescription(description);
 		return createDto;
 	}
-
 }
 

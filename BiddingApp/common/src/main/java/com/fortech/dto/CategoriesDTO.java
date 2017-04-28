@@ -10,13 +10,13 @@ public class CategoriesDTO implements Serializable{
 
 	private int id;
 
-	private String name;
+	private String text;
 
 	private String description;
 
 	private int parentId;
 	
-	private List<CategoriesDTO>children;
+	private List<CategoriesDTO>nodes;
 	
 
 	public int getId() {
@@ -26,10 +26,10 @@ public class CategoriesDTO implements Serializable{
 		this.id = id;
 	}
 	public String getName() {
-		return name;
+		return text;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.text = name;
 	}
 	public String getDescription() {
 		return description;
@@ -43,22 +43,10 @@ public class CategoriesDTO implements Serializable{
 	public void setParentId(int parentId) {
 		this.parentId = parentId;
 	}
-	public List<CategoriesDTO> getChildren() {
-		return children;
+	public List<CategoriesDTO> getNodes() {
+		return nodes;
 	}
-	public void setChildren(List<CategoriesDTO> children) {
-		this.children = children;
+	public void setNodes(List<CategoriesDTO> nodes) {
+		this.nodes = nodes;
 	}
-
-	public CategoriesDTO(int id, String name, String description, int parentId) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.parentId = parentId;
-	}
-	public CategoriesDTO() {
-		super();
-	}
-
 }

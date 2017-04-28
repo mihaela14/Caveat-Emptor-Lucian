@@ -13,6 +13,12 @@
 	position: relative;
 	margin-top: 2px;
 }
+
+.search-button {
+	position: relative;
+	margin-left: 100%;
+	margin-top: -21%;
+}
 </style>
 	</h:head>
 
@@ -20,38 +26,41 @@
 		<div class="container">
 			<div class="row top-buttons">
 				<div class="col-md-2 create-button">
-					<button type="button" class="btn btn-info">Create a
-						category</button>
+					<h:commandButton type="submit" value="Create a
+						category"
+						class="btn btn-info"></h:commandButton>
 				</div>
 
-				<div class="col-md-4">
-					<form class="navbar-form navbar-left" role="search">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search for category" />
-						</div>
-						<button type="submit" class="btn btn-info">Submit</button>
-					</form>
+				<div class="col-md-4" id="search-box">
+					<div class="form-group" id="btnSearch">
+						<h:inputText type="text" id="search-box-input"
+							class="form-control" />
+					</div>
+					<h:commandButton value="Search" onclick="searchBox()"
+						class="btn btn-info search-button"></h:commandButton>
 				</div>
 			</div>
 			<br />
-			<ol class="breadcrumb">
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Library</a></li>
-				<li class="active">Data</li>
-			</ol>
+			<ol id="breadcrumb" class="breadcrumb" />
+
 			<h:outputLabel value="Name:" class="login-label" name="name" />
-			<h:inputText value="#{categoriesOperation.name}" type="text" class="form-control" id="category-name" />
+			<h:inputText value="#{categoriesOperation.name}" type="text"
+				class="form-control" id="category-name" />
 			<br />
 			<h:outputLabel value="Description:" class="login-label"
 				name="descriptions" />
-			<h:inputTextarea value="#{categoriesOperation.description}" class="form-control" rows="5" id="description" />
+			<h:inputTextarea value="#{categoriesOperation.description}"
+				class="form-control" rows="5" id="description" />
 			<div class="row">
 				<br />
 				<div class="col-md-1">
-					<h:commandButton class="btn btn-info" value="Save" id="save-button"></h:commandButton>
+					<h:commandButton class="btn btn-info"
+						action="#{categoriesOperation.removeCategory()}" value="Save"
+						id="save-button"></h:commandButton>
 				</div>
 				<div class="col-md">
-					<h:commandButton class="btn btn-info" id="remove-button" value="Remove"></h:commandButton>
+					<h:commandButton class="btn btn-info" id="remove-button"
+						action="#{categoriesOperation.removeCategory}" value="Remove"></h:commandButton>
 				</div>
 			</div>
 		</div>

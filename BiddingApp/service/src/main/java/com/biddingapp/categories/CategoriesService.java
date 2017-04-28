@@ -56,44 +56,27 @@ public class CategoriesService {
 					CategoriesDTO childrenDto = getDto(children);
 					childListDto.add(childrenDto);
 				}
-				dto.setChildren(childListDto);
+				dto.setNodes(childListDto);
 			}
 		}
 		return dto;
 	}
 
 
-	public Tree getTreeDto(CategoriesDTO dto){
-		Tree tree= new Tree();
-
-		if(dto != null){
-			tree.setText(dto.getName());
-
-			if(dto.getChildren() != null){
-				List<Tree> treeList = new ArrayList<>();
-
-				for(CategoriesDTO children: dto.getChildren()){
-					Tree treeChild= getTreeDto(children);
-					treeList.add(treeChild);
-				}
-				tree.setNodes(treeList);
-			}
-		}
-		return tree;
-	}
-
-
 	public String getTreeStructure(){
 
 		CategoriesDTO categoriesRoot= getDto(getRoot());	
-		Tree tree= getTreeDto(categoriesRoot);	
-		String jsonInput= new Gson().toJson(tree);
-
+		String jsonInput= new Gson().toJson(categoriesRoot);
 		jsonInput=jsonInput.replaceAll(",\"nodes\":\\[\\]", "");
 
 		return jsonInput;
 	}
 
+	public void deleteCategoryById(int id){
+		if(id > 1){
+			categoriesRepository.removeCategory(id);
+		}
+	}
 
 	public void deleteCategory(String name){
 		CategoriesEntities categoriesEntities= categoriesRepository.findCategorybyName(name);
@@ -105,8 +88,8 @@ public class CategoriesService {
 		CategoriesEntities categoriesEntities= populate(categoriesDto);
 		categoriesRepository.addCategory(categoriesEntities);
 	}
-	
-	
+
+
 	public CategoriesEntities populate(CategoriesDTO categoriesdto) {
 		CategoriesEntities categoriesEntities = new CategoriesEntities();
 		categoriesEntities.setName(categoriesdto.getName());
