@@ -13,6 +13,7 @@ import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.dto.RegistrationDTO;
 import com.fortech.dto.UserDTO;
+import com.fortech.exception.AccountDetailsException;
 
 @Stateless
 public class RegisterValidation {
@@ -64,9 +65,8 @@ public class RegisterValidation {
 	}
 
 
-	public boolean activateUserByKey(String key) {
-		try{
-
+	public boolean activateUserByKey(String key) throws AccountDetailsException {
+		
 			RegistrationEntities findUserbyFK = userRepository.getUserByActivationKey(key);
 
 			if (findUserbyFK != null) {
@@ -75,22 +75,18 @@ public class RegisterValidation {
 				userRepository.removeRegistration(findUserbyFK.getId());
 				return true;
 			}
-			
-		}catch(NoResultException nre){
-			return false;
-		}
 		return false;
 	}
 
 
 
-	public boolean isDuplicateUsername(String accountName){
-		try{
+	public boolean isDuplicateUsername(String accountName) throws AccountDetailsException{
 			userRepository.findAllUsersWithName(accountName);
-			return true;
-			
-		}catch(NoResultException nre){
-			return false;	
-		}
+			return true;			
 	}
+	
+	public boolean isDuplicateEmail(String email) throws AccountDetailsException{
+		userRepository.findAllUsersByEmail(email);
+		return true;			
+}
 }

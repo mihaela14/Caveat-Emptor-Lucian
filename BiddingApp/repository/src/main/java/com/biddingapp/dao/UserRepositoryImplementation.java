@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import com.biddingapp.entities.RegistrationEntities;
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.UserRepository;
+import com.fortech.exception.AccountDetailsException;
 
 @Stateless
 @Remote(UserRepository.class)
@@ -80,26 +81,49 @@ public class UserRepositoryImplementation implements UserRepository {
 
 
 	@Override
-	public RegistrationEntities getUserByActivationKey(String activationKey) throws NoResultException{
-		RegistrationEntities registrationEntities;
+	public RegistrationEntities getUserByActivationKey(String activationKey) throws AccountDetailsException{
+		try{	
+			RegistrationEntities registrationEntities;
 			registrationEntities = (RegistrationEntities) entityManager.createNamedQuery("findbyActivationKey")
 					.setParameter("activationKey", activationKey).getSingleResult();
-		return registrationEntities;
+			return registrationEntities;
+		}catch(NoResultException ne){
+			throw new AccountDetailsException();
+		}
 	}
 
 
 	@Override
-	public boolean getStatusbyUsername(String accountName) {
-		UserEntity userEntity = (UserEntity) entityManager.createNamedQuery("findAllUsersWithName")
-				.setParameter("accountName", accountName).getSingleResult();
-		return userEntity.getStatus();
+	public boolean getStatusbyUsername(String accountName) throws AccountDetailsException{
+		try{
+			UserEntity userEntity = (UserEntity) entityManager.createNamedQuery("findAllUsersWithName")
+					.setParameter("accountName", accountName).getSingleResult();
+			return userEntity.getStatus();
+		}catch(NoResultException ne){
+			throw new AccountDetailsException();
+		}
 	}
 
 
 	@Override
-	public UserEntity findAllUsersWithName(String accountName) throws NoResultException{
-		UserEntity userEntity;
-		userEntity= (UserEntity) entityManager.createNamedQuery("findAllUsersWithName").setParameter("accountName", accountName).getSingleResult();
-		return userEntity;
+	public UserEntity findAllUsersWithName(String accountName) throws AccountDetailsException{
+		try{
+			UserEntity userEntity;
+			userEntity= (UserEntity) entityManager.createNamedQuery("findAllUsersWithName").setParameter("accountName", accountName).getSingleResult();
+			return userEntity;
+		}catch(NoResultException ne){
+			throw new AccountDetailsException();
+		}
+	}
+
+	@Override
+	public UserEntity findAllUsersByEmail(String email) throws AccountDetailsException {
+		try{
+			UserEntity userEntity;
+			userEntity= (UserEntity) entityManager.createNamedQuery("findAllUsersWithEmail").setParameter("email", email).getSingleResult();
+			return userEntity;
+		}catch(NoResultException ne){
+			throw new AccountDetailsException();
+		}
 	}
 }

@@ -21,17 +21,19 @@
 		<div id="tree" />
 
 		<script>
-
+		
 		function getTree(index, children){
 		        	var tree= [${categories.treeInput}][index][children];
 		        	return tree;
 		        	}
-
+    	
+		
 		function getParent(node){
-			if(node !== undefined){
-			return $('#tree').treeview('getParent', node);
-			}
-		}
+					if(node !== undefined){
+					return $('#tree').treeview('getParent', node);
+					}
+				}
+		
 
 		 function getBreadcrumb(node) {
 			            var parent;
@@ -48,56 +50,82 @@
 			            return breadcrumb;
 			        }
 		
-		        function selectNode(nodeId) {
+		
+		 function selectNode(nodeId) {
 			            var node = $('#tree').treeview('getNode', nodeId);
 			            $('#tree').treeview('selectNode', [ node, { silent: true } ]);
 			 
 			            createBreadcrumb(node);
 			        }
-
-		        function createBreadcrumb(data) {
-			 
+		 
+		
+		 function createBreadcrumb(data) {	 
 			            var breadcrumb = getBreadcrumb(data);
 			            $('#breadcrumb').empty();
 			            
 			            for(var i = breadcrumb.length - 1; i >= 0; --i) {
 			                
-			                var li = document.createElement('li');
-			                li.setAttribute('class', 'breadcrumb-item');
-			                
-			                var id = breadcrumb[i]['nodeId'];
-			                li.setAttribute('id', id);
+			            var li = document.createElement('li');
+			            li.setAttribute('class', 'breadcrumb-item');
+			               
+			            var id = breadcrumb[i]['nodeId'];
+		                li.setAttribute('id', id);
 			 
-			                li.setAttribute('onclick', 'selectNode(id)');
+		                li.setAttribute('onclick', 'selectNode(id)');
+
+						var a= document.createElement('a');
+						li.appendChild(a);
 			                
-			                document.getElementById('breadcrumb').appendChild(li);
-			                document.getElementById(id).innerHTML = breadcrumb[i]['text'];
-							document.getElementById('category-name').value= data['text'];
-			 				document.getElementById('description').value= data['description']
+		                document.getElementById('breadcrumb').appendChild(li);
+		                document.getElementById(id).innerHTML = breadcrumb[i]['text'];	
 			            }
+						populateFields(data['text'], data['description'], data['id']);
 			        }
 
-		function searchBox(){
-			console.log('is called');
-			var searchInput= document.getElementById('search-box-input').value;
-			
-			var searchNode = $('#tree').treeview('search', [ searchInput,{
-				  ignoreCase: true,     
-				  exactMatch: false,
-				  revealResults: true, 
-				}]);
+		function populateFields(name, description,id){
+						document.getElementById('categories-form:category-name').value= name;
+			 			document.getElementById('categories-form:description').value= description;
+			 			document.getElementById('categories-form:id-field').value= id;
+					 }
 
-			if(searchNode !== 0){
-				selectNode(searchNode[0]['nodeId']);
-				}
-			
-			}
+		 
+		 function searchBox(){
+						var searchInput= document.getElementById('search-box-input').value;
+						
+						var searchNode = $('#tree').treeview('search', [ searchInput,{
+							  ignoreCase: true,     
+							  exactMatch: false,
+							  revealResults: true, 
+							}]);
+
+						if(searchNode !== 0){
+							selectNode(searchNode[0]['nodeId']);
+							}
+						
+						}
+
 		
-	jQuery(document).ready(function ($) {
-		$('#tree').treeview({data: getTree(0,"nodes"), onNodeSelected: function(event, data){		
-			createBreadcrumb(data);
-		}});
-	});
+		function resetFields() {			
+						document.getElementById('categories-form:category-name').value = null;
+						document.getElementById('categories-form:description').value = null;
+						document.getElementById('categories-form:id-field').value= null;
+		}
+
+		
+		function createCategory(){
+						var selectedCategory = $('#tree').treeview('getSelected', null);
+						$('#tree').treeview('unselectNode', [ selectedCategory, { silent: true } ]);
+			
+						$('#breadcrumb').empty();
+						resetFields();
+					}
+
+		
+		jQuery(document).ready(function ($) {
+			$('#tree').treeview({data: getTree(0,"nodes"), onNodeSelected: function(event, data){		
+				createBreadcrumb(data);
+			}});
+		});
 	
 	</script>
 	</h:body>

@@ -7,12 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@NamedQuery(name="findAllUsersWithName", query= "SELECT u FROM UserEntity u WHERE u.accountName = :accountName")
+@NamedQueries({
+	@NamedQuery(name="findAllUsersWithName", query= "SELECT u FROM UserEntity u WHERE u.accountName = :accountName"),
+	@NamedQuery(name="findAllUsersWithEmail", query= "SELECT u FROM UserEntity u WHERE u.email = :email")}) 
 @Table(name="users")
 
 public class UserEntity implements Serializable{
@@ -23,26 +26,26 @@ public class UserEntity implements Serializable{
 	@Column(name= "ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column(name= "first_name")
 	private String firstName;
-	
+
 	@Column(name= "last_name")
 	private String lastName;
-	
+
 	private String email;
-	
+
 	@Column(name= "account_name")
 	private String accountName;
-	
+
 	private String password;
-	
+
 	@Column(name= "is_activated")
 	private boolean status;
-	
+
 	@Column(name= "roles")
 	private String roles;
-	
+
 	public int getId() {
 		return id;
 	}

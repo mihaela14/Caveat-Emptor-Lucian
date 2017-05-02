@@ -19,6 +19,13 @@
 	margin-left: 100%;
 	margin-top: -21%;
 }
+.breadcrumb {
+     cursor:pointer;
+     color:#58ACFA;
+     font-weight: 570;
+     text-decoration:underline;
+}
+
 </style>
 	</h:head>
 
@@ -26,9 +33,9 @@
 		<div class="container">
 			<div class="row top-buttons">
 				<div class="col-md-2 create-button">
-					<h:commandButton type="submit" value="Create a
-						category"
-						class="btn btn-info"></h:commandButton>
+					<h:commandButton type="submit" onclick="createCategory()"
+						value="Create a
+						category" class="btn btn-info"></h:commandButton>
 				</div>
 
 				<div class="col-md-4" id="search-box">
@@ -43,26 +50,32 @@
 			<br />
 			<ol id="breadcrumb" class="breadcrumb" />
 
-			<h:outputLabel value="Name:" class="login-label" name="name" />
-			<h:inputText value="#{categoriesOperation.name}" type="text"
-				class="form-control" id="category-name" />
-			<br />
-			<h:outputLabel value="Description:" class="login-label"
-				name="descriptions" />
-			<h:inputTextarea value="#{categoriesOperation.description}"
-				class="form-control" rows="5" id="description" />
-			<div class="row">
+			<h:form id="categories-form">
+				<h:outputLabel value="Name:" class="login-label" name="name" />
+				<h:inputText class="form-control" id="category-name"
+					value="#{categoriesOperation.name}" />
 				<br />
-				<div class="col-md-1">
-					<h:commandButton class="btn btn-info"
-						action="#{categoriesOperation.removeCategory()}" value="Save"
-						id="save-button"></h:commandButton>
+
+				<h:outputLabel value="Description:" class="login-label"
+					name="descriptions" />
+				<h:inputTextarea id="description" class="form-control" rows="5"
+					value="#{categoriesOperation.description}" />
+
+				<h:inputHidden id="id-field" value="#{categoriesOperation.id}" />
+
+				<div class="row">
+					<br />
+					<div class="col-md-1">
+						<h:commandButton id="contactbtn" class="btn btn-info"
+							name="save-btn" value="Submit"
+							action="#{categoriesOperation.addCategory}"></h:commandButton>
+					</div>
+					<div class="col-md">
+						<h:commandButton class="btn btn-info" id="remove-button"
+							action="#{categoriesOperation.removeCategory}" value="Remove"></h:commandButton>
+					</div>
 				</div>
-				<div class="col-md">
-					<h:commandButton class="btn btn-info" id="remove-button"
-						action="#{categoriesOperation.removeCategory}" value="Remove"></h:commandButton>
-				</div>
-			</div>
+			</h:form>
 		</div>
 	</h:body>
 </ui:component>

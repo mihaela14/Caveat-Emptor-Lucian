@@ -15,6 +15,7 @@ import com.fortech.dto.UserDTO;
 @SessionScoped
 public class CategoriesOperationsBean {
 
+	private int id;
 	private String name;
 	private String description;
 
@@ -33,6 +34,12 @@ public class CategoriesOperationsBean {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public CategoriesService getCategoriesService() {
 		return categoriesService;
 	}
@@ -41,11 +48,13 @@ public class CategoriesOperationsBean {
 	}
 	
 	public void removeCategory(){
-		categoriesService.deleteCategory(name);
+		categoriesService.deleteCategory(id);
 	}
 	
-	public void addCategory(){
-		categoriesService.createCategory(getDto());
+	public String addCategory(){
+		CategoriesDTO dto= getDto();
+		categoriesService.createCategory(dto, id);
+		return "main-page";
 	}
 	
 	public CategoriesDTO getDto() {

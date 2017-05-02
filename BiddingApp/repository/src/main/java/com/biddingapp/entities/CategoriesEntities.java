@@ -3,13 +3,11 @@ package com.biddingapp.entities;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -60,8 +58,14 @@ public class CategoriesEntities implements Serializable{
 	public void setChildren(List<CategoriesEntities> children) {
 		this.children = children;
 	}
+	public CategoriesEntities getParent() {
+		return parent;
+	}
+	public void setParent(CategoriesEntities parent) {
+		this.parent = parent;
+	}
 
-	public CategoriesEntities(int id, String name, String description, int parentId) {
+	public CategoriesEntities(int id, String name, String description) {
 		super();
 		this.id = id;
 		this.name = name;

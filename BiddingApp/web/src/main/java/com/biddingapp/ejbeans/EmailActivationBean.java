@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import com.biddingapp.register.RegisterValidation;
+import com.fortech.exception.AccountDetailsException;
 
 @ManagedBean(name = "activation")
 @RequestScoped
@@ -23,14 +24,16 @@ public class EmailActivationBean {
 	@PostConstruct
 	public void init() {
 		
-		if(registerValidation.activateUserByKey(getKey())){
-			valid= true;
-		}else{
-			valid= false;
+		try {
+			if(registerValidation.activateUserByKey(getKey())){
+				valid= true;
+			}else{
+				valid= false;
+			}
+		} catch (AccountDetailsException e) {
+			valid=false;
+			e.printStackTrace();
 		}
-		
-		// Delete activation key from database.				
-		// Login user.
 	}
 
 	public boolean isValid() {

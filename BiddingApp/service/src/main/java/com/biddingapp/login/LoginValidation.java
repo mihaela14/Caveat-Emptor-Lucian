@@ -9,6 +9,7 @@ import org.apache.openjpa.persistence.NoResultException;
 
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.UserRepository;
+import com.fortech.exception.AccountDetailsException;
 
 @Stateless
 public class LoginValidation {
@@ -21,23 +22,19 @@ public class LoginValidation {
 	@PersistenceContext(unitName= PERSISTENCE_UNIT_NAME)
 	private EntityManager entityManager;
 
-	public boolean isValidUser(String accountName){
+	public boolean isValidUser(String accountName) throws AccountDetailsException{
 
 		UserEntity userEntity = userRepository.findAllUsersWithName(accountName);
-		try{
 
-			if(userEntity.getAccountName().equals(accountName)){
-				return true;
-			}else{
-				return false;
-			}
-		}catch(NoResultException nre){
-			return false;			
+		if(userEntity.getAccountName().equals(accountName)){
+			return true;
+		}else{
+			return false;
 		}
 	}
 
 
-	public boolean isValidPassword(String password, String accountName){
+	public boolean isValidPassword(String password, String accountName) throws AccountDetailsException{
 
 		UserEntity userEntity= userRepository.findAllUsersWithName(accountName);
 		if(userEntity == null){
@@ -50,7 +47,7 @@ public class LoginValidation {
 
 
 
-	public boolean isAccountActivated(String accountName){
+	public boolean isAccountActivated(String accountName) throws AccountDetailsException{
 		if(userRepository.getStatusbyUsername(accountName))
 			return true;
 		return false;

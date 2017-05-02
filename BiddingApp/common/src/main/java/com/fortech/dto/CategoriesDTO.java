@@ -17,7 +17,6 @@ public class CategoriesDTO implements Serializable{
 	private int parentId;
 	
 	private List<CategoriesDTO>nodes;
-	
 
 	public int getId() {
 		return id;

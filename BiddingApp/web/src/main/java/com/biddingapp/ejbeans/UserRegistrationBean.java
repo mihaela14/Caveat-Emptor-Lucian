@@ -1,5 +1,8 @@
 package com.biddingapp.ejbeans;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -13,6 +16,8 @@ import javax.validation.ValidationException;
 import com.biddingapp.email.EmailService;
 import com.biddingapp.register.RegisterValidation;
 import com.fortech.dto.UserDTO;
+import com.fortech.exception.AccountDetailsException;
+import com.fortech.utils.Constants;
 
 @ManagedBean(name = "registration")
 @SessionScoped
@@ -91,14 +96,37 @@ public class UserRegistrationBean {
 		return "post-registration";
 	}
 
+
 	public void isValidUsername(FacesContext context, UIComponent componentToValidate, Object value){
-		String username= value.toString();
-		if(username.length()<4){
+		try{
+			String username= value.toString();
+			if(username.length()<4){
+				FacesMessage message= new FacesMessage("*Username is not valid");
+				throw new ValidatorException(message);
+			}else if(registerValidation.isDuplicateUsername(username)){
+				FacesMessage message= new FacesMessage("*Username already exists");
+				throw new ValidatorException(message);
+			}
+		}catch(AccountDetailsException ade){
 			FacesMessage message= new FacesMessage("*Username is not valid");
-			throw new ValidatorException(message);
-		}else if(registerValidation.isDuplicateUsername(username)){
-			FacesMessage message= new FacesMessage("*Username already exists");
-			throw new ValidatorException(message);
+		}
+	}
+
+
+	public void IsValidEmail(FacesContext context, UIComponent componentToValidate, Object value){
+		try{
+			String email= value.toString();
+			Matcher matcher = Constants.VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+			
+			if(!matcher.find()){
+				FacesMessage message= new FacesMessage("*Email is not valid");
+				throw new ValidatorException(message);
+			}else if(registerValidation.isDuplicateEmail(email)){
+				FacesMessage message= new FacesMessage("*Email already exists");
+				throw new ValidatorException(message);
+			}
+		}catch(AccountDetailsException ade){
+			FacesMessage message= new FacesMessage("*Email is not valid");
 		}
 	}
 }

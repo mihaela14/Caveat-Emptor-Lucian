@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import com.biddingapp.login.LoginValidation;
+import com.fortech.exception.AccountDetailsException;
 
 @ManagedBean(name = "login")
 @SessionScoped
@@ -54,6 +55,7 @@ public class UserLoginBean {
 
 	public String loginUser(){
 		
+		try{
 		boolean validUser = loginValidation.isValidUser(accountName);
 		boolean validPassword = loginValidation.isValidPassword(password, accountName);
 		
@@ -66,8 +68,11 @@ public class UserLoginBean {
 			return "notActivated";
 		} else {
 			message = "Invalid login";
-			System.out.println("It worked !!!");
 			return "login";
+		}
+		}catch(AccountDetailsException ade){
+			ade.setErrorMessage("Account details are not valid !");
+			return "register";
 		}
 	}
 }

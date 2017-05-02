@@ -23,7 +23,7 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 
 	@Override
 	public void addCategory(CategoriesEntities categoriesEntities) {
-		entityManager.remove(categoriesEntities);	
+		entityManager.persist(categoriesEntities);	
 	}
 
 
@@ -31,14 +31,21 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 	public void removeCategory(int id) {
 		CategoriesEntities categoriesEntities = entityManager.find(CategoriesEntities.class, id);
 		if (categoriesEntities != null) {
+			updateCategoryParent(categoriesEntities);
 			entityManager.remove(categoriesEntities);
 		}
-
 	}
 
 
 	@Override
-	public void updateCategory(CategoriesEntities categoriesEntities) {
+	public void updateCategoryParent(CategoriesEntities categoriesEntities) {
+		for(CategoriesEntities child: categoriesEntities.getChildren()){
+			child.setParent(categoriesEntities.getParent());
+			entityManager.merge(child);
+		}
+	}
+
+	public void updateCategory(CategoriesEntities categoriesEntities) {		
 		entityManager.merge(categoriesEntities);
 	}
 
@@ -53,7 +60,7 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 		CategoriesEntities categoriesEntities;
 		categoriesEntities = (CategoriesEntities) entityManager.createNamedQuery("findCategorybyName")
 				.setParameter("name", name).getSingleResult();
-	return categoriesEntities;
+		return categoriesEntities;
 	}
 }
 

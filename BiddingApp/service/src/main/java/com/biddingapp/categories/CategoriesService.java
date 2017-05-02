@@ -22,18 +22,6 @@ public class CategoriesService {
 	@EJB
 	CategoriesRepository categoriesRepository;
 
-	private static final String PERSISTENCE_UNIT_NAME = "BiddingApp";
-
-	@PersistenceContext(unitName = PERSISTENCE_UNIT_NAME)
-	private EntityManager entityManager;
-
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
 
 	public CategoriesEntities getRoot(){
 		return categoriesRepository.findCategorybyId(1);
@@ -72,28 +60,38 @@ public class CategoriesService {
 		return jsonInput;
 	}
 
-	public void deleteCategoryById(int id){
+	public void deleteCategory(int id){
 		if(id > 1){
 			categoriesRepository.removeCategory(id);
 		}
 	}
 
-	public void deleteCategory(String name){
-		CategoriesEntities categoriesEntities= categoriesRepository.findCategorybyName(name);
-		categoriesRepository.removeCategory(categoriesEntities.getId());
+	public void createCategory(CategoriesDTO categoriesdto, int id) {
+
+		CategoriesEntities category= populate(categoriesdto);
+
+		if(id==0){
+			CategoriesEntities root= categoriesRepository.findCategorybyId(1);
+			category.setParent(root);
+			categoriesRepository.addCategory(category);
+		}else{
+			CategoriesEntities selected= categoriesRepository.findCategorybyId(id);
+			if(selected.getName().equals(categoriesdto.getName())){
+				selected.setDescription(categoriesdto.getDescription());
+				categoriesRepository.updateCategory(selected);
+			}else{
+				category.setParent(selected);
+				categoriesRepository.addCategory(category);
+			}
+		}
 	}
 
-
-	public void createCategory(CategoriesDTO categoriesDto){
-		CategoriesEntities categoriesEntities= populate(categoriesDto);
-		categoriesRepository.addCategory(categoriesEntities);
-	}
-
-
-	public CategoriesEntities populate(CategoriesDTO categoriesdto) {
+	public CategoriesEntities populate(CategoriesDTO categoriesdto){
 		CategoriesEntities categoriesEntities = new CategoriesEntities();
+
 		categoriesEntities.setName(categoriesdto.getName());
 		categoriesEntities.setDescription(categoriesdto.getDescription());
+
 		return categoriesEntities;
 	}
 }
