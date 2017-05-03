@@ -11,6 +11,7 @@ import com.biddingapp.entities.RegistrationEntities;
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.CategoriesRepository;
 import com.biddingapp.repositories.UserRepository;
+import com.fortech.exception.CategoriesDetailsException;
 
 @Stateless
 @Remote(CategoriesRepository.class)
@@ -28,7 +29,7 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 
 
 	@Override
-	public void removeCategory(int id) {
+	public void removeCategory(int id) throws CategoriesDetailsException{
 		CategoriesEntities categoriesEntities = entityManager.find(CategoriesEntities.class, id);
 		if (categoriesEntities != null) {
 			updateCategoryParent(categoriesEntities);
@@ -56,7 +57,7 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 	}
 
 	@Override
-	public CategoriesEntities findCategorybyName(String name) throws NoResultException{
+	public CategoriesEntities findCategorybyName(String name) throws CategoriesDetailsException{
 		CategoriesEntities categoriesEntities;
 		categoriesEntities = (CategoriesEntities) entityManager.createNamedQuery("findCategorybyName")
 				.setParameter("name", name).getSingleResult();

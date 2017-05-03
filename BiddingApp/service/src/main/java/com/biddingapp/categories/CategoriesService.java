@@ -14,6 +14,7 @@ import com.biddingapp.repositories.CategoriesRepository;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.dto.CategoriesDTO;
 import com.fortech.dto.UserDTO;
+import com.fortech.exception.CategoriesDetailsException;
 import com.google.gson.Gson;
 
 @Stateless
@@ -60,7 +61,7 @@ public class CategoriesService {
 		return jsonInput;
 	}
 
-	public void deleteCategory(int id){
+	public void deleteCategory(int id) throws CategoriesDetailsException{
 		if(id > 1){
 			categoriesRepository.removeCategory(id);
 		}

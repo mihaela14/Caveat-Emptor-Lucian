@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import com.biddingapp.categories.CategoriesService;
 import com.fortech.dto.CategoriesDTO;
 import com.fortech.dto.UserDTO;
+import com.fortech.exception.CategoriesDetailsException;
 
 @ManagedBean(name = "categoriesOperation")
 @SessionScoped
@@ -48,7 +49,12 @@ public class CategoriesOperationsBean {
 	}
 	
 	public void removeCategory(){
-		categoriesService.deleteCategory(id);
+		try {
+			categoriesService.deleteCategory(id);
+		} catch (CategoriesDetailsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public String addCategory(){
