@@ -1,7 +1,6 @@
 package com.biddingapp.ejbeans;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -11,12 +10,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import javax.validation.ValidationException;
 
 import com.biddingapp.email.EmailService;
 import com.biddingapp.register.RegisterValidation;
-import com.fortech.dto.UserDTO;
 import com.fortech.exception.AccountDetailsException;
+import com.fortech.implementations.UserDTO;
 import com.fortech.utils.Constants;
 
 @ManagedBean(name = "registration")
@@ -101,7 +99,7 @@ public class UserRegistrationBean {
 		try{
 			String username= value.toString();
 			if(username.length()<4){
-				FacesMessage message= new FacesMessage("*Username is not valid");
+				FacesMessage message= new FacesMessage("*Username is not valid (Username must be at least 4 characters long)");
 				throw new ValidatorException(message);
 			}else if(registerValidation.isDuplicateUsername(username)){
 				FacesMessage message= new FacesMessage("*Username already exists");

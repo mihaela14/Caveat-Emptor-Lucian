@@ -19,13 +19,24 @@
 	margin-left: 100%;
 	margin-top: -21%;
 }
-.breadcrumb {
-     cursor:pointer;
-     color:#58ACFA;
-     font-weight: 570;
-     text-decoration:underline;
-}
 
+.breadcrumb {
+	cursor: pointer;
+	color: #58ACFA;
+	font-weight: 570;
+	text-decoration: underline;
+}
+.clearfix:after{
+	content: " ";
+   display: block; 
+   height: 0; 
+   clear: both;
+}
+.left{
+	float:left;
+	margin-left: 1%;
+}	
+	
 </style>
 	</h:head>
 
@@ -53,13 +64,16 @@
 			<h:form id="categories-form">
 				<h:outputLabel value="Name:" class="login-label" name="name" />
 				<h:inputText class="form-control" id="category-name"
-					value="#{categoriesOperation.name}" />
+					value="#{categoriesOperation.name}" required="true"
+					requiredMessage="*Please enter category's name" />
 				<br />
 
 				<h:outputLabel value="Description:" class="login-label"
-					name="descriptions" />
+					name="descriptions" required="true"
+					requiredMessage="Please enter category's name" />
 				<h:inputTextarea id="description" class="form-control" rows="5"
-					value="#{categoriesOperation.description}" />
+					value="#{categoriesOperation.description}" required="true"
+					requiredMessage="*Please enter category's description" />
 
 				<h:inputHidden id="id-field" value="#{categoriesOperation.id}" />
 
@@ -68,11 +82,18 @@
 					<div class="col-md-1">
 						<h:commandButton id="contactbtn" class="btn btn-info"
 							name="save-btn" value="Submit"
-							action="#{categoriesOperation.addCategory}"></h:commandButton>
+							action="#{categoriesOperation.addCategory}">
+							</h:commandButton>
 					</div>
 					<div class="col-md">
 						<h:commandButton class="btn btn-info" id="remove-button"
-							action="#{categoriesOperation.removeCategory}" value="Remove"></h:commandButton>
+							action="#{categoriesOperation.removeCategory}" value="Remove">
+							</h:commandButton>
+					</div>
+					<br />
+					<div class="clearfix">
+						<h:message for="category-name" style="color:red; width: 100%;" class="left" />
+						<h:message for="description" style="color:red; width: 100%;" class="left" />
 					</div>
 				</div>
 			</h:form>

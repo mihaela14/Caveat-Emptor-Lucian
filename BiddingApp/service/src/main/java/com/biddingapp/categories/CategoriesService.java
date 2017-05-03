@@ -5,16 +5,11 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import com.biddingapp.entities.CategoriesEntities;
-import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.CategoriesRepository;
-import com.biddingapp.repositories.UserRepository;
-import com.fortech.dto.CategoriesDTO;
-import com.fortech.dto.UserDTO;
 import com.fortech.exception.CategoriesDetailsException;
+import com.fortech.implementations.CategoriesDTO;
 import com.google.gson.Gson;
 
 @Stateless
@@ -85,6 +80,7 @@ public class CategoriesService {
 				categoriesRepository.addCategory(category);
 			}
 		}
+		categoriesdto= null;
 	}
 
 	public CategoriesEntities populate(CategoriesDTO categoriesdto){

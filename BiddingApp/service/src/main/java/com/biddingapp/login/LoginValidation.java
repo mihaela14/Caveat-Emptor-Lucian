@@ -5,8 +5,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.openjpa.persistence.NoResultException;
-
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.exception.AccountDetailsException;

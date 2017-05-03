@@ -1,4 +1,4 @@
-package com.fortech.dto;
+package com.fortech.implementations;
 
 import java.sql.Timestamp;
 

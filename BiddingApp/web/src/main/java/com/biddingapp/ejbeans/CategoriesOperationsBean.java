@@ -1,16 +1,17 @@
 package com.biddingapp.ejbeans;
 
-import java.io.IOException;
-
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import com.biddingapp.categories.CategoriesService;
-import com.fortech.dto.CategoriesDTO;
-import com.fortech.dto.UserDTO;
+import com.fortech.exception.AccountDetailsException;
 import com.fortech.exception.CategoriesDetailsException;
+import com.fortech.implementations.CategoriesDTO;
 
 @ManagedBean(name = "categoriesOperation")
 @SessionScoped
@@ -60,7 +61,7 @@ public class CategoriesOperationsBean {
 	public String addCategory(){
 		CategoriesDTO dto= getDto();
 		categoriesService.createCategory(dto, id);
-		return "main-page";
+		return "main-page"+ "?faces-redirect=true&amp;includeViewParams=true";
 	}
 	
 	public CategoriesDTO getDto() {

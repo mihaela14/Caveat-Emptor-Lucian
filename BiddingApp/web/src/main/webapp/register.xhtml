@@ -71,8 +71,8 @@
 								<h:inputSecret value="#{registration.password}"
 									id="inputPassword" class="registration-input" required="true"
 									requiredMessage="*Please enter your password"
-									validatorMessage="*Password is not valid">
-									<f:validateLength minimum="5" />
+									validatorMessage="*Password is not valid (Password should be at least 4 characters long)">
+									<f:validateLength minimum="4" />
 								</h:inputSecret>
 							</div>
 							<br />

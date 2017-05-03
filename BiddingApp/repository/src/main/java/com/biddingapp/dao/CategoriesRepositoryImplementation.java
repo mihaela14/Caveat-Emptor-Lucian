@@ -3,14 +3,10 @@ package com.biddingapp.dao;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.biddingapp.entities.CategoriesEntities;
-import com.biddingapp.entities.RegistrationEntities;
-import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.CategoriesRepository;
-import com.biddingapp.repositories.UserRepository;
 import com.fortech.exception.CategoriesDetailsException;
 
 @Stateless

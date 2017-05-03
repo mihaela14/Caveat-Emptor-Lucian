@@ -1,11 +1,8 @@
 package com.biddingapp.ejbeans;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import com.biddingapp.login.LoginValidation;
 import com.fortech.exception.AccountDetailsException;
@@ -72,7 +69,8 @@ public class UserLoginBean {
 		}
 		}catch(AccountDetailsException ade){
 			ade.setErrorMessage("Account details are not valid !");
-			return "register";
+			message = "Invalid login";
+			return "login";
 		}
 	}
 }
