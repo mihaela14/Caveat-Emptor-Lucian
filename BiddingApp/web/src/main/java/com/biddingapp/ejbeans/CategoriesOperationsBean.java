@@ -6,7 +6,8 @@ import javax.faces.bean.SessionScoped;
 
 import com.biddingapp.categories.CategoriesService;
 import com.fortech.exception.CategoriesDetailsException;
-import com.fortech.implementations.CategoriesDTO;
+
+import dto.CategoriesDTO;
 
 @ManagedBean(name = "categoriesOperation")
 @SessionScoped

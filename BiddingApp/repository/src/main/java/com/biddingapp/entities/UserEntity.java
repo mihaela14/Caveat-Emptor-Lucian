@@ -11,10 +11,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.biddingapp.queries.UserQueries;
+
 @Entity
 @NamedQueries({
-	@NamedQuery(name="findAllUsersWithName", query= "SELECT u FROM UserEntity u WHERE u.accountName = :accountName"),
-	@NamedQuery(name="findAllUsersWithEmail", query= "SELECT u FROM UserEntity u WHERE u.email = :email")}) 
+	@NamedQuery(name="findAllUsersWithName", query= UserQueries.FIND_BY_USERNAME),
+	@NamedQuery(name="findAllUsersWithEmail", query= UserQueries.FIND_BY_EMAIL)
+}) 
 @Table(name="users")
 
 public class UserEntity implements Serializable{
@@ -45,6 +48,8 @@ public class UserEntity implements Serializable{
 	@Column(name= "roles")
 	private String roles;
 
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -93,6 +98,8 @@ public class UserEntity implements Serializable{
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
+	
+	
 	public UserEntity(int id, String firstName, String lastName, String email, String accountName, String password,boolean isActive,
 			String roles) {
 		super();
@@ -107,6 +114,8 @@ public class UserEntity implements Serializable{
 	public UserEntity() {
 		super();
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "UserEntity [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email

@@ -13,8 +13,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.biddingapp.queries.UserQueries;
+
 @Entity
-@NamedQuery(name="findCategorybyName", query= "SELECT u FROM CategoriesEntities u WHERE u.name = :name")
+@NamedQuery(name="findCategorybyName", query= UserQueries.FIND_BY_CATEGORY_NAME)
 @Table(name="categories")
 public class CategoriesEntities implements Serializable{
 
@@ -34,6 +36,7 @@ public class CategoriesEntities implements Serializable{
 	@OneToMany(mappedBy="parent", fetch=FetchType.EAGER)
 	private List<CategoriesEntities>children;
 
+	
 	public int getId() {
 		return id;
 	}
@@ -65,6 +68,7 @@ public class CategoriesEntities implements Serializable{
 		this.parent = parent;
 	}
 
+	
 	public CategoriesEntities(int id, String name, String description) {
 		super();
 		this.id = id;

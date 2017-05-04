@@ -14,8 +14,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.biddingapp.queries.UserQueries;
+
 @Entity
-@NamedQuery(name="findbyActivationKey", query= "SELECT u FROM RegistrationEntities u WHERE u.activationKey = :activationKey")
+@NamedQuery(name="findbyActivationKey", query= UserQueries.FIND_BY_ACTIVATION_KEY)
 @Table(name= "registrationdetails")
 public class RegistrationEntities implements Serializable{
 

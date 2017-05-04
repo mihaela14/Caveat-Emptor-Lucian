@@ -15,21 +15,30 @@
 		<form id="loginForm" class="form-horizontal">
 			<div class="row account-wall">
 				<div class="col-sm-6 col-md-4 col-md-offset-4">
-					<img class="profile-img"
-						src="resources/img/exclamation-xxl.png"
-						alt=""></img> <br />
-					<div class= "text-form">
-					<h2 class="text-center login-title">Your account is not activated yet</h2>
-					<h3 class="text-center login-title">Check your provided email adress and try again</h3>
+					<img class="profile-img" src="resources/img/info.png" alt=""></img>
 					<br />
-					<h3 class="text-center login-title">You did not registered yet ?</h3>
+					<div class="text-form">
+						<h2 class="text-center login-title">Step 1. To create an
+							account go to the register page and complete the form</h2>
+						<h2 class="text-center login-title">Step 2. Check your
+							provided email adress open the email and click on the link to
+							activate your account</h2>
+						<h2 class="text-center login-title">Step 3. Login into your
+							account</h2>
+						<br /> <a href="register.xhtml" class="text-center new-account">Go
+							to the register page</a>
 					</div>
-					<br />
-					<a href="register.xhtml" class="text-center new-account">Create an account </a>
+					<a href="login.xhtml" class="text-center new-account">Login
+						page if you already registered</a>
 				</div>
 			</div>
 		</form>
 	</div>
-
+	<style>
+.text-form {
+	margin-left: -100%;
+	margin-right: -100%;
+}
+</style>
 </h:body>
 </html>

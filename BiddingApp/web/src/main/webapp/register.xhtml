@@ -26,7 +26,7 @@
 								class="registration-field form-group #{!name.valid ? 'has-error' : 'none'}">
 								<h:outputLabel value="First Name:" class="registration-label"
 									name="first-name" />
-								<h:inputText value="#{registration.firstName}"
+								<h:inputText value="#{registration.userDTO.firstName}"
 									id="registerFirstName" class="registration-input"
 									required="true" requiredMessage="*Please enter your first name"
 									validatorMessage="*Not a valid first name">
@@ -37,7 +37,7 @@
 								class="registration-field form-group #{!name.valid ? 'has-error' : 'none'}">
 								<h:outputLabel value="Last Name:" class="registration-label"
 									name="last-name" />
-								<h:inputText value="#{registration.lastName}"
+								<h:inputText value="#{registration.userDTO.lastName}"
 									id="registerLastName" class="registration-input"
 									required="true" requiredMessage="*Please enter your last name"
 									validatorMessage="*Not a valid last name">
@@ -48,7 +48,7 @@
 								class="registration-field form-group #{!name.valid ? 'has-error' : 'none'}">
 								<h:outputLabel value="Email :" class="registration-emaillabel"
 									name="email" />
-								<h:inputText value="#{registration.email}" id="registerEmail"
+								<h:inputText value="#{registration.userDTO.email}" id="registerEmail"
 									class="registration-input" required="true"
 									requiredMessage="*Please enter your email"
 									validator="#{registration.IsValidEmail}">
@@ -58,7 +58,7 @@
 								class="registration-field form-group #{!name.valid ? 'has-error' : 'none'}">
 								<h:outputLabel value="Username :" class="registration-label"
 									name="username" />
-								<h:inputText value="#{registration.accountName}"
+								<h:inputText value="#{registration.userDTO.accountName}"
 									id="registerUsername"
 									class="registration-input" required="true" 
 									requiredMessage="*Please enter your username"
@@ -68,7 +68,7 @@
 							<div class="registration-field">
 								<h:outputLabel value="Password:"
 									class="registration-passwordlabel" />
-								<h:inputSecret value="#{registration.password}"
+								<h:inputSecret value="#{registration.userDTO.password}"
 									id="inputPassword" class="registration-input" required="true"
 									requiredMessage="*Please enter your password"
 									validatorMessage="*Password is not valid (Password should be at least 4 characters long)">
@@ -80,7 +80,7 @@
 								class="btn btn-info btn-lg btn-block" name="username"
 								value="Submit" action="#{registration.register}"
 								update="register-form"></h:commandButton>
-							<a href="#" class="pull-right need-help">Need help? </a>
+							<a href="need-help.xhtml" class="pull-right need-help">Need help? </a>
 							<span class="clearfix"></span>
 
 							<div class="clearfix">

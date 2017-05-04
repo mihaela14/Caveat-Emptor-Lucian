@@ -1,4 +1,4 @@
-package com.biddingapp.dao;
+package com.biddingapp.implementations;
 
 import javax.ejb.Remote;
 import javax.ejb.Stateless;

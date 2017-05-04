@@ -59,7 +59,6 @@ public class LoginValidation {
 		this.userRepository = userRepository;
 	}
 
-
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}

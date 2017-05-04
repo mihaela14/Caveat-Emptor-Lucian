@@ -11,7 +11,8 @@ import com.biddingapp.entities.RegistrationEntities;
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.exception.AccountDetailsException;
-import com.fortech.implementations.UserDTO;
+
+import dto.UserDTO;
 
 @Stateless
 public class RegisterValidation {
@@ -57,8 +58,8 @@ public class RegisterValidation {
 		user.setEmail(userdto.getEmail());
 		user.setAccountName(userdto.getAccountName());
 		user.setPassword(userdto.getPassword());
-		user.setStatus(userdto.getStatus());
-		user.setRoles(userdto.getRoles());
+		user.setStatus(false);
+		user.setRoles("USER");
 		return user;
 	}
 
