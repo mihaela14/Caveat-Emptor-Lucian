@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Not activated</title>
+	<ui:include src="error-imports.xhtml" />
+</h:head>
+
+<h:body>
+	<div class="container">
+		<form id="loginForm" class="form-horizontal">
+			<div class="row account-wall">
+				<div class="col-sm-6 col-md-4 col-md-offset-4">
+					<h2 class="text-center login-title">Sorry ! Something went wrong</h2>
+					<br />
+					<img class="profile-img"
+						src="resources/img/oops.png"
+						alt=""></img> <br />
+					<br />
+					<h3 class="text-center login-title">We are working on getting this fixed as soon as we can it </h3>
+					<br />
+					<h:form id="button">
+					<h:commandButton id="contactbtn" value="Go back to main page"
+								class="btn btn-info btn-lg btn-block"
+								action="main-page?faces.faces-redirect=true"></h:commandButton>
+								</h:form>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</h:body>
+</html>

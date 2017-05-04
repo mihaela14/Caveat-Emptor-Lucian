@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <ui:component>
 	<h:head>
 		<title>Categories operations</title>
@@ -14,10 +15,19 @@
 	margin-top: 2px;
 }
 
+.seach-box{
+	float: right;
+    margin-right: 250px;
+}
+
 .search-button {
 	position: relative;
-	margin-left: 100%;
+	width: 30%;
+    margin-left: 139%;
 	margin-top: -21%;
+}
+#btnSearch {
+	width: 140%;
 }
 
 .breadcrumb {
@@ -25,18 +35,26 @@
 	color: #58ACFA;
 	font-weight: 570;
 	text-decoration: underline;
+	padding: 10px 10px;
+	margin-bottom: 15px;
 }
-.clearfix:after{
+
+.clearfix:after {
 	content: " ";
-   display: block; 
-   height: 0; 
-   clear: both;
+	display: block;
+	height: 0;
+	clear: both;
 }
-.left{
-	float:left;
+
+.left {
+	float: left;
 	margin-left: 1%;
-}	
-	
+}
+
+#search-box {
+	float: right;
+	margin-right: 250px;
+}
 </style>
 	</h:head>
 
@@ -52,7 +70,7 @@
 				<div class="col-md-4" id="search-box">
 					<div class="form-group" id="btnSearch">
 						<h:inputText type="text" id="search-box-input"
-							class="form-control" />
+							class="form-control" a:placeholder="Search for a category" />
 					</div>
 					<h:commandButton value="Search" onclick="searchBox()"
 						class="btn btn-info search-button"></h:commandButton>
@@ -65,7 +83,8 @@
 				<h:outputLabel value="Name:" class="login-label" name="name" />
 				<h:inputText class="form-control" id="category-name"
 					value="#{categoriesOperation.name}" required="true"
-					requiredMessage="*Please enter category's name" />
+					requiredMessage="*Please enter category's name"
+					a:placeholder="Category's name" />
 				<br />
 
 				<h:outputLabel value="Description:" class="login-label"
@@ -73,7 +92,8 @@
 					requiredMessage="Please enter category's name" />
 				<h:inputTextarea id="description" class="form-control" rows="5"
 					value="#{categoriesOperation.description}" required="true"
-					requiredMessage="*Please enter category's description" />
+					requiredMessage="*Please enter category's description"
+					a:placeholder="Category's description" />
 
 				<h:inputHidden id="id-field" value="#{categoriesOperation.id}" />
 
@@ -83,17 +103,19 @@
 						<h:commandButton id="contactbtn" class="btn btn-info"
 							name="save-btn" value="Submit"
 							action="#{categoriesOperation.addCategory}">
-							</h:commandButton>
+						</h:commandButton>
 					</div>
 					<div class="col-md">
 						<h:commandButton class="btn btn-info" id="remove-button"
 							action="#{categoriesOperation.removeCategory}" value="Remove">
-							</h:commandButton>
+						</h:commandButton>
 					</div>
 					<br />
 					<div class="clearfix">
-						<h:message for="category-name" style="color:red; width: 100%;" class="left" />
-						<h:message for="description" style="color:red; width: 100%;" class="left" />
+						<h:message for="category-name" style="color:red; width: 100%;"
+							class="left" />
+						<h:message for="description" style="color:red; width: 100%;"
+							class="left" />
 					</div>
 				</div>
 			</h:form>

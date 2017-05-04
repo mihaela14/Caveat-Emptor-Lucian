@@ -54,7 +54,7 @@
 		 function selectNode(nodeId) {
 			            var node = $('#tree').treeview('getNode', nodeId);
 			            $('#tree').treeview('selectNode', [ node, { silent: true } ]);
-			 			
+			 			document.getElementById('categories-form:remove-button').disabled= false;
 			            createBreadcrumb(node);
 			        }
 		 
@@ -86,6 +86,8 @@
 						document.getElementById('categories-form:category-name').value= name;
 			 			document.getElementById('categories-form:description').value= description;
 			 			document.getElementById('categories-form:id-field').value= id;
+			 			document.getElementById('categories-form:remove-button').disabled= false;
+			 			
 					 }
 
 		 
@@ -109,6 +111,7 @@
 						document.getElementById('categories-form:category-name').value = null;
 						document.getElementById('categories-form:description').value = null;
 						document.getElementById('categories-form:id-field').value= null;
+						document.getElementById('categories-form:remove-button').disabled= true;
 		}
 
 		
@@ -118,6 +121,7 @@
 			
 						$('#breadcrumb').empty();
 						resetFields();
+						$('#tree').treeview('clearSearch');
 					}
 
 		
@@ -126,6 +130,8 @@
 			$('#tree').treeview({data: getTree(0,"nodes"), onNodeSelected: function(event, data){		
 				createBreadcrumb(data);
 			}});
+			$('#tree').treeview('collapseAll', { silent: true });
+			document.getElementById('categories-form:remove-button').disabled= true;
 		});
 	
 	</script>

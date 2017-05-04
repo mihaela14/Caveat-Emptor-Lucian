@@ -51,6 +51,4 @@ public class EmailActivationBean {
 	public void setKey(String key) {
 		this.key = key;
 	}
-
-	// ...
 }
