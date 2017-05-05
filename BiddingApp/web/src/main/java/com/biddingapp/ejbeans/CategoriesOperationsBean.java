@@ -5,9 +5,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import com.biddingapp.categories.CategoriesService;
+import com.fortech.dto.CategoriesDTO;
 import com.fortech.exception.CategoriesDetailsException;
-
-import dto.CategoriesDTO;
 
 @ManagedBean(name = "categoriesOperation")
 @SessionScoped

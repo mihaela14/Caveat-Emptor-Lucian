@@ -1,4 +1,4 @@
-package dto;
+package com.fortech.dto;
 
 public class UserDTO {
 

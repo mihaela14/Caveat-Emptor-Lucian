@@ -13,10 +13,9 @@ import javax.faces.validator.ValidatorException;
 
 import com.biddingapp.email.EmailService;
 import com.biddingapp.register.RegisterValidation;
+import com.fortech.dto.UserDTO;
 import com.fortech.exception.AccountDetailsException;
 import com.fortech.utils.Constants;
-
-import dto.UserDTO;
 
 @ManagedBean(name = "registration")
 @SessionScoped

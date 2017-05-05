@@ -8,10 +8,9 @@ import javax.ejb.Stateless;
 
 import com.biddingapp.entities.CategoriesEntities;
 import com.biddingapp.repositories.CategoriesRepository;
+import com.fortech.dto.CategoriesDTO;
 import com.fortech.exception.CategoriesDetailsException;
 import com.google.gson.Gson;
-
-import dto.CategoriesDTO;
 
 @Stateless
 public class CategoriesService {

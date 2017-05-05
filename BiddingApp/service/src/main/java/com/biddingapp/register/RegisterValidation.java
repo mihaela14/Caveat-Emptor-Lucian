@@ -10,9 +10,8 @@ import javax.persistence.PersistenceContext;
 import com.biddingapp.entities.RegistrationEntities;
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.UserRepository;
+import com.fortech.dto.UserDTO;
 import com.fortech.exception.AccountDetailsException;
-
-import dto.UserDTO;
 
 @Stateless
 public class RegisterValidation {
