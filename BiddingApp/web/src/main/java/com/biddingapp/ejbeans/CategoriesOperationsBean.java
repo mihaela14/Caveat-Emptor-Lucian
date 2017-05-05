@@ -19,6 +19,7 @@ public class CategoriesOperationsBean {
 	@EJB
 	private CategoriesService categoriesService;
 	
+	
 	public String getName() {
 		return name;
 	}
@@ -49,7 +50,6 @@ public class CategoriesOperationsBean {
 		try {
 			categoriesService.deleteCategory(id);
 		} catch (CategoriesDetailsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -10,19 +10,21 @@
 <h:body>
 	<ui:composition>
 		<ui:include src="/templates/header-imports.xhtml" />
-		<div class="nav-header">
-			<div class="navbar">
-				<b:navBar brand="Caveat Emptor" brandHref="#">
-					<b:navbarLinks>
-						<b:navLink value="Bidding" href="#"></b:navLink>
-						<b:navLink value="Items" href="#"></b:navLink>
-						<b:navLink value="Categories" href="#"></b:navLink>
-						<b:navLink value="Users" href="#"></b:navLink>
-						<b:navLink value="Account" href="#"></b:navLink>
-					</b:navbarLinks>
-				</b:navBar>
+		<form method="post">
+			<div class="nav-header">
+				<div class="navbar">
+					<b:navBar brand="Caveat Emptor" brandHref="#">
+						<b:navbarLinks>
+							<b:navLink value="Bidding" href="#"></b:navLink>
+							<b:navLink value="Items" href="items-page.xhtml"></b:navLink>
+							<b:navLink value="Categories" href="main-page.xhtml"></b:navLink>
+							<b:navLink value="Users" href="#"></b:navLink>
+							<b:navLink value="Account" href="#"></b:navLink>
+						</b:navbarLinks>
+					</b:navBar>
+				</div>
 			</div>
-		</div>
+		</form>
 
 		<style>
 .nav-header {
@@ -33,7 +35,6 @@
 /* #j_idt9{ */
 /* 	background: #FAAC58; */
 /* } */
-
 </style>
 	</ui:composition>
 

@@ -4,10 +4,21 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head>
+<h:head>
+	<style>
+</style>
+</h:head>
 <h:body>
-      <ui:composition template = "templates/categories/common.xhtml">	
-      </ui:composition>
-   
-   </h:body>
+	<div>
+		<ui:insert name="header">
+			<ui:include src="/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+
+	<div class="container operations-body">
+		<ui:insert name="content">
+			<ui:include src="/items.xhtml" />
+		</ui:insert>
+	</div>
+</h:body>
 </html>

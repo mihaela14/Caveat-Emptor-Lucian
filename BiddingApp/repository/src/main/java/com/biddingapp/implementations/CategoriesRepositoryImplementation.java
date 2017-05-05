@@ -20,16 +20,16 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 
 	@Override
 	public void addCategory(CategoriesEntities categoriesEntities) {
-		entityManager.persist(categoriesEntities);	
+		getEntityManager().persist(categoriesEntities);	
 	}
 
 
 	@Override
 	public void removeCategory(int id) throws CategoriesDetailsException{
-		CategoriesEntities categoriesEntities = entityManager.find(CategoriesEntities.class, id);
+		CategoriesEntities categoriesEntities = getEntityManager().find(CategoriesEntities.class, id);
 		if (categoriesEntities != null) {
 			updateCategoryParent(categoriesEntities);
-			entityManager.remove(categoriesEntities);
+			getEntityManager().remove(categoriesEntities);
 		}
 	}
 
@@ -38,26 +38,34 @@ public class CategoriesRepositoryImplementation implements CategoriesRepository 
 	public void updateCategoryParent(CategoriesEntities categoriesEntities) {
 		for(CategoriesEntities child: categoriesEntities.getChildren()){
 			child.setParent(categoriesEntities.getParent());
-			entityManager.merge(child);
+			getEntityManager().merge(child);
 		}
 	}
 
 	public void updateCategory(CategoriesEntities categoriesEntities) {		
-		entityManager.merge(categoriesEntities);
+		getEntityManager().merge(categoriesEntities);
 	}
 
 
 	@Override
 	public CategoriesEntities findCategorybyId(int id) {
-		return entityManager.find(CategoriesEntities.class, id);
+		return getEntityManager().find(CategoriesEntities.class, id);
 	}
 
 	@Override
 	public CategoriesEntities findCategorybyName(String name) throws CategoriesDetailsException{
 		CategoriesEntities categoriesEntities;
-		categoriesEntities = (CategoriesEntities) entityManager.createNamedQuery("findCategorybyName")
+		categoriesEntities = (CategoriesEntities) getEntityManager().createNamedQuery("findCategorybyName")
 				.setParameter("name", name).getSingleResult();
 		return categoriesEntities;
+	}
+
+
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 }
 
