@@ -59,7 +59,7 @@ public class UserLoginBean {
 		if (validUser && validPassword) {
 			if(loginValidation.isAccountActivated(accountName)){
 				message = "Successfully logged in";
-				return "success";
+				return "items-page";
 			}else
 				message = "Your account is not activated";
 			return "notActivated";

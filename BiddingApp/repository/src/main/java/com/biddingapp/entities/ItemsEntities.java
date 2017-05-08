@@ -1,8 +1,10 @@
 package com.biddingapp.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,12 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
-import com.biddingapp.queries.UserQueries;
+import com.biddingapp.queries.ItemsQueries;
 
-@NamedQuery(name="findItemByUser", query= UserQueries.FIND_BY_USERNAME)
-public class ItemsEntities {
+@Entity
+@NamedQuery(name="findItemByUser", query= ItemsQueries.FIND_ITEM_BY_USER)
+@Table(name= "items")
+public class ItemsEntities implements Serializable{
 	
+	private static final long serialVersionUID = 5913721175475853574L;
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,15 +31,14 @@ public class ItemsEntities {
 	@Column
 	private String name;
 	
-	@Column(name="category_id")
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="category_id")
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="category_id", referencedColumnName = "id")
 	private CategoriesEntities category;
 	
 	@Column
 	private float price;
 	
-	@Column(name="best_id")
+	@Column(name="best_bid")
 	private float bestBid;
 	
 	@Column
@@ -44,12 +50,15 @@ public class ItemsEntities {
 	@Column(name="closing_date")
 	private Timestamp closingDate;
 	
+	@Column
+	private String status;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="seller_id")
+	@JoinColumn(name="seller_id", referencedColumnName = "ID")
 	private UserEntity sellerId;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="winner_id")
+	@JoinColumn(name="winner_id", referencedColumnName = "ID")
 	private UserEntity winnerId;
 
 	
@@ -100,6 +109,12 @@ public class ItemsEntities {
 	}
 	public void setClosingDate(Timestamp closingDate) {
 		this.closingDate = closingDate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public UserEntity getSellerId() {
 		return sellerId;

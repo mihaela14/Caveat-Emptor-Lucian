@@ -10,6 +10,4 @@ public class UserQueries {
 	
 	public static final String FIND_BY_EMAIL = "SELECT u FROM UserEntity u WHERE u.email = :email";
 	
-	public static final String FIND_ITEM_BY_USER= "SELECT u FROM ItemsEntities u WHERE u.sellerId = :sellerId";
-	
 }

@@ -15,6 +15,8 @@ public class ItemsDTO {
 	private String name;
 
 	private float price;
+	
+	private String categoryName;
 
 	private float bestBid;
 
@@ -23,6 +25,12 @@ public class ItemsDTO {
 	private Timestamp openingDate;
 
 	private Timestamp closingDate;
+	
+	private String status;
+	
+	private String seller;
+	
+	private String winner;
 
 
 	public int getId() {
@@ -66,6 +74,30 @@ public class ItemsDTO {
 	}
 	public void setClosingDate(Timestamp closingDate) {
 		this.closingDate = closingDate;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getSeller() {
+		return seller;
+	}
+	public void setSeller(String seller) {
+		this.seller = seller;
+	}
+	public String getWinner() {
+		return winner;
+	}
+	public void setWinner(String winner) {
+		this.winner = winner;
 	}
 
 

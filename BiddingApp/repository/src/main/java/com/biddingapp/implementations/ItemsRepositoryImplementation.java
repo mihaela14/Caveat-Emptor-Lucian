@@ -1,6 +1,5 @@
 package com.biddingapp.implementations;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -8,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import com.biddingapp.entities.ItemsEntities;
 import com.biddingapp.entities.UserEntity;
@@ -43,13 +43,14 @@ public class ItemsRepositoryImplementation implements ItemsRepository{
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<ItemsEntities> findEntitiesbyUser(UserEntity user) throws ItemsDetailsException{
+	public List<ItemsEntities> findItemsbyUser(UserEntity user) throws ItemsDetailsException{
 		try{
-			List<ItemsEntities>itemsEntities= new ArrayList<>();
-			itemsEntities = entityManager.createNamedQuery("findItemByUser")
-					.setParameter("sellerId", user.getId()).getResultList();
-			return itemsEntities;
+			
+			return entityManager.createNamedQuery("findItemByUser").setParameter("sellerId", user).getResultList();
+
+
 		}catch(NoResultException nre){
 			throw new ItemsDetailsException();
 		}

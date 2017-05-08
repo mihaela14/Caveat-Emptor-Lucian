@@ -68,15 +68,6 @@ public class CategoriesEntities implements Serializable{
 		this.parent = parent;
 	}
 
-	
-	public CategoriesEntities(int id, String name, String description) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.description = description;
-	}
-	public CategoriesEntities() {
-		super();
-	}
+ 
 
 }

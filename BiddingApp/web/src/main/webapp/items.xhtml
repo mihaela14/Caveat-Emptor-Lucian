@@ -4,44 +4,60 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<head>
-<title>Bootstrap Example</title>
-<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+<h:head>
+	<title>Bootstrap Example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css"></link>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+</h:head>
+<h:body>
 
 	<div class="container">
 
 		<h:form>
 			<div>
-			<h:commandButton class="btn btn-info" value="Add a new item" action="#{items.addItem}"/>
+				<h:commandButton class="btn btn-info" value="Add a new item"
+					action="#{items.addItem}" />
+				<h1>#{items.userDetails.accountName}</h1>
 			</div>
 		</h:form>
 
-		<table class="table table-condensed">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Categories</th>
-					<th>Initial price</th>
-					<th>Best bid</th>
-					<th>Bids</th>
-					<th>Opening date</th>
-					<th>Closing date</th>
-					<th>Status</th>
-					<th>Winner</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+		<div class="container">
+			<table id="table">
+				<thead>
+					<tr>
+						<th data-field="id">Id</th>
+						<th data-field="name">Name</th>
+						<th data-field="categoryName">Categories</th>
+						<th data-field="price">Initial price</th>
+						<th data-field="bestBid">Best bid</th>
+						<th data-field="bids">Bids</th>
+						<th data-field="openingDate">Opening date</th>
+						<th data-field="closingDate">Closing date</th>
+						<th data-field="status">Status</th>
+						<th data-field="winner">Winner</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
 	</div>
+	<script>
+	var $table = $('#table');
+	var itemsList = [${items.json}][0];
 
-</body>
+	$(function () {
+	    $('#table').bootstrapTable({
+	        data: itemsList
+	    });
+	});
+	</script>
+</h:body>
 </html>
