@@ -8,27 +8,75 @@
 	<title>Bootstrap Example</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css"></link>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+	<style>
+.add-button {
+	position: relative;
+	margin-left: -33%;
+}
+</style>
 </h:head>
 <h:body>
 
-	<div class="container">
+	<div class="">
 
-		<h:form>
-			<div>
-				<h:commandButton class="btn btn-info" value="Add a new item"
-					action="#{items.addItem}" />
-				<h1>#{items.userDetails.accountName}</h1>
+		<button type="button" class="btn btn-info btn-lg add-button"
+			data-toggle="modal" data-target="#myModal">Create a new Item</button>
+
+		<div id="myModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Confirmation</h4>
+					</div>
+
+					<h:form id="modal-form">
+						<div class="modal-body">
+						
+						
+							<h:outputLabel value="Item Name: " />
+							<h:inputText id="id1" value="#{items.itemDto.name}" onclick="consoleee()"/>
+							<br />
+
+							<h:outputLabel value="Price: " />
+							<h:inputText value="#{items.itemDto.price}" />
+							<br />
+
+							<h:outputLabel value="Opening date: " />
+							<h:inputText value="#{items.itemDto.openingDate}" />
+							<br />
+
+							<h:outputLabel value="Closing Date:" />
+							<h:inputText value="#{items.itemDto.closingDate}" />
+							<br />
+
+							<h:outputLabel value="Status: " />
+							<h:inputText value="#{items.itemDto.status}" />
+							<br />
+							<br />
+
+							<p class="text-warning">
+								<small>If you don't save, your changes will be lost.</small>
+							</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default submit-data"
+								data-dismiss="modal">Close</button>
+							<h:commandButton type="button" class="btn btn-primary"
+								id="save-button" value="Save changes">
+								<f:ajax listener="#{items.addItem()}" event="click"
+									update=":modal-form" process="@form" />
+							</h:commandButton>
+						</div>
+						<h:messages for="save-button"></h:messages>
+					</h:form>
+				</div>
 			</div>
-		</h:form>
+		</div>
 
 		<div class="container">
 			<table id="table">
@@ -58,6 +106,10 @@
 	        data: itemsList
 	    });
 	});
+
+	function consoleee(){
+		console.log(document.getElementById("modal-form:id1").value);
+		}
 	</script>
 </h:body>
 </html>

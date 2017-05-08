@@ -2,11 +2,6 @@ package com.fortech.dto;
 
 import java.sql.Timestamp;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 public class ItemsDTO {
 
 

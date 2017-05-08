@@ -29,6 +29,9 @@ public class ItemsService {
 	
 	}
 	
+	public void createItem(ItemsEntities itemsEntity){
+		itemsRepository.add(itemsEntity);
+	}
 	
 	public ItemsRepository getItemsRepository() {
 		return itemsRepository;

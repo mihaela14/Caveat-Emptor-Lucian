@@ -44,7 +44,7 @@ public class ItemsBean {
 			List<ItemsDTO> DTOList = new ArrayList<>();
 			
 			for (ItemsEntities item : items) {
-				ItemsDTO itemDTO = getDto(item);
+				ItemsDTO itemDTO = getTableDto(item);
 				DTOList.add(itemDTO);
 			}
 			
@@ -55,7 +55,7 @@ public class ItemsBean {
 		}
 	}
 	
-	public ItemsDTO getDto(ItemsEntities item){
+	public ItemsDTO getTableDto(ItemsEntities item){
 		ItemsDTO createDto= new ItemsDTO();
 		
 		createDto.setId(item.getId());
@@ -70,6 +70,24 @@ public class ItemsBean {
 		createDto.setWinner(item.getWinnerId().getAccountName());
 		
 		return createDto;
+	}
+	
+	
+	public ItemsEntities getDto(){
+		ItemsEntities itemEntity= new ItemsEntities();
+		
+		itemEntity.setName(itemDto.getName());
+		itemEntity.setPrice(itemDto.getPrice());
+		itemEntity.setOpeningDate(itemDto.getOpeningDate());
+		itemEntity.setClosingDate(itemDto.getClosingDate());
+		itemEntity.setStatus(itemDto.getStatus());
+		
+		return itemEntity;
+	}
+	
+	
+	public void addItem(){
+		itemsService.createItem(getDto());
 	}
 	
 	public ItemsService getItemsService() {
