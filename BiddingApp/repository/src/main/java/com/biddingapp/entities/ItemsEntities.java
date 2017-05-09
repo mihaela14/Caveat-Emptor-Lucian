@@ -3,6 +3,7 @@ package com.biddingapp.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,7 +32,7 @@ public class ItemsEntities implements Serializable{
 	@Column
 	private String name;
 	
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.MERGE,fetch=FetchType.EAGER)
 	@JoinColumn(name="category_id", referencedColumnName = "id")
 	private CategoriesEntities category;
 	
@@ -53,11 +54,11 @@ public class ItemsEntities implements Serializable{
 	@Column
 	private String status;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.MERGE,fetch=FetchType.LAZY)
 	@JoinColumn(name="seller_id", referencedColumnName = "ID")
 	private UserEntity sellerId;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@JoinColumn(name="winner_id", referencedColumnName = "ID")
 	private UserEntity winnerId;
 

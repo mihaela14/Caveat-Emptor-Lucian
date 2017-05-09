@@ -5,8 +5,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import com.biddingapp.entities.CategoriesEntities;
 import com.biddingapp.entities.ItemsEntities;
 import com.biddingapp.entities.UserEntity;
+import com.biddingapp.repositories.CategoriesRepository;
 import com.biddingapp.repositories.ItemsRepository;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.exception.AccountDetailsException;
@@ -20,6 +22,9 @@ public class ItemsService {
 	
 	@EJB
 	UserRepository userRepository;
+	
+	@EJB
+	CategoriesRepository categoriesRepository;
 	
 
 	public List<ItemsEntities> getItemList(String accountName) throws AccountDetailsException, ItemsDetailsException {
@@ -45,5 +50,9 @@ public class ItemsService {
 	}
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
+	}
+
+	public CategoriesEntities getCategory(int categoryId) {
+		return categoriesRepository.findCategorybyId(categoryId);
 	}
 }

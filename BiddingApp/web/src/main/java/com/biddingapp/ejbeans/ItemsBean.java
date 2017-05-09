@@ -67,7 +67,10 @@ public class ItemsBean {
 		createDto.setOpeningDate(item.getOpeningDate());
 		createDto.setClosingDate(item.getClosingDate());
 		createDto.setStatus(item.getStatus());
+		
+		if(item.getWinnerId() != null){
 		createDto.setWinner(item.getWinnerId().getAccountName());
+		}
 		
 		return createDto;
 	}
@@ -81,6 +84,7 @@ public class ItemsBean {
 		itemEntity.setOpeningDate(itemDto.getOpeningDate());
 		itemEntity.setClosingDate(itemDto.getClosingDate());
 		itemEntity.setStatus(itemDto.getStatus());
+		itemEntity.setCategory(itemsService.getCategory(categoryId));
 		
 		return itemEntity;
 	}

@@ -12,92 +12,145 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
 	<style>
-.add-button {
-	position: relative;
-	margin-left: -33%;
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
 </style>
 </h:head>
 <h:body>
 
-	<div class="">
+	<div class="row">
+		<div class="col-md-2">
+			<!-- Trigger/Open The Modal -->
+			<button class="btn btn-info" id="myBtn">Add a new item</button>
+		</div>
+		<div class="col-md-1">
+			<div class="dropdown">
+				<button class="btn btn-info dropdown-toggle" type="button"
+					data-toggle="dropdown">
+					Items to: <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#">Sell</a></li>
+					<li><a href="#">Buy</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<br />
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
 
-		<button type="button" class="btn btn-info btn-lg add-button"
-			data-toggle="modal" data-target="#myModal">Create a new Item</button>
+		<!-- Modal content -->
+		<div class="modal-content">
 
-		<div id="myModal" class="modal fade">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-						<h4 class="modal-title">Confirmation</h4>
+			<span class="close">&times;</span>
+			<div class="row">
+				<div class="col-md-6">
+					<ui:insert name="items_operations">
+						<ui:include src="/items-operations.xhtml" />
+					</ui:insert>
+				</div>
+				<div class="col-md-6">
+					<h:outputText value="Select the category" />
+
+					<div class="col md-12">
+						<div class="tree">
+							<ui:insert name="tree">
+								<ui:include src="/tree.xhtml" />
+							</ui:insert>
+						</div>
 					</div>
-
-					<h:form id="modal-form">
-						<div class="modal-body">
-						
-						
-							<h:outputLabel value="Item Name: " />
-							<h:inputText id="id1" value="#{items.itemDto.name}" onclick="consoleee()"/>
-							<br />
-
-							<h:outputLabel value="Price: " />
-							<h:inputText value="#{items.itemDto.price}" />
-							<br />
-
-							<h:outputLabel value="Opening date: " />
-							<h:inputText value="#{items.itemDto.openingDate}" />
-							<br />
-
-							<h:outputLabel value="Closing Date:" />
-							<h:inputText value="#{items.itemDto.closingDate}" />
-							<br />
-
-							<h:outputLabel value="Status: " />
-							<h:inputText value="#{items.itemDto.status}" />
-							<br />
-							<br />
-
-							<p class="text-warning">
-								<small>If you don't save, your changes will be lost.</small>
-							</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-default submit-data"
-								data-dismiss="modal">Close</button>
-							<h:commandButton type="button" class="btn btn-primary"
-								id="save-button" value="Save changes">
-								<f:ajax listener="#{items.addItem()}" event="click"
-									update=":modal-form" process="@form" />
-							</h:commandButton>
-						</div>
-						<h:messages for="save-button"></h:messages>
-					</h:form>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="container">
-			<table id="table">
-				<thead>
-					<tr>
-						<th data-field="id">Id</th>
-						<th data-field="name">Name</th>
-						<th data-field="categoryName">Categories</th>
-						<th data-field="price">Initial price</th>
-						<th data-field="bestBid">Best bid</th>
-						<th data-field="bids">Bids</th>
-						<th data-field="openingDate">Opening date</th>
-						<th data-field="closingDate">Closing date</th>
-						<th data-field="status">Status</th>
-						<th data-field="winner">Winner</th>
-					</tr>
-				</thead>
-			</table>
-		</div>
+	<div class="container table-container">
+		<table id="table">
+			<thead>
+				<tr>
+					<th data-field="id">Id</th>
+					<th data-field="name">Name</th>
+					<th data-field="categoryName">Categories</th>
+					<th data-field="price">Initial price</th>
+					<th data-field="bestBid">Best bid</th>
+					<th data-field="bids">Bids</th>
+					<th data-field="openingDate">Opening date</th>
+					<th data-field="closingDate">Closing date</th>
+					<th data-field="status">Status</th>
+					<th data-field="winner">Winner</th>
+				</tr>
+			</thead>
+		</table>
 	</div>
 	<script>
+
+	//Get the modal
+	var modal = document.getElementById('myModal');
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("myBtn");
+
+	// Get the span element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// When the user clicks on the button, open the modal 
+	btn.onclick = function() {
+	    modal.style.display = "block";
+	}
+
+	// When the user clicks on span (x), close the modal
+	span.onclick = function() {
+	    modal.style.display = "none";
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	    if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+	}
+
+	function populateCategoryFields(id, name){
+		document.getElementById('item-form:itemCategory').value= name;
+		document.getElementById('form-item:id-field').value= id;
+		}
+
 	var $table = $('#table');
 	var itemsList = [${items.json}][0];
 
@@ -106,10 +159,7 @@
 	        data: itemsList
 	    });
 	});
-
-	function consoleee(){
-		console.log(document.getElementById("modal-form:id1").value);
-		}
+	
 	</script>
 </h:body>
 </html>

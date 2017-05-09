@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<h2>Add a new item:</h2>
+
+	<h:form class="form-item" id="item-form">
+
+		<div class="form-group #{!name.valid ? 'has-error' : 'none'}">
+
+			<h:outputLabel value="Item Name:" />
+			<h:inputText id="registerItemName" class="item-input"
+				value="#{items.itemDto.name}">
+				<f:ajax execute="@this" />
+			</h:inputText>
+			<br />
+
+			<h:outputLabel value="Price: " />
+			<h:inputText id="registerPrice" class="item-input"
+				value="#{items.itemDto.price}">
+				<f:ajax execute="@this" />
+			</h:inputText>
+			<br />
+			
+			<h:outputLabel value="Select a category: " />
+			<h:inputText id="itemCategory" class="item-input"
+				value="#{items.itemDto.categoryName}">
+				<f:ajax execute="@this" />
+			</h:inputText>
+			<br />
+
+			<h:inputHidden id="id-field" value="#{items.categoryId}" />
+			<br />
+		</div>
+		<h:commandButton id="contactbtn" class="btn btn-info" value="Submit">
+			<f:ajax listener="#{items.addItem()}" update="item-form"
+				process="@this" />
+		</h:commandButton>
+
+	</h:form>
+
+</body>
+</html>
