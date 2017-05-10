@@ -28,32 +28,36 @@ public class ItemsBean {
 
 	private ItemsDTO itemDto;
 
-	private List<ItemsEntities> items;
+	private List<ItemsEntities> itemsList;
+
+	private List<ItemsDTO> DTOList;
 
 	private int categoryId;
 
-	private String json;
 
 	@PostConstruct
 	public void init() {
-		Gson gson = new Gson();
 		itemDto = new ItemsDTO();
+		DTOList= populateDTOList();
+	}
 
+
+	public List<ItemsDTO> populateDTOList(){
 		try {
-			items= itemsService.getItemList(userDetails.getAccountName());	
-			List<ItemsDTO> DTOList = new ArrayList<>();
-
-			for (ItemsEntities item : items) {
+			itemsList= itemsService.getItemList(userDetails.getAccountName());	
+			DTOList= new ArrayList<>();
+			
+			for (ItemsEntities item : itemsList) {
 				ItemsDTO itemDTO = getTableDto(item);
 				DTOList.add(itemDTO);
 			}
-
-			setJson(gson.toJson(DTOList));
-
+			return DTOList;
 		} catch (AccountDetailsException | ItemsDetailsException e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
+
 
 	public ItemsDTO getTableDto(ItemsEntities item){
 		ItemsDTO createDto= new ItemsDTO();
@@ -71,7 +75,6 @@ public class ItemsBean {
 		if(item.getWinnerId() != null){
 			createDto.setWinner(item.getWinnerId().getAccountName());
 		}
-
 		return createDto;
 	}
 
@@ -117,11 +120,11 @@ public class ItemsBean {
 		this.userDetails = userDetails;
 	}
 
-	public List<ItemsEntities> getItems() {
-		return items;
+	public List<ItemsEntities> getItemsList() {
+		return itemsList;
 	}
-	public void setItems(List<ItemsEntities> items) {
-		this.items = items;
+	public void setItemsList(List<ItemsEntities> itemsList) {
+		this.itemsList = itemsList;
 	}
 
 	public int getCategoryId() {
@@ -131,12 +134,11 @@ public class ItemsBean {
 		this.categoryId = categoryId;
 	}
 
-	public String getJson() {
-		return json;
+	public List<ItemsDTO> getDTOList() {
+		return DTOList;
 	}
-
-	public void setJson(String json) {
-		this.json = json;
+	public void setDTOList(List<ItemsDTO> dTOList) {
+		DTOList = dTOList;
 	}
 
 }
