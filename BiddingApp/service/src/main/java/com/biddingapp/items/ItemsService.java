@@ -38,6 +38,19 @@ public class ItemsService {
 		itemsRepository.add(itemsEntity);
 	}
 	
+	public CategoriesEntities getCategory(int categoryId) {
+		return categoriesRepository.findCategorybyId(categoryId);
+	}
+	
+	public UserEntity getSellerIdByUsername(String accountName){	
+		try {
+			return userRepository.findAllUsersWithName(accountName);
+		} catch (AccountDetailsException e) {
+			e.printStackTrace();
+			return null;
+		}	
+	}
+	
 	public ItemsRepository getItemsRepository() {
 		return itemsRepository;
 	}
@@ -50,9 +63,5 @@ public class ItemsService {
 	}
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
-	}
-
-	public CategoriesEntities getCategory(int categoryId) {
-		return categoriesRepository.findCategorybyId(categoryId);
 	}
 }

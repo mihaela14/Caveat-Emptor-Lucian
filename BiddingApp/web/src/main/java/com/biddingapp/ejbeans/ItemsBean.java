@@ -25,39 +25,39 @@ public class ItemsBean {
 
 	@ManagedProperty(value = "#{login}")
 	private UserLoginBean userDetails;
-	
+
 	private ItemsDTO itemDto;
-	
+
 	private List<ItemsEntities> items;
-	
+
 	private int categoryId;
-	
+
 	private String json;
 
 	@PostConstruct
 	public void init() {
 		Gson gson = new Gson();
 		itemDto = new ItemsDTO();
-		
+
 		try {
 			items= itemsService.getItemList(userDetails.getAccountName());	
 			List<ItemsDTO> DTOList = new ArrayList<>();
-			
+
 			for (ItemsEntities item : items) {
 				ItemsDTO itemDTO = getTableDto(item);
 				DTOList.add(itemDTO);
 			}
-			
+
 			setJson(gson.toJson(DTOList));
-			
+
 		} catch (AccountDetailsException | ItemsDetailsException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ItemsDTO getTableDto(ItemsEntities item){
 		ItemsDTO createDto= new ItemsDTO();
-		
+
 		createDto.setId(item.getId());
 		createDto.setName(item.getName());
 		createDto.setCategoryName(item.getCategory().getName());
@@ -67,54 +67,56 @@ public class ItemsBean {
 		createDto.setOpeningDate(item.getOpeningDate());
 		createDto.setClosingDate(item.getClosingDate());
 		createDto.setStatus(item.getStatus());
-		
+
 		if(item.getWinnerId() != null){
-		createDto.setWinner(item.getWinnerId().getAccountName());
+			createDto.setWinner(item.getWinnerId().getAccountName());
 		}
-		
+
 		return createDto;
 	}
-	
-	
+
+
 	public ItemsEntities getDto(){
 		ItemsEntities itemEntity= new ItemsEntities();
-		
+
 		itemEntity.setName(itemDto.getName());
 		itemEntity.setPrice(itemDto.getPrice());
 		itemEntity.setOpeningDate(itemDto.getOpeningDate());
 		itemEntity.setClosingDate(itemDto.getClosingDate());
 		itemEntity.setStatus(itemDto.getStatus());
 		itemEntity.setCategory(itemsService.getCategory(categoryId));
-		
+		itemEntity.setSellerId(itemsService.getSellerIdByUsername(userDetails.getAccountName()));
+
+
 		return itemEntity;
 	}
-	
-	
+
+
 	public void addItem(){
 		itemsService.createItem(getDto());
 	}
-	
+
 	public ItemsService getItemsService() {
 		return itemsService;
 	}
 	public void setItemsService(ItemsService itemsService) {
 		this.itemsService = itemsService;
 	}
-	
+
 	public ItemsDTO getItemDto() {
 		return itemDto;
 	}
 	public void setItemDto(ItemsDTO itemDto) {
 		this.itemDto = itemDto;
 	}
-	
+
 	public UserLoginBean getUserDetails() {
 		return userDetails;
 	}
 	public void setUserDetails(UserLoginBean userDetails) {
 		this.userDetails = userDetails;
 	}
-	
+
 	public List<ItemsEntities> getItems() {
 		return items;
 	}
@@ -136,5 +138,5 @@ public class ItemsBean {
 	public void setJson(String json) {
 		this.json = json;
 	}
-	
+
 }

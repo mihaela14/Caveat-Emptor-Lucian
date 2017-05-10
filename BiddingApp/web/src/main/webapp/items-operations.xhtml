@@ -27,23 +27,33 @@
 				<f:ajax execute="@this" />
 			</h:inputText>
 			<br />
-			
+
 			<h:outputLabel value="Select a category: " />
 			<h:inputText id="itemCategory" class="item-input"
-				value="#{items.itemDto.categoryName}">
+				value="#{items.itemDto.categoryName}" readonly="true">
 				<f:ajax execute="@this" />
 			</h:inputText>
 			<br />
 
-			<h:inputHidden id="id-field" value="#{items.categoryId}" />
+			<h:outputLabel value="Status: " />
+			<h:inputText id="itemStatus" class="item-input"
+				value="#{items.itemDto.status}">
+				<f:ajax execute="@this" />
+			</h:inputText>
+			<br />
+
+			<h:inputHidden id="id-field" class="item-input"
+				value="#{items.categoryId}">
+			</h:inputHidden>
 			<br />
 		</div>
-		<h:commandButton id="contactbtn" class="btn btn-info" value="Submit">
-			<f:ajax listener="#{items.addItem()}" update="item-form"
-				process="@this" />
+		<h:commandButton id="contactbtn" class="btn btn-info" value="Submit"
+			action="#{items.addItem}" data-dismiss="modal">
+			<f:ajax execute="@this id-field" render="items-table" />
 		</h:commandButton>
 
 	</h:form>
+
 
 </body>
 </html>

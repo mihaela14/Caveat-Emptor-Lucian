@@ -95,6 +95,4 @@ public class ItemsDTO {
 		this.winner = winner;
 	}
 
-
-
 }
