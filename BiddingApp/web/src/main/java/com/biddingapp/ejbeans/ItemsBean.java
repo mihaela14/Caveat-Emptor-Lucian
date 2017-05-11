@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 
 import com.biddingapp.entities.ItemsEntities;
 import com.biddingapp.items.ItemsService;
@@ -40,13 +41,31 @@ public class ItemsBean {
 		itemDto = new ItemsDTO();
 		DTOList= populateDTOList();
 	}
+	
+	public String editAction(ItemsDTO item){
+		item.setEditable(true);
+		return null;
+	}
+	
+	
+	public String saveAction() {
+		//get all existing value but set "editable" to false
+		for (ItemsDTO items : DTOList){
+			items.setEditable(false);
+			
+			//TODO update on save itemsService.updateItem(getDto());
+		}
+		//return to current page
+		return null;
 
+	}
 
+	
 	public List<ItemsDTO> populateDTOList(){
 		try {
 			itemsList= itemsService.getItemList(userDetails.getAccountName());	
 			DTOList= new ArrayList<>();
-			
+
 			for (ItemsEntities item : itemsList) {
 				ItemsDTO itemDTO = getTableDto(item);
 				DTOList.add(itemDTO);
@@ -71,10 +90,12 @@ public class ItemsBean {
 		createDto.setOpeningDate(item.getOpeningDate());
 		createDto.setClosingDate(item.getClosingDate());
 		createDto.setStatus(item.getStatus());
-
+		
 		if(item.getWinnerId() != null){
 			createDto.setWinner(item.getWinnerId().getAccountName());
 		}
+		
+		createDto.setEditable(false);				
 		return createDto;
 	}
 
@@ -89,7 +110,6 @@ public class ItemsBean {
 		itemEntity.setStatus(itemDto.getStatus());
 		itemEntity.setCategory(itemsService.getCategory(categoryId));
 		itemEntity.setSellerId(itemsService.getSellerIdByUsername(userDetails.getAccountName()));
-
 
 		return itemEntity;
 	}
@@ -140,5 +160,4 @@ public class ItemsBean {
 	public void setDTOList(List<ItemsDTO> dTOList) {
 		DTOList = dTOList;
 	}
-
 }

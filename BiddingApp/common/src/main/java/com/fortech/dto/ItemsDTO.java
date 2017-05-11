@@ -26,6 +26,8 @@ public class ItemsDTO {
 	private String seller;
 	
 	private String winner;
+	
+	boolean editable;
 
 
 	public int getId() {
@@ -93,6 +95,12 @@ public class ItemsDTO {
 	}
 	public void setWinner(String winner) {
 		this.winner = winner;
+	}
+	public boolean isEditable() {
+		return editable;
+	}
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 
 }

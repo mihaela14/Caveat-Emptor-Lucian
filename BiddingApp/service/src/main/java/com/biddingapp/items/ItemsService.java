@@ -38,6 +38,10 @@ public class ItemsService {
 		itemsRepository.add(itemsEntity);
 	}
 	
+	public void updateItem(ItemsEntities itemsEntity){
+		itemsRepository.updateItem(itemsEntity);
+	}
+	
 	public CategoriesEntities getCategory(int categoryId) {
 		return categoriesRepository.findCategorybyId(categoryId);
 	}

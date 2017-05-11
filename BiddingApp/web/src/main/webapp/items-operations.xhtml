@@ -5,55 +5,106 @@
 	xmlns:b="http://bootsfaces.net/ui"
 	xmlns:h="http://java.sun.com/jsf/html">
 
-<h:head></h:head>
+<h:head>
+<!-- 	<link -->
+<!-- 		href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" -->
+<!--  		rel="stylesheet"></link>  -->
+	<link rel="stylesheet" type="text/css" media="screen"
+		href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"></link>
+</h:head>
 <body>
 
 	<h2>Add a new item:</h2>
 
 	<h:form class="form-item" id="item-form">
 
-		<div class="form-group #{!name.valid ? 'has-error' : 'none'}">
+		<div class="form-group">
 
 			<h:outputLabel value="Item Name:" />
-			<h:inputText id="registerItemName" class="item-input"
+			<h:inputText id="registerItemName" class="form-control item-input"
 				value="#{items.itemDto.name}">
 				<f:ajax execute="@this" />
 			</h:inputText>
 			<br />
 
 			<h:outputLabel value="Price: " />
-			<h:inputText id="registerPrice" class="item-input"
+			<h:inputText id="registerPrice" class="form-control item-input"
 				value="#{items.itemDto.price}">
 				<f:ajax execute="@this" />
 			</h:inputText>
 			<br />
 
 			<h:outputLabel value="Select a category: " />
-			<h:inputText id="itemCategory" class="item-input"
+			<h:inputText id="itemCategory" class="form-control item-input"
 				value="#{items.itemDto.categoryName}" readonly="true">
 				<f:ajax execute="@this" />
 			</h:inputText>
 			<br />
 
 			<h:outputLabel value="Status: " />
-			<h:inputText id="itemStatus" class="item-input"
+			<h:inputText id="itemStatus" class="form-control item-input"
 				value="#{items.itemDto.status}">
 				<f:ajax execute="@this" />
 			</h:inputText>
 			<br />
 
+<!-- 			<h:outputLabel value="Opening Date: " /> -->
+<!-- 			<div class="form-group"> -->
+<!-- 				<div class='input-group date' id='datetimepicker2'> -->
+<!-- 					<h:inputText class="form-control" /> -->
+<!-- 					<span class="input-group-addon"> <span -->
+<!-- 						class="glyphicon glyphicon-calendar"></span> -->
+<!-- 					</span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<br /> -->
+
+<!-- 			<h:outputLabel value="Closing Date: " /> -->
+<!-- 			<div class="form-group"> -->
+<!-- 				<div class='input-group date' id='datetimepicker2'> -->
+<!-- 					<h:inputText class="form-control" /> -->
+<!-- 					<span class="input-group-addon"> <span -->
+<!-- 						class="glyphicon glyphicon-calendar"></span> -->
+<!-- 					</span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+
+			<h:outputLabel value="Opening Date: " />
+			<div id="datetimepicker" class="input-append date">
+				<h:inputText class="form-control" />
+				<span class="add-on"> <i data-time-icon="icon-time"
+					data-date-icon="icon-calendar"></i>
+				</span>
+			</div>
+
+			<h:outputLabel value="Description " />
+			<h:inputTextarea id="itemDescrition" class="form-control item-input" />
+			<br />
+
 			<h:inputHidden id="id-field" class="item-input"
 				value="#{items.categoryId}">
 			</h:inputHidden>
-			<br />
-		</div>
-		<h:commandButton id="contactbtn" class="btn btn-info" value="Submit"
-			action="#{items.addItem}" data-dismiss="modal">
-			<f:ajax execute="@this id-field" render="items-table" />
-		</h:commandButton>
 
+			<h:commandButton id="contactbtn" class="btn btn-info" value="Submit"
+				action="#{items.addItem}" data-dismiss="modal">
+				<f:ajax execute="@this id-field" render="items-table" />
+			</h:commandButton>
+		</div>
 	</h:form>
 
+	<script type="text/javascript"
+		src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+	<script type="text/javascript"
+		src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+    </script>
+	<script type="text/javascript">
+      $('#datetimepicker').datetimepicker({
+        format: 'yyyy-MM-dd hh:mm:ss',
+        language: 'en-US'
+      });
+      
+    </script>
 
 </body>
 </html>
