@@ -55,6 +55,12 @@ public class ItemsService {
 		}	
 	}
 	
+	
+	public UserEntity getUserUsingId(int id){
+		return userRepository.findUserbyID(id);
+	}
+	
+	
 	public ItemsRepository getItemsRepository() {
 		return itemsRepository;
 	}

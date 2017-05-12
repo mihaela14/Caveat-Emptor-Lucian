@@ -12,6 +12,8 @@ public class ItemsDTO {
 	private float price;
 	
 	private String categoryName;
+	
+	private int categoryId;
 
 	private float bestBid;
 
@@ -25,7 +27,11 @@ public class ItemsDTO {
 	
 	private String seller;
 	
+	private int sellerId;
+	
 	private String winner;
+	
+	private int winnerId;
 	
 	boolean editable;
 
@@ -101,6 +107,24 @@ public class ItemsDTO {
 	}
 	public void setEditable(boolean editable) {
 		this.editable = editable;
+	}
+	public int getSellerId() {
+		return sellerId;
+	}
+	public void setSellerId(int sellerId) {
+		this.sellerId = sellerId;
+	}
+	public int getWinnerId() {
+		return winnerId;
+	}
+	public void setWinnerId(int winnerId) {
+		this.winnerId = winnerId;
+	}
+	public int getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }

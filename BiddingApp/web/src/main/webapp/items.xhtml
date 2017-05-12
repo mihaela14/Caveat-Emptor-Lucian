@@ -104,96 +104,100 @@
 	</div>
 
 	<h:form id="items-table">
-		<h:dataTable class="table table-condensed" var="rows"
-			value="#{items.DTOList}">
+		<div class="table-items">
+			<h:dataTable class="table table-condensed" var="rows"
+				value="#{items.DTOList}">
 
-			<h:column>
-				<f:facet name="header">Name</f:facet>
-				<h:inputText class="form-control" value="#{rows.name}"
-					rendered="#{rows.editable}">
-					<f:ajax execute="@this" />
-				</h:inputText>
-				<h:outputText value="#{rows.name}" rendered="#{not rows.editable}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Name</f:facet>
+					<h:inputText class="form-control" value="#{rows.name}"
+						rendered="#{rows.editable}">
+						<f:ajax execute="@this" />
+					</h:inputText>
+					<h:outputText value="#{rows.name}" rendered="#{not rows.editable}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Category</f:facet>
-				<h:inputText class="form-control" value="#{rows.categoryName}"
-					rendered="#{rows.editable}">
-					<f:ajax execute="@this" />
-				</h:inputText>
-				<h:outputText value="#{rows.categoryName}"
-					rendered="#{not rows.editable}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Category</f:facet>
+					<h:inputText class="form-control" value="#{rows.categoryName}"
+						rendered="#{rows.editable}">
+						<f:ajax execute="@this" />
+					</h:inputText>
+					<h:outputText value="#{rows.categoryName}"
+						rendered="#{not rows.editable}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Price</f:facet>
-				<h:inputText class="form-control" value="#{rows.price}"
-					rendered="#{rows.editable}">
-					<f:ajax execute="@this" />
-				</h:inputText>
-				<h:outputText value="#{rows.price}" rendered="#{not rows.editable}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Price</f:facet>
+					<h:inputText class="form-control" value="#{rows.price}"
+						rendered="#{rows.editable}">
+						<f:ajax execute="@this" />
+					</h:inputText>
+					<h:outputText value="#{rows.price}" rendered="#{not rows.editable}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Best Bid</f:facet>
+				<h:column>
+					<f:facet name="header">Best Bid</f:facet>
 				#{rows.bestBid}
 			</h:column>
 
-			<h:column>
-				<f:facet name="header">Bids</f:facet>
+				<h:column>
+					<f:facet name="header">Bids</f:facet>
 				#{rows.bids}
 			</h:column>
 
-			<h:column>
-				<f:facet name="header">Opening Date</f:facet>
-				<h:inputText class="form-control" value="#{rows.openingDate}"
-					rendered="#{rows.editable}">
-					<f:ajax execute="@this" />
-				</h:inputText>
-				<h:outputText value="#{rows.openingDate}"
-					rendered="#{not rows.editable}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Opening Date</f:facet>
+					<h:inputText class="form-control" value="#{rows.openingDate}"
+						rendered="#{rows.editable}">
+						<f:ajax execute="@this" />
+					</h:inputText>
+					<h:outputText value="#{rows.openingDate}"
+						rendered="#{not rows.editable}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Closing Date</f:facet>
-				<h:inputText class="form-control" value="#{rows.closingDate}"
-					rendered="#{rows.editable}">
-					<f:ajax execute="@this" />
-				</h:inputText>
-				<h:outputText value="#{rows.closingDate}"
-					rendered="#{not rows.editable}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Closing Date</f:facet>
+					<h:inputText class="form-control" value="#{rows.closingDate}"
+						rendered="#{rows.editable}">
+						<f:ajax execute="@this" />
+					</h:inputText>
+					<h:outputText value="#{rows.closingDate}"
+						rendered="#{not rows.editable}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Status</f:facet>
-				<h:selectOneMenu value="#{rows.status}" rendered="#{rows.editable}">
-					<f:selectItem itemValue="OPEN" itemLabel="OPEN" />
-					<f:selectItem itemValue="CLOSED" itemLabel="CLOSED" />
-					<f:selectItem itemValue="ABANDONED" itemLabel="ABANDONED" />
-					<f:ajax execute="@this" />
-				</h:selectOneMenu>
+				<h:column>
+					<f:facet name="header">Status</f:facet>
+					<h:selectOneMenu class="form-control status-dropdown"
+						value="#{rows.status}" rendered="#{rows.editable}">
+						<f:selectItem itemValue="OPEN" itemLabel="OPEN" />
+						<f:selectItem itemValue="CLOSED" itemLabel="CLOSED" />
+						<f:selectItem itemValue="ABANDONED" itemLabel="ABANDONED" />
+						<f:ajax execute="@this" />
+					</h:selectOneMenu>
 
-				<h:outputText value="#{rows.status}" rendered="#{not rows.editable}" />
-			</h:column>
+					<h:outputText value="#{rows.status}"
+						rendered="#{not rows.editable}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Winner</f:facet>
+				<h:column>
+					<f:facet name="header">Winner</f:facet>
 				#{rows.winner}
 			</h:column>
 
-			<h:column>
-				<f:facet name="header">Edit</f:facet>
-				<h:commandButton id="editButton" class="btn btn-info" value="Edit"
-					rendered="#{not rows.editable}" action="#{items.editAction(rows)}">
-					<f:ajax execute="@this" render="@form" />
-				</h:commandButton>
-			</h:column>
-		</h:dataTable>
-		<h:commandButton class="btn btn-info" value="Save Changes"
-			action="#{items.saveAction}">
-			<f:ajax execute="@this" render="@form" />
-		</h:commandButton>
+				<h:column>
+					<f:facet name="header">Edit</f:facet>
+					<h:commandButton id="editButton" class="btn btn-info" value="Edit"
+						rendered="#{not rows.editable}" action="#{items.editAction(rows)}">
+						<f:ajax execute="@this" render="@form" />
+					</h:commandButton>
+				</h:column>
+			</h:dataTable>
+			<h:commandButton class="btn btn-info" value="Save Changes"
+				action="#{items.saveAction}">
+				<f:ajax execute="@this" render="@form" />
+			</h:commandButton>
+		</div>
 	</h:form>
 	<script>
 		//Get the modal

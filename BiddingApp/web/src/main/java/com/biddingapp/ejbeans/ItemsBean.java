@@ -51,15 +51,33 @@ public class ItemsBean {
 	public String saveAction() {
 		//get all existing value but set "editable" to false
 		for (ItemsDTO items : DTOList){
+			itemsService.updateItem(getUpdateEntity(items));
 			items.setEditable(false);
-			
-			//TODO update on save itemsService.updateItem(getDto());
 		}
 		//return to current page
 		return null;
 
 	}
 
+	public ItemsEntities getUpdateEntity(ItemsDTO items){
+		ItemsEntities itemEntity= new ItemsEntities();
+		
+		itemEntity.setId(items.getId());
+		itemEntity.setName(items.getName());
+		itemEntity.setPrice(items.getPrice());
+		
+		//TODO category tree to get categoryId
+		itemEntity.setCategory(itemsService.getCategory(categoryId));
+		itemEntity.setBestBid(items.getBestBid());
+		itemEntity.setBids(items.getBids());
+		itemEntity.setOpeningDate(items.getOpeningDate());
+		itemEntity.setClosingDate(items.getClosingDate());
+		itemEntity.setStatus(items.getStatus());
+		itemEntity.setWinnerId(itemsService.getUserUsingId(items.getWinnerId()));
+		itemEntity.setSellerId(itemsService.getUserUsingId(items.getSellerId()));
+		
+		return itemEntity;
+	}
 	
 	public List<ItemsDTO> populateDTOList(){
 		try {
@@ -84,12 +102,17 @@ public class ItemsBean {
 		createDto.setId(item.getId());
 		createDto.setName(item.getName());
 		createDto.setCategoryName(item.getCategory().getName());
+		createDto.setCategoryId(item.getCategory().getId());
 		createDto.setPrice(item.getPrice());
 		createDto.setBestBid(item.getBestBid());
 		createDto.setBids(item.getBids());
 		createDto.setOpeningDate(item.getOpeningDate());
 		createDto.setClosingDate(item.getClosingDate());
 		createDto.setStatus(item.getStatus());
+		createDto.setSellerId(item.getSellerId().getId());
+		createDto.setWinnerId(item.getWinnerId().getId());
+
+		
 		
 		if(item.getWinnerId() != null){
 			createDto.setWinner(item.getWinnerId().getAccountName());
