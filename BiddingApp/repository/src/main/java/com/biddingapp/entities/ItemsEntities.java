@@ -62,6 +62,8 @@ public class ItemsEntities implements Serializable{
 	@JoinColumn(name="winner_id", referencedColumnName = "ID")
 	private UserEntity winnerId;
 
+	@Column
+	private String description; 
 	
 	public int getId() {
 		return id;
@@ -128,6 +130,12 @@ public class ItemsEntities implements Serializable{
 	}
 	public void setWinnerId(UserEntity winnerId) {
 		this.winnerId = winnerId;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

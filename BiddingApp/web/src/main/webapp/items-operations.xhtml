@@ -11,7 +11,7 @@
 	<!--  		rel="stylesheet"></link>  -->
 	<link rel="stylesheet" type="text/css" media="screen"
 		href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"></link>
-			
+
 	<style>
 .bootstrap-datetimepicker-widget>ul {
 	padding-left: 0 !important;
@@ -57,8 +57,10 @@
 			<h:outputLabel value="Opening Date: " />
 			<div class="form-group">
 				<div class='input-append date input-group date' id='datetimepicker'>
-					<h:inputText value="#{items.itemDto.openingDate}"
-						class="form-control" />
+					<h:inputText value="#{items.itemDto.openingDate}" class="form-control openingDate"
+						id="openingDate">
+						<f:ajax execute="@this"/>
+					</h:inputText>
 					<span class="input-group-addon add-on"> <span
 						class="glyphicon glyphicon-calendar" data-time-icon="icon-time"
 						data-date-icon="icon-calendar"></span>
@@ -70,7 +72,9 @@
 			<div class="form-group">
 				<div class='input-append date input-group date' id='datetimepicker2'>
 					<h:inputText value="#{items.itemDto.closingDate}"
-						class="form-control" />
+						class="form-control closingDate" id="closingDate">
+						<f:ajax execute="@this" />
+					</h:inputText>
 					<span class="input-group-addon add-on"> <span
 						class="glyphicon glyphicon-calendar" data-time-icon="icon-time"
 						data-date-icon="icon-calendar"></span>
@@ -78,16 +82,11 @@
 				</div>
 			</div>
 
-			<!-- 			<h:outputLabel value="Opening Date: " /> -->
-			<!-- 			<div id="datetimepicker" class="input-append date"> -->
-			<!-- 				<h:inputText class="form-control" /> -->
-			<!-- 				<span class="add-on"> <i data-time-icon="icon-time" -->
-			<!-- 					data-date-icon="icon-calendar"></i> -->
-			<!-- 				</span> -->
-			<!-- 			</div> -->
-
 			<h:outputLabel value="Description " />
-			<h:inputTextarea id="itemDescrition" class="form-control item-input" />
+			<h:inputTextarea id="itemDescrition" class="form-control item-input"
+				>
+				<f:ajax execute="@this" />
+			</h:inputTextarea>
 			<br />
 
 			<h:inputHidden id="id-field" class="item-input"
@@ -117,6 +116,22 @@
           format: 'yyyy-MM-dd hh:mm:ss',
           language: 'en-US'
         });
+      $('#datetimepicker').on('changeDate', function(e) {
+
+          $('.openingDate').val(e.date);
+          console.log($('.openingDate').val());
+          
+    	});
+
+    	function getClosingDate(){
+
+        	}
+      $('#datetimepicker2').on('changeDate', function(e) {
+
+          $('.closingDate').val(e.date);
+          console.log($('.closingDate').val());
+          
+    	});
     </script>
 
 </body>

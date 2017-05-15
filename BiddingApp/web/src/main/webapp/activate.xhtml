@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Not activated</title>
+	<ui:include src="notActivated-imports.xhtml" />
+	<ui:fragment rendered="#{activation.valid}">
+		<meta http-equiv="refresh" content="3;url=login.xhtml" />
+	</ui:fragment>
+</h:head>
+
+<h:body>
+	<div class="container">
+		<form id="loginForm" class="form-horizontal">
+			<div class="row account-wall">
+				<div class="col-sm-6 col-md-4 col-md-offset-4">
+					<h:panelGroup layout="block" rendered="#{activation.valid}">
+						<img class="profile-img" src="resources/img/license-check.png"
+							alt=""></img>
+						<h2 class="text-center login-title">Your account is successfully activated!</h2>
+						<h1 class="text-center login-title">You will in 3 seconds be redirected to
+							<h:link outcome="login">Login Page</h:link>
+						</h1>
+					</h:panelGroup>
+
+					<h:panelGroup layout="block" rendered="#{!activation.valid}">
+						<img class="profile-img" src="resources/img/x-mark-4-512.png"
+							alt=""></img>
+						<br />
+						<h2 class="text-center login-title">Activation failed! Please open your verification email and try once again.</h2>
+					</h:panelGroup>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</h:body>
+</html>

@@ -33,6 +33,8 @@ public class ItemsDTO {
 	
 	private int winnerId;
 	
+	private String description; 
+	
 	boolean editable;
 
 
@@ -125,6 +127,12 @@ public class ItemsDTO {
 	}
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

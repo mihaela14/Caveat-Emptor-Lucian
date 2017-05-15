@@ -106,10 +106,12 @@
 	<h:form id="items-table">
 		<div class="table-items">
 			<h:dataTable class="table table-condensed" var="rows"
-				value="#{items.DTOList}">
+				value="#{items.DTOList}" first="#{items.first}" rows="5">
 
 				<h:column>
-					<f:facet name="header">Name</f:facet>
+					<f:facet name="header">
+						<h:commandLink action="#{items.sortByName}">Name</h:commandLink>
+					</f:facet>
 					<h:inputText class="form-control" value="#{rows.name}"
 						rendered="#{rows.editable}">
 						<f:ajax execute="@this" />
@@ -120,7 +122,7 @@
 				<h:column>
 					<f:facet name="header">Category</f:facet>
 					<h:inputText class="form-control" value="#{rows.categoryName}"
-						rendered="#{rows.editable}">
+						rendered="#{rows.editable}" readonly="true">
 						<f:ajax execute="@this" />
 					</h:inputText>
 					<h:outputText value="#{rows.categoryName}"
@@ -191,12 +193,20 @@
 						rendered="#{not rows.editable}" action="#{items.editAction(rows)}">
 						<f:ajax execute="@this" render="@form" />
 					</h:commandButton>
+
+					<f:facet name="footer">
+						<h:commandButton class="btn btn-info" value="Previous"
+							action="#{items.previous}" disabled="#{items.previousVisible}"/>
+						<h:commandButton class="btn btn-info" value="Next"
+							action="#{items.next}" disabled="#{items.nextVisible}"/>
+					</f:facet>
 				</h:column>
 			</h:dataTable>
 			<h:commandButton class="btn btn-info" value="Save Changes"
 				action="#{items.saveAction}">
 				<f:ajax execute="@this" render="@form" />
 			</h:commandButton>
+
 		</div>
 	</h:form>
 	<script>
