@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
 	<title>Bootstrap Example</title>
@@ -48,6 +49,12 @@
 	color: black;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+.operations-body {
+	position: relative;
+	margin-left: 3%;
+	width: 74%;
 }
 </style>
 </h:head>
@@ -105,21 +112,19 @@
 
 	<h:form id="items-table">
 		<div class="table-items">
-			<h:dataTable class="table table-condensed" var="rows"
-				value="#{items.DTOList}" first="#{items.first}" rows="5">
+			<b:dataTable class="table table-condensed" var="rows"
+				value="#{items.DTOList}">
 
-				<h:column>
-					<f:facet name="header">
-						<h:commandLink action="#{items.sortByName}">Name</h:commandLink>
-					</f:facet>
+				<b:dataTableColumn>
+					<f:facet name="header">Name</f:facet>
 					<h:inputText class="form-control" value="#{rows.name}"
 						rendered="#{rows.editable}">
 						<f:ajax execute="@this" />
 					</h:inputText>
 					<h:outputText value="#{rows.name}" rendered="#{not rows.editable}" />
-				</h:column>
+				</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Category</f:facet>
 					<h:inputText class="form-control" value="#{rows.categoryName}"
 						rendered="#{rows.editable}" readonly="true">
@@ -127,28 +132,28 @@
 					</h:inputText>
 					<h:outputText value="#{rows.categoryName}"
 						rendered="#{not rows.editable}" />
-				</h:column>
+				</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Price</f:facet>
 					<h:inputText class="form-control" value="#{rows.price}"
 						rendered="#{rows.editable}">
 						<f:ajax execute="@this" />
 					</h:inputText>
 					<h:outputText value="#{rows.price}" rendered="#{not rows.editable}" />
-				</h:column>
+				</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Best Bid</f:facet>
 				#{rows.bestBid}
-			</h:column>
+			</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Bids</f:facet>
 				#{rows.bids}
-			</h:column>
+			</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Opening Date</f:facet>
 					<h:inputText class="form-control" value="#{rows.openingDate}"
 						rendered="#{rows.editable}">
@@ -156,9 +161,9 @@
 					</h:inputText>
 					<h:outputText value="#{rows.openingDate}"
 						rendered="#{not rows.editable}" />
-				</h:column>
+				</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Closing Date</f:facet>
 					<h:inputText class="form-control" value="#{rows.closingDate}"
 						rendered="#{rows.editable}">
@@ -166,9 +171,9 @@
 					</h:inputText>
 					<h:outputText value="#{rows.closingDate}"
 						rendered="#{not rows.editable}" />
-				</h:column>
+				</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Status</f:facet>
 					<h:selectOneMenu class="form-control status-dropdown"
 						value="#{rows.status}" rendered="#{rows.editable}">
@@ -180,28 +185,21 @@
 
 					<h:outputText value="#{rows.status}"
 						rendered="#{not rows.editable}" />
-				</h:column>
+				</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Winner</f:facet>
 				#{rows.winner}
-			</h:column>
+			</b:dataTableColumn>
 
-				<h:column>
+				<b:dataTableColumn>
 					<f:facet name="header">Edit</f:facet>
 					<h:commandButton id="editButton" class="btn btn-info" value="Edit"
 						rendered="#{not rows.editable}" action="#{items.editAction(rows)}">
 						<f:ajax execute="@this" render="@form" />
 					</h:commandButton>
-
-					<f:facet name="footer">
-						<h:commandButton class="btn btn-info" value="Previous"
-							action="#{items.previous}" disabled="#{items.previousVisible}"/>
-						<h:commandButton class="btn btn-info" value="Next"
-							action="#{items.next}" disabled="#{items.nextVisible}"/>
-					</f:facet>
-				</h:column>
-			</h:dataTable>
+				</b:dataTableColumn>
+			</b:dataTable>
 			<h:commandButton class="btn btn-info" value="Save Changes"
 				action="#{items.saveAction}">
 				<f:ajax execute="@this" render="@form" />

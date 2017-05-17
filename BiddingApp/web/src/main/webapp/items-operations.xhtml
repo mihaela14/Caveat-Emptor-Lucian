@@ -6,19 +6,24 @@
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<!-- 	<link -->
-	<!-- 		href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" -->
-	<!--  		rel="stylesheet"></link>  -->
-	<link rel="stylesheet" type="text/css" media="screen"
-		href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css"></link>
-
 	<style>
-.bootstrap-datetimepicker-widget>ul {
-	padding-left: 0 !important;
+#dates {
+	width: 39%;
+	position: relative;
+	margin-left: -17px;
+	margin-bottom: 2%;
+}
+
+.clearfix:after {
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
 }
 </style>
 </h:head>
-<body>
+
+<h:body>
 
 	<h2>Add a new item:</h2>
 
@@ -28,64 +33,63 @@
 
 			<h:outputLabel value="Item Name:" />
 			<h:inputText id="registerItemName" class="form-control item-input"
-				value="#{items.itemDto.name}">
-				<f:ajax execute="@this" />
+				value="#{items.itemDto.name}" required="true"
+				requiredMessage="*Please enter a name for the item">
 			</h:inputText>
 			<br />
 
 			<h:outputLabel value="Price: " />
 			<h:inputText id="registerPrice" class="form-control item-input"
-				value="#{items.itemDto.price}">
-				<f:ajax execute="@this" />
+				value="#{items.itemDto.price}" required="true"
+				requiredMessage="*Please enter a name for the item">
 			</h:inputText>
 			<br />
 
 			<h:outputLabel value="Select a category: " />
 			<h:inputText id="itemCategory" class="form-control item-input"
-				value="#{items.itemDto.categoryName}" readonly="true">
-				<f:ajax execute="@this" />
+				value="#{items.itemDto.categoryName}" readonly="true"
+				required="true" requiredMessage="*Please enter a name for the item">
 			</h:inputText>
 			<br />
 
-			<h:outputLabel value="Status: " />
-			<h:inputText id="itemStatus" class="form-control item-input"
-				value="#{items.itemDto.status}">
-				<f:ajax execute="@this" />
-			</h:inputText>
-			<br />
+			<!-- 			<h:outputLabel value="Status: " /> -->
+			<!-- 			<h:inputText id="itemStatus" class="form-control item-input" -->
+			<!-- 				value="#{items.itemDto.status}" required="true" -->
+			<!-- 				requiredMessage="*Please enter a name for the item"> -->
+			<!-- 			</h:inputText> -->
+			<!-- 			<br /> -->
 
-			<h:outputLabel value="Opening Date: " />
-			<div class="form-group">
-				<div class='input-append date input-group date' id='datetimepicker'>
-					<h:inputText value="#{items.itemDto.openingDate}" class="form-control openingDate"
-						id="openingDate">
-						<f:ajax execute="@this"/>
-					</h:inputText>
-					<span class="input-group-addon add-on"> <span
-						class="glyphicon glyphicon-calendar" data-time-icon="icon-time"
-						data-date-icon="icon-calendar"></span>
-					</span>
-				</div>
-			</div>
+			<!-- 			<h:outputLabel value="Opening Date: " /> -->
+			<!-- 			<h:inputText value="#{items.itemDto.openingDate}" -->
+			<!-- 				class="form-control openingDate" id="datetimepicker"> -->
+			<!-- 			</h:inputText> -->
 
-			<h:outputLabel value="Closing Date: " />
-			<div class="form-group">
-				<div class='input-append date input-group date' id='datetimepicker2'>
-					<h:inputText value="#{items.itemDto.closingDate}"
-						class="form-control closingDate" id="closingDate">
-						<f:ajax execute="@this" />
-					</h:inputText>
-					<span class="input-group-addon add-on"> <span
-						class="glyphicon glyphicon-calendar" data-time-icon="icon-time"
-						data-date-icon="icon-calendar"></span>
-					</span>
-				</div>
-			</div>
+
+			<!-- 			<h:outputLabel value="Closing Date: " /> -->
+			<!-- 			<h:inputText value="#{items.itemDto.closingDate}" -->
+			<!-- 				class="form-control closingDate" id="datetimepicker2"> -->
+			<!-- 			</h:inputText> -->
+
+			<b:container>
+				<b:form>
+					<div id="dates">
+						<h:outputLabel value="Opening Date:" />
+						<b:dateTimePicker id="opening"
+							value="#{items.itemDto.openingDate}" ajax="true" required="true"
+							requiredMessage="*Please enter a name for the item" />
+						<br />
+						<h:outputLabel id="closing" value="Closing Date:" />
+						<b:dateTimePicker value="#{items.itemDto.closingDate}" ajax="true"
+							required="true"
+							requiredMessage="*Please enter a name for the item" />
+					</div>
+				</b:form>
+			</b:container>
 
 			<h:outputLabel value="Description " />
 			<h:inputTextarea id="itemDescrition" class="form-control item-input"
-				>
-				<f:ajax execute="@this" />
+				value="#{items.itemDto.description}" required="true"
+				requiredMessage="*Please enter a name for the item">
 			</h:inputTextarea>
 			<br />
 
@@ -95,44 +99,23 @@
 
 			<h:commandButton id="contactbtn" class="btn btn-info" value="Submit"
 				action="#{items.addItem}" data-dismiss="modal">
-				<f:ajax execute="@this id-field" render="items-table" />
+				<f:ajax execute="@form" render="items-table" />
 			</h:commandButton>
+			<div class="clearfix">
+				<h:message for="registerItemName" style="color:red; width: 100%;"
+					class="left" />
+				<h:message for="registerPrice" style="color:red; width: 100%;"
+					class="left" />
+				<h:message for="opening" style="color:red; width: 100%;"
+					class="left" />
+				<h:message for="closing" style="color:red; width: 100%;"
+					class="left" />
+				<h:message for="itemCategory" style="color:red; width: 100%;"
+					class="left" />
+				<h:message for="itemDescrition" style="color:red; width: 100%;"
+					class="left" />
+			</div>
 		</div>
 	</h:form>
-
-	<script type="text/javascript"
-		src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
-    </script>
-	<script type="text/javascript"
-		src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
-    </script>
-	<script type="text/javascript">
-      $('#datetimepicker').datetimepicker({
-        format: 'yyyy-MM-dd hh:mm:ss',
-        language: 'en-US'
-      });
-
-      $('#datetimepicker2').datetimepicker({
-          format: 'yyyy-MM-dd hh:mm:ss',
-          language: 'en-US'
-        });
-      $('#datetimepicker').on('changeDate', function(e) {
-
-          $('.openingDate').val(e.date);
-          console.log($('.openingDate').val());
-          
-    	});
-
-    	function getClosingDate(){
-
-        	}
-      $('#datetimepicker2').on('changeDate', function(e) {
-
-          $('.closingDate').val(e.date);
-          console.log($('.closingDate').val());
-          
-    	});
-    </script>
-
-</body>
+</h:body>
 </html>

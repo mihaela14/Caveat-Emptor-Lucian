@@ -1,7 +1,5 @@
 package com.fortech.dto;
 
-import java.sql.Timestamp;
-
 public class ItemsDTO {
 
 
@@ -19,9 +17,9 @@ public class ItemsDTO {
 
 	private int bids;
 
-	private Timestamp openingDate;
+	private String openingDate;
 
-	private Timestamp closingDate;
+	private String closingDate;
 	
 	private String status;
 	
@@ -68,23 +66,23 @@ public class ItemsDTO {
 	public void setBids(int bids) {
 		this.bids = bids;
 	}
-	public Timestamp getOpeningDate() {
-		return openingDate;
-	}
-	public void setOpeningDate(Timestamp openingDate) {
-		this.openingDate = openingDate;
-	}
-	public Timestamp getClosingDate() {
-		return closingDate;
-	}
-	public void setClosingDate(Timestamp closingDate) {
-		this.closingDate = closingDate;
-	}
 	public String getCategoryName() {
 		return categoryName;
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	public String getOpeningDate() {
+		return openingDate;
+	}
+	public void setOpeningDate(String openingDate) {
+		this.openingDate = openingDate;
+	}
+	public String getClosingDate() {
+		return closingDate;
+	}
+	public void setClosingDate(String closingDate) {
+		this.closingDate = closingDate;
 	}
 	public String getStatus() {
 		return status;
