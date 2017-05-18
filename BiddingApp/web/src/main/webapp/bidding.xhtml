@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:component>
+	<h:head>
+		<title>Categories operations</title>
+		<ui:include src="notActivated-imports.xhtml" />
+		<style>
+.navbar-left {
+	position: relative;
+	margin-top: 2px;
+}
+
+.seach-box {
+	float: right;
+	margin-right: 250px;
+}
+
+.search-button {
+	position: relative;
+	width: 30%;
+	margin-left: 139%;
+	margin-top: -21%;
+}
+
+#btnSearch {
+	width: 140%;
+}
+
+.breadcrumb {
+	cursor: pointer;
+	color: #58ACFA;
+	font-weight: 570;
+	text-decoration: underline;
+	padding: 10px 10px;
+	margin-bottom: 15px;
+}
+
+.clearfix:after {
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
+}
+
+.left {
+	float: left;
+	margin-left: 1%;
+}
+
+#search-box {
+	float: right;
+	margin-right: 250px;
+}
+</style>
+	</h:head>
+
+	<h:body>
+		<div class="container">
+			<div class="row top-buttons">
+				<div class="col-md-2 create-button">
+					<h:commandButton type="submit" onclick="createCategory()"
+						value="Create a
+						category" class="btn btn-info"></h:commandButton>
+				</div>
+
+				<div class="col-md-4" id="search-box">
+					<div class="form-group" id="btnSearch">
+						<h:inputText type="text" id="search-box-input"
+							class="form-control" a:placeholder="Search for a category" />
+					</div>
+					<h:commandButton value="Search" onclick="searchBox()"
+						class="btn btn-info search-button"></h:commandButton>
+				</div>
+			</div>
+			<br />
+			<ol id="breadcrumb" class="breadcrumb" />
+
+			<h:form id="biddingItems-form">
+				<b:dataTable value="#{bidding.DTOList}" var="rows">
+					<b:dataTableColumn value="#{rows.name}">
+						<f:facet name="header">Name</f:facet>
+					</b:dataTableColumn>
+
+					<b:dataTableColumn value="#{rows.description}">
+						<f:facet name="header">Description</f:facet>
+					</b:dataTableColumn>
+
+					<b:dataTableColumn value="#{rows.price}">
+						<f:facet name="header">Price</f:facet>
+					</b:dataTableColumn>
+
+					<b:dataTableColumn value="#{rows.closingDate}">
+						<f:facet name="header">Price</f:facet>
+					</b:dataTableColumn>
+
+					<b:dataTableColumn value="#{rows.bestBid}">
+						<f:facet name="header">Best Bid</f:facet>
+					</b:dataTableColumn>
+
+					<b:dataTableColumn value="#{rows.bids}">
+						<f:facet name="header">Bids</f:facet>
+					</b:dataTableColumn>
+
+				</b:dataTable>
+				
+				<h:inputHidden id="categoryId-field" value="#{bidding.categoryId}" />
+			</h:form>
+		</div>
+	</h:body>
+</ui:component>
+</html>

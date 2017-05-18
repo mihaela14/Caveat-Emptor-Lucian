@@ -155,22 +155,19 @@
 
 				<b:dataTableColumn>
 					<f:facet name="header">Opening Date</f:facet>
-					<h:inputText class="form-control" value="#{rows.openingDate}"
-						rendered="#{rows.editable}">
-						<f:ajax execute="@this" />
-					</h:inputText>
+					<b:dateTimePicker value="#{rows.openingDate}"
+						rendered="#{rows.editable}"/>
 					<h:outputText value="#{rows.openingDate}"
 						rendered="#{not rows.editable}" />
 				</b:dataTableColumn>
 
 				<b:dataTableColumn>
 					<f:facet name="header">Closing Date</f:facet>
-					<h:inputText class="form-control" value="#{rows.closingDate}"
-						rendered="#{rows.editable}">
-						<f:ajax execute="@this" />
-					</h:inputText>
+					<b:dateTimePicker value="#{rows.closingDate}"
+						rendered="#{rows.editable}"/>
 					<h:outputText value="#{rows.closingDate}"
-						rendered="#{not rows.editable}" />
+						rendered="#{not rows.editable}">
+					</h:outputText>
 				</b:dataTableColumn>
 
 				<b:dataTableColumn>
@@ -193,11 +190,18 @@
 			</b:dataTableColumn>
 
 				<b:dataTableColumn>
-					<f:facet name="header">Edit</f:facet>
+					<f:facet name="header">Edit item</f:facet>
 					<h:commandButton id="editButton" class="btn btn-info" value="Edit"
 						rendered="#{not rows.editable}" action="#{items.editAction(rows)}">
 						<f:ajax execute="@this" render="@form" />
 					</h:commandButton>
+
+					<h:commandButton id="cancelButton" class="btn btn-info"
+						value="Cancel" rendered="#{rows.editable}"
+						action="#{items.cancelAction(rows)}">
+						<f:ajax execute="@this" render="@form" />
+					</h:commandButton>
+
 				</b:dataTableColumn>
 			</b:dataTable>
 			<h:commandButton class="btn btn-info" value="Save Changes"

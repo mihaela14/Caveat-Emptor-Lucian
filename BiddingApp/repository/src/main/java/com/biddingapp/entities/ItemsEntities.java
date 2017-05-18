@@ -3,7 +3,6 @@ package com.biddingapp.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,59 +11,63 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.biddingapp.queries.ItemsQueries;
 
 @Entity
-@NamedQuery(name="findItemByUser", query= ItemsQueries.FIND_ITEM_BY_USER)
+@NamedQueries({
+	@NamedQuery(name="findItemByUser", query= ItemsQueries.FIND_ITEM_BY_USER),
+	@NamedQuery(name="findItemByCategory", query= ItemsQueries.FIND_ITEM_BY_CATEGORY)
+})
 @Table(name= "items")
 public class ItemsEntities implements Serializable{
-	
+
 	private static final long serialVersionUID = 5913721175475853574L;
 
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column
 	private String name;
-	
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="category_id", referencedColumnName = "id")
 	private CategoriesEntities category;
-	
+
 	@Column
 	private float price;
-	
+
 	@Column(name="best_bid")
 	private float bestBid;
-	
+
 	@Column
 	private int bids;
-	
+
 	@Column(name="opening_date")
 	private Timestamp openingDate;
-	
+
 	@Column(name="closing_date")
 	private Timestamp closingDate;
-	
+
 	@Column
 	private String status;
-	
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="seller_id", referencedColumnName = "ID")
 	private UserEntity sellerId;
-	
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="winner_id", referencedColumnName = "ID")
 	private UserEntity winnerId;
 
 	@Column
 	private String description; 
-	
+
 	public int getId() {
 		return id;
 	}
@@ -137,7 +140,7 @@ public class ItemsEntities implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
+
 
 }

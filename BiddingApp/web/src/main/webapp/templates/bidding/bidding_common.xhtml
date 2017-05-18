@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<h:link rel="stylesheet" type="text/css"
+		src="template/commonStyles.xhtml" />
+	<style>
+.operations-body {
+	position: absolute;
+	margin-top: -25px;
+}
+</style>
+</h:head>
+<h:body>
+	<div>
+		<ui:insert name="header">
+			<ui:include src="/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+
+	<div class="container operations-body">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="row">
+					<ui:insert name="content">
+						<ui:include src="/categories.xhtml" />
+					</ui:insert>
+				</div>
+				
+				<div class="row">
+					<ui:insert name="content">
+						<ui:include src="/tree.xhtml" />
+					</ui:insert>
+				</div>
+				
+			</div>
+			<div class="col-md-4">
+				<ui:insert name="content">
+					<ui:include src="/bidding.xhtml" />
+				</ui:insert>
+			</div>
+		</div>
+	</div>
+</h:body>
+</html>

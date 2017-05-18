@@ -50,6 +50,11 @@ public class ItemsBean {
 		item.setEditable(true);
 		return null;
 	}
+	
+	public String cancelAction(ItemsDTO item){
+		item.setEditable(false);
+		return null;
+	}
 
 
 	public String saveAction() {
@@ -67,8 +72,8 @@ public class ItemsBean {
 		ItemsEntities itemEntity= new ItemsEntities();
 
 		//TODO handle null pointer exception 
-		Timestamp opening= stringToTimestamp(itemDto.getOpeningDate());
-		Timestamp closing= stringToTimestamp(itemDto.getClosingDate());
+		Timestamp opening= stringToTimestampUpdater(items.getOpeningDate());
+		Timestamp closing= stringToTimestampUpdater(items.getClosingDate());
 
 		itemEntity.setId(items.getId());
 		itemEntity.setName(items.getName());
@@ -170,6 +175,20 @@ public class ItemsBean {
 
 		try {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("E MMM dd HH:mm:ss Z yyyy");
+			Date parsedDate = dateFormat.parse(datetime);
+			Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+			return timestamp;
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	public Timestamp stringToTimestampUpdater(String datetime){
+
+		try {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/DD/YYYY HH:mm:SS a");
 			Date parsedDate = dateFormat.parse(datetime);
 			Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 			return timestamp;
