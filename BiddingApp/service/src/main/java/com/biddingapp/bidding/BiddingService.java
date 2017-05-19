@@ -21,28 +21,22 @@ public class BiddingService {
 	
 	@EJB
 	CategoriesRepository categoryRepository;
-
-
+	
+	
+	public List<ItemsEntities> getItems(int categoryId) throws BiddingOperationsException{
+		return biddingRepository.findBidsByCategoryId(categoryId);
+	}
+	
+	
+	public CategoriesEntities getCategory(int id){
+		return categoryRepository.findCategorybyId(id);
+	}
+	
+	
 	public BiddingRepository getBiddingRepository() {
 		return biddingRepository;
 	}
 	public void setBiddingRepository(BiddingRepository biddingRepository) {
 		this.biddingRepository = biddingRepository;
-	}
-
-	public List<ItemsEntities> getItems(CategoriesEntities category) throws BiddingOperationsException {
-		List<ItemsEntities> itemsList;
-		itemsList= biddingRepository.findBidsByCategory(category);
-		return itemsList;
-	}
-	
-	
-	public List<ItemsEntities> getItems(int categoryId) throws BiddingOperationsException{
-
-		return biddingRepository.findBidsByCategoryId(categoryId);
-	}
-	
-	public CategoriesEntities getCategory(int id){
-		return categoryRepository.findCategorybyId(id);
 	}
 }

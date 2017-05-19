@@ -49,11 +49,12 @@ public class BiddingBean {
 	
 	public List<ItemsDTO> populateDTOList(){
 		try {
-//			CategoriesEntities category= biddingService.getCategory(categoryId);
 			itemsList= biddingService.getItems(categoryId);
+			
 			DTOList= new ArrayList<>();
-
+			
 			for (ItemsEntities item : itemsList) {
+				List<CategoriesEntities> children= item.getCategory().getChildren();
 				ItemsDTO itemDTO = getTableDto(item);
 				DTOList.add(itemDTO);
 			}
@@ -88,7 +89,7 @@ public class BiddingBean {
 
 		if(item.getWinnerId() != null){
 			createDto.setWinner(item.getWinnerId().getAccountName());
-		}			
+		}	
 		return createDto;
 	}
 
