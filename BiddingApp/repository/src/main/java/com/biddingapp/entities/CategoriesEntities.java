@@ -35,6 +35,9 @@ public class CategoriesEntities implements Serializable{
 
 	@OneToMany(mappedBy="parent", fetch=FetchType.EAGER)
 	private List<CategoriesEntities>children;
+	
+	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+	private List<ItemsEntities> items;
 
 	
 	public int getId() {

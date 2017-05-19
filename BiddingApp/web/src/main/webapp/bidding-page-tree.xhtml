@@ -11,13 +11,21 @@
 		<ui:include src="categories-imports.xhtml" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="X-UA-Compatible" content="IE-edge" />
-		<h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
-
 		<script src="https://code.jquery.com/jquery-3.2.1.js" />
 		<script src="resources/js/bootstrap-treeview.min.js" />
 	</h:head>
 
 	<h:body>
+
+		<h:form id="actions-form">
+			<h:inputHidden id="categoryId" value="#{bidding.categoryId}" />
+
+			<h:commandButton class="action-button"
+				action="#{bidding.getItemTablerows}" style="display: none;">
+				<f:ajax execute="@form" render="biddingItems-form:bidItems-table" onclick="alert('dfhdfj');"/>
+			</h:commandButton>
+		</h:form>
+
 		<div id="tree" />
 
 		<script>
@@ -77,12 +85,12 @@
 			                
 		                document.getElementById('breadcrumb').appendChild(li);
 		                document.getElementById(id).innerHTML = breadcrumb[i]['text'];	
+						populateFields(data['id']);
 			            }
-						populateFields(data['text'], data['description'], data['id']);
 			        }
 
 		function populateFields(id){
-			 			document.getElementById('biddingItems-form:categoryId-field').value= id;	 			
+			 			document.getElementById('actions-form:categoryId').value= id;	 			
 					 }
 
 		 
@@ -102,20 +110,12 @@
 						}
 
 		
-		function createCategory(){
-						var selectedCategory = $('#tree').treeview('getSelected', null);
-						$('#tree').treeview('unselectNode', [ selectedCategory, { silent: true } ]);
-			
-						$('#breadcrumb').empty();
-						resetFields();
-						$('#tree').treeview('clearSearch');
-					}
-
-		
 		jQuery(document).ready(function ($) {
-			document.getElementById('categories-form:id-field').removeAttribute('value');
-			$('#tree').treeview({data: getTree(0,"nodes"), onNodeSelected: function(event, data){		
-				createBreadcrumb(data);
+			$('#tree').treeview({data: getTree(0,"nodes"), onNodeSelected: function(event, data){
+				console.log(data);
+				populateFields(data['id']);
+				createBreadcrumb(data);		
+				$('.action-button').trigger("click");
 			}});
 			$('#tree').treeview('collapseAll', { silent: true });
 		});

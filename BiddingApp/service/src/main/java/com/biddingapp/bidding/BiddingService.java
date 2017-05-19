@@ -36,6 +36,12 @@ public class BiddingService {
 		return itemsList;
 	}
 	
+	
+	public List<ItemsEntities> getItems(int categoryId) throws BiddingOperationsException{
+
+		return biddingRepository.findBidsByCategoryId(categoryId);
+	}
+	
 	public CategoriesEntities getCategory(int id){
 		return categoryRepository.findCategorybyId(id);
 	}

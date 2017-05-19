@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 import com.biddingapp.bidding.BiddingService;
@@ -18,14 +19,14 @@ import com.fortech.dto.ItemsDTO;
 import com.fortech.exception.BiddingOperationsException;
 
 @ManagedBean(name ="bidding")
-@SessionScoped
+@RequestScoped
 public class BiddingBean {
 
 	@EJB
 	private BiddingService biddingService;
 
 	private BiddingDTO biddingDTO;
-	
+
 	private CategoriesDTO categoriesDTO;
 
 	private List<ItemsDTO> DTOList;
@@ -38,14 +39,18 @@ public class BiddingBean {
 	public void init() {
 		biddingDTO= new BiddingDTO();
 		categoriesDTO= new CategoriesDTO();
-		DTOList= populateDTOList();
 	}
 
-
+	
+	public void getItemTablerows(){
+		DTOList= populateDTOList();
+	}
+	
+	
 	public List<ItemsDTO> populateDTOList(){
 		try {
-			CategoriesEntities category= biddingService.getCategory(categoryId);
-			itemsList= biddingService.getItems(category);
+//			CategoriesEntities category= biddingService.getCategory(categoryId);
+			itemsList= biddingService.getItems(categoryId);
 			DTOList= new ArrayList<>();
 
 			for (ItemsEntities item : itemsList) {
@@ -71,6 +76,7 @@ public class BiddingBean {
 		createDto.setName(item.getName());
 		createDto.setCategoryName(item.getCategory().getName());
 		createDto.setCategoryId(item.getCategory().getId());
+		createDto.setDescription(item.getDescription());
 		createDto.setPrice(item.getPrice());
 		createDto.setBestBid(item.getBestBid());
 		createDto.setBids(item.getBids());

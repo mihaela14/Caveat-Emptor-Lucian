@@ -67,6 +67,17 @@ public class BiddingRepositoryImplementation implements BiddingRepository{
 		}
 	}
 	
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ItemsEntities> findBidsByCategoryId(int category) throws BiddingOperationsException {
+		try{
+		return entityManager.createNamedQuery("findItemByCategory").setParameter("category", category).getResultList();
+		}catch(PersistenceException pe){
+			throw new BiddingOperationsException();
+		}
+	}
+	
 
 	public EntityManager getEntityManager() {
 		return entityManager;

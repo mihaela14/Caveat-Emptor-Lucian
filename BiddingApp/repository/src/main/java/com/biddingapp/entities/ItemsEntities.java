@@ -35,7 +35,7 @@ public class ItemsEntities implements Serializable{
 	@Column
 	private String name;
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="category_id", referencedColumnName = "id")
 	private CategoriesEntities category;
 
@@ -57,11 +57,11 @@ public class ItemsEntities implements Serializable{
 	@Column
 	private String status;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="seller_id", referencedColumnName = "ID")
 	private UserEntity sellerId;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="winner_id", referencedColumnName = "ID")
 	private UserEntity winnerId;
 

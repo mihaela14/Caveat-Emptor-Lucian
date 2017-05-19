@@ -65,9 +65,7 @@
 		<div class="container">
 			<div class="row top-buttons">
 				<div class="col-md-2 create-button">
-					<h:commandButton type="submit" onclick="createCategory()"
-						value="Create a
-						category" class="btn btn-info"></h:commandButton>
+					
 				</div>
 
 				<div class="col-md-4" id="search-box">
@@ -83,7 +81,7 @@
 			<ol id="breadcrumb" class="breadcrumb" />
 
 			<h:form id="biddingItems-form">
-				<b:dataTable value="#{bidding.DTOList}" var="rows">
+				<b:dataTable id="bidItems-table" value="#{bidding.DTOList}" var="rows">
 					<b:dataTableColumn value="#{rows.name}">
 						<f:facet name="header">Name</f:facet>
 					</b:dataTableColumn>
@@ -97,7 +95,7 @@
 					</b:dataTableColumn>
 
 					<b:dataTableColumn value="#{rows.closingDate}">
-						<f:facet name="header">Price</f:facet>
+						<f:facet name="header">Opening Date</f:facet>
 					</b:dataTableColumn>
 
 					<b:dataTableColumn value="#{rows.bestBid}">
@@ -109,8 +107,6 @@
 					</b:dataTableColumn>
 
 				</b:dataTable>
-				
-				<h:inputHidden id="categoryId-field" value="#{bidding.categoryId}" />
 			</h:form>
 		</div>
 	</h:body>

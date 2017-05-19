@@ -22,4 +22,6 @@ public interface BiddingRepository {
 	
 	public List<ItemsEntities> findBidsByCategory(CategoriesEntities category) throws BiddingOperationsException;
 	
+	public List<ItemsEntities> findBidsByCategoryId(int categoryId) throws BiddingOperationsException;
+	
 }
