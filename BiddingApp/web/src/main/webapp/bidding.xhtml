@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui">
 
 <ui:component>
 	<h:head>
@@ -64,9 +64,7 @@
 	<h:body>
 		<div class="container">
 			<div class="row top-buttons">
-				<div class="col-md-2 create-button">
-					
-				</div>
+				<div class="col-md-2 create-button"></div>
 
 				<div class="col-md-4" id="search-box">
 					<div class="form-group" id="btnSearch">
@@ -80,8 +78,43 @@
 			<br />
 			<ol id="breadcrumb" class="breadcrumb" />
 
+			<b:modal id="amodal2" title="Modal Example"
+				styleClass="modalPseudoClass2" closable="false"
+				close-on-escape="false" backdrop="false">
+				
+				<div class="row">
+					<div class="col-md-3">saddas</div>
+					<div class="col-md-9">asdsda</div>
+				</div>
+				<br />
+				
+				<h:outputText value="Best bid:" />
+				<br />
+				<h:outputText value="Initial Price:" />
+				<br />
+				<h:outputText value="Opening Date:" />
+				<br />
+				<h:outputText value="Closing Date" />
+				<br />
+				<h:outputText value="Total Bids:" />
+				<br />
+				<h:outputText value="Your Bid:" />
+				<br />
+				
+				<div class="row">
+					<h:commandButton class="btn btn-info" value="Submit" />
+					<h:commandButton class="btn btn-info" value="Discard" />
+				</div>
+				
+				<f:facet name="footer">
+					<b:button value="Close" dismiss="modal" />
+					<b:button value="Ok" look="info" dismiss="modal" />
+				</f:facet>
+			</b:modal>
+
 			<h:form id="biddingItems-form">
-				<b:dataTable id="bidItems-table" value="#{bidding.DTOList}" var="rows">
+				<b:dataTable id="bidItems-table" value="#{bidding.DTOList}"
+					var="rows">
 					<b:dataTableColumn value="#{rows.name}">
 						<f:facet name="header">Name</f:facet>
 					</b:dataTableColumn>
@@ -104,6 +137,12 @@
 
 					<b:dataTableColumn value="#{rows.bids}">
 						<f:facet name="header">Bids</f:facet>
+					</b:dataTableColumn>
+
+					<b:dataTableColumn>
+						<f:facet name="header">Details</f:facet>
+						<b:button iconAwesome="fa-search-plus" look="warning"
+							onclick="$('.modalPseudoClass2').modal()" size="md" />
 					</b:dataTableColumn>
 
 				</b:dataTable>

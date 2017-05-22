@@ -91,4 +91,9 @@ public class CategoriesService {
 
 		return categoriesEntities;
 	}
+	
+	
+	public CategoriesEntities getCategory(int id){
+		return categoriesRepository.findCategorybyId(id);
+	}
 }

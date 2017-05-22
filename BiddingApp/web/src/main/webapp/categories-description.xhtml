@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+</h:head>
+
+<ui:component>
+	<h:body>
+
+		<h:form id="catgeory-description" class="category-description">
+			<b:panel id="category-info" title="#{bidding.categoryName}" collapsible="false" look="info">
+				<h:outputText value="#{bidding.categoryDescription}" />
+			</b:panel>
+		</h:form>
+
+	</h:body>
+</ui:component>
+</html>
