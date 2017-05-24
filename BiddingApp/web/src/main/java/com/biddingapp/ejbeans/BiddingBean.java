@@ -6,9 +6,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import com.biddingapp.bidding.BiddingService;
@@ -73,17 +70,16 @@ public class BiddingBean {
 
 	
 	public void getDataForModal(ItemsDTO item){		
-		System.out.println(item);
-		itemForModal= item;
-		/*onclick="$('.modalPseudoClass2').modal()"*/
+		setItemForModal(item);
 	}
-
-
+	
+	
 	public List<ItemsDTO> populateChildrenList(int id){
 		try {		
 			CategoriesEntities currentCategory= categoryService.getCategory(id);
 			List<CategoriesEntities> children = currentCategory.getChildren();
 			DTOList= new ArrayList<>();
+			
 			itemsList.addAll(biddingService.getItems(id));			
 
 			if(children.isEmpty()){
@@ -107,6 +103,8 @@ public class BiddingBean {
 
 	}
 
+	public void submit(){	
+	}
 
 	private ItemsDTO getTableDto(ItemsEntities item) {
 		ItemsDTO createDto= new ItemsDTO();
@@ -176,9 +174,5 @@ public class BiddingBean {
 	}
 	public void setItemForModal(ItemsDTO itemForModal) {
 		this.itemForModal = itemForModal;
-	}
-	
-	public void openModal() {
-		System.out.println(itemForModal.getName());
 	}
 }
