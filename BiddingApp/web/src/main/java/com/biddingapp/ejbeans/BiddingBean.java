@@ -6,10 +6,12 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import com.biddingapp.bidding.BiddingService;
 import com.biddingapp.categories.CategoriesService;
+import com.biddingapp.entities.BiddingEntities;
 import com.biddingapp.entities.CategoriesEntities;
 import com.biddingapp.entities.ItemsEntities;
 import com.fortech.dto.BiddingDTO;
@@ -18,7 +20,7 @@ import com.fortech.dto.ItemsDTO;
 import com.fortech.exception.BiddingOperationsException;
 
 @ManagedBean(name ="bidding")
-@ViewScoped
+@SessionScoped
 public class BiddingBean {
 
 	@EJB
@@ -44,7 +46,7 @@ public class BiddingBean {
 		biddingDTO= new BiddingDTO();
 		categoriesDTO= new CategoriesDTO();
 	}
-
+	
 
 	public String getCategoryName(){
 		if(categoryId != 0){
@@ -66,11 +68,6 @@ public class BiddingBean {
 
 	public void getItemTablerows(){
 		DTOList= populateChildrenList(categoryId);
-	}
-
-	
-	public void getDataForModal(ItemsDTO item){		
-		setItemForModal(item);
 	}
 	
 	
@@ -103,9 +100,30 @@ public class BiddingBean {
 
 	}
 
-	public void submit(){	
+	public void submitBid(){
+		biddingService.bid(getBiddingEntity(biddingDTO));
+	}
+	
+	
+	public BiddingEntities getBiddingEntity(BiddingDTO dto){
+		BiddingEntities bid= new BiddingEntities();
+		bid.setBidValue(biddingDTO.getBidValue());
+		bid.setItemId(biddingService.getItemsbyId(dto.getItemId()));
+		bid.setUserId(biddingService.getUserbyId(dto.getUserId()));
+		return bid;
+	}
+	
+	
+	public void getIdForUser(int id){
+		biddingDTO.setUserId(id);
 	}
 
+	
+	public void getIdForItem(int id){
+		biddingDTO.setItemId(id);
+	}
+	
+	
 	private ItemsDTO getTableDto(ItemsEntities item) {
 		ItemsDTO createDto= new ItemsDTO();
 

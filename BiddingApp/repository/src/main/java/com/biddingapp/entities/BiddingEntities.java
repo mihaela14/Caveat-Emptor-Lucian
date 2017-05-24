@@ -1,5 +1,6 @@
 package com.biddingapp.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -19,7 +20,8 @@ import com.biddingapp.queries.ItemsQueries;
 @Entity
 @NamedQuery(name="findBidsByCategory", query= ItemsQueries.FIND_ITEM_BY_CATEGORY)
 @Table(name="bidding")
-public class BiddingEntities {
+public class BiddingEntities implements Serializable{
+	private static final long serialVersionUID = 1215211368970850173L;
 
 	@Id
 	@Column

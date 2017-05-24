@@ -119,12 +119,24 @@
 					<br />
 
 					<h:outputLabel value="Your Bid:" />
-					<h:inputText class="form-control" />
+					<h:inputText class="form-control"
+						value="#{bidding.biddingDTO.bidValue}">
+						<f:ajax execute="@this" />
+					</h:inputText>
 					<br />
 					<br />
 
+					<h:outputText class="form-control"
+						value="#{bidding.getIdForItem(bidding.itemForModal.id)}">
+					</h:outputText>
+
+					<h:outputText class="form-control"
+						value="#{bidding.getIdForUser(bidding.itemForModal.sellerId)}">
+					</h:outputText>
+
 					<div class="row">
-						<h:commandButton class="btn btn-info" value="Submit" action="#{bidding.submit()}"/>
+						<h:commandButton class="btn btn-info" value="Submit"
+							action="#{bidding.submitBid()}" />
 						<h:commandButton class="btn btn-info" value="Discard" />
 					</div>
 
@@ -165,9 +177,12 @@
 					<b:dataTableColumn>
 						<f:facet name="header">Details</f:facet>
 						<b:commandButton class="open-biddingModal"
-							iconAwesome="fa-search-plus" look="warning" ajax="true" update=":modal-form"
-							oncomplete="$('.modalPseudoClass2').modal();return false;" size="md" >
-							<f:setPropertyActionListener value="#{rows}" target="#{bidding.itemForModal}" />
+							iconAwesome="fa-search-plus" look="warning" ajax="true"
+							update=":modal-form"
+							oncomplete="$('.modalPseudoClass2').modal();return false;"
+							size="md">
+							<f:setPropertyActionListener value="#{rows}"
+								target="#{bidding.itemForModal}" />
 						</b:commandButton>
 					</b:dataTableColumn>
 				</b:dataTable>

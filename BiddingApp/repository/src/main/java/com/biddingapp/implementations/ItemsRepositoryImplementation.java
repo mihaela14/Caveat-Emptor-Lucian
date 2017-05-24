@@ -51,6 +51,12 @@ public class ItemsRepositoryImplementation implements ItemsRepository{
 			throw new ItemsDetailsException("An exception happended getting items for the user: "+ user.getAccountName());
 		}
 	}
+	
+	
+	@Override
+	public ItemsEntities findItemById(int id) {
+		return entityManager.find(ItemsEntities.class, id);
+	}
 
 
 	public EntityManager getEntityManager() {
@@ -66,4 +72,5 @@ public class ItemsRepositoryImplementation implements ItemsRepository{
 	}
 	public ItemsRepositoryImplementation() {
 	}
+
 }
