@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 import com.biddingapp.entities.ItemsEntities;
 import com.biddingapp.entities.UserEntity;
@@ -46,13 +45,10 @@ public class ItemsRepositoryImplementation implements ItemsRepository{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ItemsEntities> findItemsbyUser(UserEntity user) throws ItemsDetailsException{
-		try{
-			
+		try{		
 			return entityManager.createNamedQuery("findItemByUser").setParameter("sellerId", user).getResultList();
-
-
 		}catch(NoResultException nre){
-			throw new ItemsDetailsException();
+			throw new ItemsDetailsException("An exception happended getting items for the user: "+ user.getAccountName());
 		}
 	}
 

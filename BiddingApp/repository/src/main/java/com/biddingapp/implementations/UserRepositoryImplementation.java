@@ -10,6 +10,7 @@ import com.biddingapp.entities.RegistrationEntities;
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.exception.AccountDetailsException;
+import com.fortech.exception.BiddingOperationsException;
 
 @Stateless
 @Remote(UserRepository.class)
@@ -19,23 +20,6 @@ public class UserRepositoryImplementation implements UserRepository {
 
 	@PersistenceContext(unitName = PERSISTENCE_UNIT_NAME)
 	private EntityManager entityManager;
-
-	public UserRepositoryImplementation() {
-		super();
-	}
-
-	public UserRepositoryImplementation(EntityManager entityManager) {
-		super();
-		this.entityManager = entityManager;
-	}
-
-	public EntityManager getEntityManager() {
-		return entityManager;
-	}
-
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
 
 
 	@Override
@@ -88,7 +72,7 @@ public class UserRepositoryImplementation implements UserRepository {
 					.setParameter("activationKey", activationKey).getSingleResult();
 			return registrationEntities;
 		}catch(NoResultException ne){
-			throw new AccountDetailsException();
+			throw new AccountDetailsException("An exception happended getting user for the actiovation key: "+activationKey);
 		}
 	}
 
@@ -100,7 +84,7 @@ public class UserRepositoryImplementation implements UserRepository {
 					.setParameter("accountName", accountName).getSingleResult();
 			return userEntity.getStatus();
 		}catch(NoResultException ne){
-			throw new AccountDetailsException();
+			throw new AccountDetailsException("An exception happended getting user for the username: "+accountName);
 		}
 	}
 
@@ -112,10 +96,11 @@ public class UserRepositoryImplementation implements UserRepository {
 			userEntity= (UserEntity) entityManager.createNamedQuery("findAllUsersWithName").setParameter("accountName", accountName).getSingleResult();
 			return userEntity;
 		}catch(NoResultException ne){
-			throw new AccountDetailsException();
+			throw new AccountDetailsException("An exception happended getting user for the username: "+accountName);
 		}
 	}
 
+	
 	@Override
 	public UserEntity findAllUsersByEmail(String email) throws AccountDetailsException {
 		try{
@@ -123,7 +108,23 @@ public class UserRepositoryImplementation implements UserRepository {
 			userEntity= (UserEntity) entityManager.createNamedQuery("findAllUsersWithEmail").setParameter("email", email).getSingleResult();
 			return userEntity;
 		}catch(NoResultException ne){
-			throw new AccountDetailsException();
+			throw new AccountDetailsException("An exception happended getting user for the email: "+email);
 		}
+	}
+
+	
+	public UserRepositoryImplementation() {
+		super();
+	}
+	public UserRepositoryImplementation(EntityManager entityManager) {
+		super();
+		this.entityManager = entityManager;
+	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
 	}
 }

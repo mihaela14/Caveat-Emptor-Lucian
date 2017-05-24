@@ -21,19 +21,12 @@ public class LoginValidation {
 	private EntityManager entityManager;
 
 	public boolean isValidUser(String accountName) throws AccountDetailsException{
-
 		UserEntity userEntity = userRepository.findAllUsersWithName(accountName);
-
-		if(userEntity.getAccountName().equals(accountName)){
-			return true;
-		}else{
-			return false;
-		}
+		return userEntity.getAccountName().equals(accountName);
 	}
 
 
 	public boolean isValidPassword(String password, String accountName) throws AccountDetailsException{
-
 		UserEntity userEntity= userRepository.findAllUsersWithName(accountName);
 		if(userEntity == null){
 			return false;
@@ -44,11 +37,8 @@ public class LoginValidation {
 	}
 
 
-
 	public boolean isAccountActivated(String accountName) throws AccountDetailsException{
-		if(userRepository.getStatusbyUsername(accountName))
-			return true;
-		return false;
+		return userRepository.getStatusbyUsername(accountName);
 	}
 
 

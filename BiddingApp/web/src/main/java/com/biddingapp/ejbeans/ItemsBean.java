@@ -58,12 +58,10 @@ public class ItemsBean {
 
 
 	public String saveAction() {
-		//get all existing value but set "editable" to false
 		for (ItemsDTO items : DTOList){
 			itemsService.updateItem(getUpdateEntity(items));
 			items.setEditable(false);
 		}
-		//return to current page
 		return null;
 
 	}
@@ -71,17 +69,13 @@ public class ItemsBean {
 	public ItemsEntities getUpdateEntity(ItemsDTO items){
 		ItemsEntities itemEntity= new ItemsEntities();
 
-		//TODO handle null pointer exception 
 		Timestamp opening= stringToTimestampUpdater(items.getOpeningDate());
 		Timestamp closing= stringToTimestampUpdater(items.getClosingDate());
 
 		itemEntity.setId(items.getId());
 		itemEntity.setName(items.getName());
 		itemEntity.setPrice(items.getPrice());
-
-		//TODO category tree to get categoryId
 		itemEntity.setCategory(itemsService.getCategory(items.getCategoryId()));
-
 		itemEntity.setBestBid(items.getBestBid());
 		itemEntity.setBids(items.getBids());
 		itemEntity.setOpeningDate(opening);
@@ -113,7 +107,6 @@ public class ItemsBean {
 	public ItemsDTO getTableDto(ItemsEntities item){
 		ItemsDTO createDto= new ItemsDTO();
 
-		//TODO handle null pointer exception
 		String opening= item.getOpeningDate().toString() ;
 		String closing= item.getClosingDate().toString();
 
@@ -128,12 +121,10 @@ public class ItemsBean {
 		createDto.setClosingDate(closing);
 		createDto.setStatus(item.getStatus());
 		createDto.setSellerId(item.getSellerId().getId());
-		//		createDto.setWinnerId(item.getWinnerId().getId());
 
 		if(item.getWinnerId() != null){
 			createDto.setWinner(item.getWinnerId().getAccountName());
 		}
-
 		createDto.setEditable(false);				
 		return createDto;
 	}
@@ -142,7 +133,6 @@ public class ItemsBean {
 	public ItemsEntities getDto(){
 		ItemsEntities itemEntity= new ItemsEntities();
 
-		//TODO handle null pointer exception
 		Timestamp opening= stringToTimestamp(itemDto.getOpeningDate());
 		Timestamp closing= stringToTimestamp(itemDto.getClosingDate());
 		Timestamp currentTimespamp= getCurentTimestamp();

@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import com.biddingapp.bidding.BiddingService;
 import com.biddingapp.categories.CategoriesService;
@@ -20,7 +21,7 @@ import com.fortech.dto.ItemsDTO;
 import com.fortech.exception.BiddingOperationsException;
 
 @ManagedBean(name ="bidding")
-@RequestScoped
+@ViewScoped
 public class BiddingBean {
 
 	@EJB
@@ -38,6 +39,8 @@ public class BiddingBean {
 	private List<ItemsEntities> itemsList= new ArrayList<>();
 
 	private int categoryId;
+
+	private ItemsDTO itemForModal;
 
 	@PostConstruct
 	public void init() {
@@ -62,23 +65,28 @@ public class BiddingBean {
 			return "Description";
 		}
 	}
-	
+
 
 	public void getItemTablerows(){
 		DTOList= populateChildrenList(categoryId);
+	}
+
+	
+	public void getDataForModal(ItemsDTO item){		
+		System.out.println(item);
+		itemForModal= item;
+		/*onclick="$('.modalPseudoClass2').modal()"*/
 	}
 
 
 	public List<ItemsDTO> populateChildrenList(int id){
 		try {		
 			CategoriesEntities currentCategory= categoryService.getCategory(id);
-
 			List<CategoriesEntities> children = currentCategory.getChildren();
-
-			itemsList.addAll(biddingService.getItems(id));			
 			DTOList= new ArrayList<>();
+			itemsList.addAll(biddingService.getItems(id));			
 
-			if(currentCategory.getChildren().size() < 1){
+			if(children.isEmpty()){
 				for (ItemsEntities item : itemsList) {
 
 					ItemsDTO itemDTO = getTableDto(item);
@@ -86,11 +94,11 @@ public class BiddingBean {
 				}
 				return DTOList;
 			}else{
-				for(CategoriesEntities c: children){
-					populateChildrenList(c.getId());
+				for(CategoriesEntities child: children){
+					populateChildrenList(child.getId());
 				}
 			}
-			return DTOList;
+			return DTOList;		
 
 		}catch (BiddingOperationsException boe) {
 			boe.printStackTrace();
@@ -160,9 +168,17 @@ public class BiddingBean {
 	public CategoriesDTO getCategoriesDTO() {
 		return categoriesDTO;
 	}
-
-
 	public void setCategoriesDTO(CategoriesDTO categoriesDTO) {
 		this.categoriesDTO = categoriesDTO;
+	}
+	public ItemsDTO getItemForModal() {
+		return itemForModal;
+	}
+	public void setItemForModal(ItemsDTO itemForModal) {
+		this.itemForModal = itemForModal;
+	}
+	
+	public void openModal() {
+		System.out.println(itemForModal.getName());
 	}
 }

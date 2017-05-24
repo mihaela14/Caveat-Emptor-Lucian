@@ -11,7 +11,6 @@ import javax.persistence.PersistenceException;
 import com.biddingapp.entities.BiddingEntities;
 import com.biddingapp.entities.CategoriesEntities;
 import com.biddingapp.entities.ItemsEntities;
-import com.biddingapp.entities.UserEntity;
 import com.biddingapp.repositories.BiddingRepository;
 import com.fortech.exception.BiddingOperationsException;
 
@@ -63,7 +62,7 @@ public class BiddingRepositoryImplementation implements BiddingRepository{
 		try{
 		return entityManager.createNamedQuery("findItemByCategory").setParameter("category", category).getResultList();
 		}catch(PersistenceException pe){
-			throw new BiddingOperationsException();
+			throw new BiddingOperationsException("An exception happended getting bids for category: "+ category.getName());
 		}
 	}
 	
@@ -73,8 +72,8 @@ public class BiddingRepositoryImplementation implements BiddingRepository{
 	public List<ItemsEntities> findBidsByCategoryId(int category) throws BiddingOperationsException {
 		try{
 		return entityManager.createNamedQuery("findItemByCategory").setParameter("category", category).getResultList();
-		}catch(PersistenceException pe){
-			throw new BiddingOperationsException();
+		}catch(PersistenceException pe){			
+			throw new BiddingOperationsException("An exception happended getting bids for category with id: "+ category);
 		}
 	}
 	

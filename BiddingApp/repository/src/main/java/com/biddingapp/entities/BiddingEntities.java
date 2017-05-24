@@ -10,13 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.biddingapp.queries.ItemsQueries;
-import com.biddingapp.queries.UserQueries;
 
 @Entity
 @NamedQuery(name="findBidsByCategory", query= ItemsQueries.FIND_ITEM_BY_CATEGORY)

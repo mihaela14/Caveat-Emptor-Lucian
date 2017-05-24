@@ -78,43 +78,66 @@
 			<br />
 			<ol id="breadcrumb" class="breadcrumb" />
 
-			<b:modal id="amodal2" title="Modal Example"
-				styleClass="modalPseudoClass2" closable="false"
-				close-on-escape="false" backdrop="false">
-				
-				<div class="row">
-					<div class="col-md-3">saddas</div>
-					<div class="col-md-9">asdsda</div>
-				</div>
-				<br />
-				
-				<h:outputText value="Best bid:" />
-				<br />
-				<h:outputText value="Initial Price:" />
-				<br />
-				<h:outputText value="Opening Date:" />
-				<br />
-				<h:outputText value="Closing Date" />
-				<br />
-				<h:outputText value="Total Bids:" />
-				<br />
-				<h:outputText value="Your Bid:" />
-				<br />
-				
-				<div class="row">
-					<h:commandButton class="btn btn-info" value="Submit" />
-					<h:commandButton class="btn btn-info" value="Discard" />
-				</div>
-				
-				<f:facet name="footer">
-					<b:button value="Close" dismiss="modal" />
-					<b:button value="Ok" look="info" dismiss="modal" />
-				</f:facet>
-			</b:modal>
+			<h:form id="modal-form">
+				<b:modal id="amodal2" title="#{bidding.itemForModal.name}"
+					styleClass="modalPseudoClass2" closable="true"
+					close-on-escape="true" backdrop="false">
+
+					<div class="row">
+						<div class="col-md-3">
+							<b:image value="resources/img/intel_i3_7100.jpg"
+								style="width: 140%; height: 30%; position: relative; margin-left: -12%;" />
+
+						</div>
+						<div class="col-md-9">#{bidding.itemForModal.description}</div>
+					</div>
+					<br />
+
+					<h:outputLabel value="Best bid:" />
+					<h:inputText class="form-control"
+						value="#{bidding.itemForModal.bestBid}" readonly="true" />
+					<br />
+
+					<h:outputLabel value="Initial Price:" />
+					<h:inputText class="form-control"
+						value="#{bidding.itemForModal.price}" readonly="true" />
+					<br />
+
+					<h:outputLabel value="Opening Date:" />
+					<h:inputText class="form-control"
+						value="#{bidding.itemForModal.openingDate}" readonly="true" />
+					<br />
+
+					<h:outputLabel value="Closing Date" />
+					<h:inputText class="form-control"
+						value="#{bidding.itemForModal.closingDate}" readonly="true" />
+					<br />
+
+					<h:outputLabel value="Total Bids:" />
+					<h:inputText class="form-control"
+						value="#{bidding.itemForModal.bids}" readonly="true" />
+					<br />
+
+					<h:outputLabel value="Your Bid:" />
+					<h:inputText class="form-control" />
+					<br />
+					<br />
+
+					<div class="row">
+						<h:commandButton class="btn btn-info" value="Submit" />
+						<h:commandButton class="btn btn-info" value="Discard" />
+					</div>
+
+					<f:facet name="footer">
+						<b:button value="Close" dismiss="modal" />
+						<b:button value="Ok" look="info" dismiss="modal" />
+					</f:facet>
+				</b:modal>
+			</h:form>
 
 			<h:form id="biddingItems-form">
 				<b:dataTable id="bidItems-table" value="#{bidding.DTOList}"
-					var="rows">
+					var="rows" responsive="">
 					<b:dataTableColumn value="#{rows.name}">
 						<f:facet name="header">Name</f:facet>
 					</b:dataTableColumn>
@@ -141,10 +164,12 @@
 
 					<b:dataTableColumn>
 						<f:facet name="header">Details</f:facet>
-						<b:button iconAwesome="fa-search-plus" look="warning"
-							onclick="$('.modalPseudoClass2').modal()" size="md" />
+						<b:commandButton class="open-biddingModal"
+							iconAwesome="fa-search-plus" look="warning" ajax="true" update=":modal-form"
+							oncomplete="$('.modalPseudoClass2').modal()" actionListener="#{bidding.openModal}" size="md">
+							<f:setPropertyActionListener value="#{rows}" target="#{bidding.itemForModal}" />
+						</b:commandButton>
 					</b:dataTableColumn>
-
 				</b:dataTable>
 			</h:form>
 		</div>
