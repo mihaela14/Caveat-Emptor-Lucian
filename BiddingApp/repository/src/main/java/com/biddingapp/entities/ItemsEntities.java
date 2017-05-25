@@ -67,6 +67,9 @@ public class ItemsEntities implements Serializable{
 	@Column
 	private String description; 
 
+	@Column
+	private String image;
+	
 	public int getId() {
 		return id;
 	}
@@ -138,6 +141,12 @@ public class ItemsEntities implements Serializable{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 

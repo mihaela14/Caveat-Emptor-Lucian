@@ -63,4 +63,24 @@ public class RegistrationEntities implements Serializable{
 	public void setActivationKey(String activationKey) {
 		this.activationKey = activationKey;
 	}
+	
+	public UserEntity getUser() {
+		return user;
+	}
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+	
+	public RegistrationEntities(int id, UserEntity user, Timestamp activationExpiry, String activationKey) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.activationExpiry = activationExpiry;
+		this.activationKey = activationKey;
+	}
+	
+	public RegistrationEntities() {
+		super();
+	} 
+	
 }

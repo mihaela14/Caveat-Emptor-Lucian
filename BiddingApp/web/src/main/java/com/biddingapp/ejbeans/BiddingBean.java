@@ -6,8 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import com.biddingapp.bidding.BiddingService;
 import com.biddingapp.categories.CategoriesService;
@@ -18,9 +17,10 @@ import com.fortech.dto.BiddingDTO;
 import com.fortech.dto.CategoriesDTO;
 import com.fortech.dto.ItemsDTO;
 import com.fortech.exception.BiddingOperationsException;
+import com.fortech.exception.CategoriesDetailsException;
 
 @ManagedBean(name ="bidding")
-@SessionScoped
+@ViewScoped
 public class BiddingBean {
 
 	@EJB
@@ -35,7 +35,7 @@ public class BiddingBean {
 
 	private List<ItemsDTO> DTOList;
 
-	private List<ItemsEntities> itemsList= new ArrayList<>();
+	private List<ItemsEntities> itemsList;
 
 	private int categoryId;
 
@@ -67,12 +67,13 @@ public class BiddingBean {
 
 
 	public void getItemTablerows(){
+		itemsList= new ArrayList<>();
 		DTOList= populateChildrenList(categoryId);
 	}
 	
 	
 	public List<ItemsDTO> populateChildrenList(int id){
-		try {		
+		try {
 			CategoriesEntities currentCategory= categoryService.getCategory(id);
 			List<CategoriesEntities> children = currentCategory.getChildren();
 			DTOList= new ArrayList<>();
@@ -101,7 +102,18 @@ public class BiddingBean {
 	}
 
 	public void submitBid(){
+		biddingDTO.setItemId(itemForModal.getId());
+		biddingDTO.setUserId(itemForModal.getSellerId());
 		biddingService.bid(getBiddingEntity(biddingDTO));
+	}
+	
+	
+	public void removeBid(){
+//		try {
+//			biddingService.remove(biddingDTO.getId());
+//		} catch (CategoriesDetailsException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	
@@ -142,7 +154,7 @@ public class BiddingBean {
 		createDto.setClosingDate(closing);
 		createDto.setStatus(item.getStatus());
 		createDto.setSellerId(item.getSellerId().getId());
-		//		createDto.setWinnerId(item.getWinnerId().getId());
+		createDto.setImage(item.getImage());
 
 		if(item.getWinnerId() != null){
 			createDto.setWinner(item.getWinnerId().getAccountName());

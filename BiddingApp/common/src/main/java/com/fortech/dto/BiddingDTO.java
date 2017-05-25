@@ -4,9 +4,6 @@ import java.sql.Timestamp;
 
 public class BiddingDTO {
 
-
-	private int id;
-
 	private int userId;
 
 	private int itemId;
@@ -15,13 +12,7 @@ public class BiddingDTO {
 
 	private Timestamp date;
 
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public int getUserId() {
 		return userId;
 	}

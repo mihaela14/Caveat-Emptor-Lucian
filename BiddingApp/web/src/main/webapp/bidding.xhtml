@@ -58,6 +58,23 @@
 	float: right;
 	margin-right: 250px;
 }
+
+.info-text {
+	width: 80%;
+	position: relative;
+	margin-top: -6%;
+	margin-left: 18%;
+}
+
+.action-buttons {
+	position: relative;
+	margin-left: inherit;
+}
+
+.modal-forms {
+	position: relative;
+	margin-top: 4%;
+}
 </style>
 	</h:head>
 
@@ -85,59 +102,77 @@
 
 					<div class="row">
 						<div class="col-md-3">
-							<b:image value="resources/img/intel_i3_7100.jpg"
+							<h:graphicImage value="#{bidding.itemForModal.image}"
 								style="width: 140%; height: 30%; position: relative; margin-left: -12%;" />
 
 						</div>
-						<div class="col-md-9">#{bidding.itemForModal.description}</div>
+						<div class="col-md-9" style="margin-top: 1%;">
+							<b:inputTextarea class="form-control" rows="5"
+								value="#{bidding.itemForModal.description}"
+								style="resize: none; background: #f9fdff; width: 97%;"
+								readonly="true">
+								<f:facet name="prepend">
+									<b:icon style="color: #505050;" name="book" />
+								</f:facet>
+							</b:inputTextarea>
+						</div>
 					</div>
 					<br />
 
-					<h:outputLabel value="Best bid:" />
-					<h:inputText class="form-control"
-						value="#{bidding.itemForModal.bestBid}" readonly="true" />
-					<br />
+					<div class="modal-forms">
+						<h:outputLabel class="info-label" value="Best bid:" />
+						<h:inputText class="form-control info-text"
+							style="background: #f9fdff;"
+							value="#{bidding.itemForModal.bestBid}" readonly="true" />
+						<br />
 
-					<h:outputLabel value="Initial Price:" />
-					<h:inputText class="form-control"
-						value="#{bidding.itemForModal.price}" readonly="true" />
-					<br />
+						<h:outputLabel class="info-label" value="Initial Price:" />
+						<h:inputText class="form-control info-text"
+							style="background: #f9fdff;"
+							value="#{bidding.itemForModal.price}" readonly="true" />
+						<br />
 
-					<h:outputLabel value="Opening Date:" />
-					<h:inputText class="form-control"
-						value="#{bidding.itemForModal.openingDate}" readonly="true" />
-					<br />
+						<h:outputLabel class="info-label" value="Opening Date:" />
+						<h:inputText class="form-control info-text"
+							style="background: #f9fdff;"
+							value="#{bidding.itemForModal.openingDate}" readonly="true" />
+						<br />
 
-					<h:outputLabel value="Closing Date" />
-					<h:inputText class="form-control"
-						value="#{bidding.itemForModal.closingDate}" readonly="true" />
-					<br />
+						<h:outputLabel class="info-label" value="Closing Date:" />
+						<h:inputText class="form-control info-text"
+							style="background: #f9fdff;"
+							value="#{bidding.itemForModal.closingDate}" readonly="true" />
+						<br />
 
-					<h:outputLabel value="Total Bids:" />
-					<h:inputText class="form-control"
-						value="#{bidding.itemForModal.bids}" readonly="true" />
-					<br />
+						<h:outputLabel class="info-label" value="Total Bids:" />
+						<h:inputText class="form-control info-text"
+							style="background: #f9fdff;" value="#{bidding.itemForModal.bids}"
+							readonly="true" />
+						<br />
 
-					<h:outputLabel value="Your Bid:" />
-					<h:inputText class="form-control"
-						value="#{bidding.biddingDTO.bidValue}">
-						<f:ajax execute="@this" />
-					</h:inputText>
-					<br />
-					<br />
+						<h:outputLabel class="info-label" value="Your Bid:" />
+						<h:inputText class="form-control info-text"
+							value="#{bidding.biddingDTO.bidValue}">
+							<f:ajax execute="@this" />
+						</h:inputText>
+						<br /> <br />
 
-					<h:outputText class="form-control"
-						value="#{bidding.getIdForItem(bidding.itemForModal.id)}">
-					</h:outputText>
+						<h:outputText value="#{bidding.itemForModal.id}">
+						</h:outputText>
 
-					<h:outputText class="form-control"
-						value="#{bidding.getIdForUser(bidding.itemForModal.sellerId)}">
-					</h:outputText>
+						<h:outputText value="#{bidding.itemForModal.sellerId}">
+						</h:outputText>
+					</div>
 
-					<div class="row">
-						<h:commandButton class="btn btn-info" value="Submit"
-							action="#{bidding.submitBid()}" />
-						<h:commandButton class="btn btn-info" value="Discard" />
+
+					<div class="row action-buttons">
+						<b:buttonGroup>
+							<b:commandButton look="info" value="Submit"
+								action="#{bidding.submitBid}" />
+							<b:commandButton look="info" value="Remove" action="#{bidding.removeBid}"/>
+							<b:commandButton look="info" value="Edit" />
+							<b:commandButton look="info" value="Discard" />
+						</b:buttonGroup>
 					</div>
 
 					<f:facet name="footer">

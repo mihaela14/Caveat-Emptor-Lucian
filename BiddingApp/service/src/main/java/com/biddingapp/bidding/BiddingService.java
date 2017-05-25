@@ -14,6 +14,7 @@ import com.biddingapp.repositories.CategoriesRepository;
 import com.biddingapp.repositories.ItemsRepository;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.exception.BiddingOperationsException;
+import com.fortech.exception.CategoriesDetailsException;
 
 @Stateless
 public class BiddingService {
@@ -38,6 +39,11 @@ public class BiddingService {
 	
 	public CategoriesEntities getCategory(int id){
 		return categoryRepository.findCategorybyId(id);
+	}
+	
+	
+	public void remove(int id) throws CategoriesDetailsException{
+		categoryRepository.removeCategory(id);
 	}
 	
 	
