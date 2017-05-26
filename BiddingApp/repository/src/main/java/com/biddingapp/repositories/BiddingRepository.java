@@ -5,6 +5,7 @@ import java.util.List;
 import com.biddingapp.entities.BiddingEntities;
 import com.biddingapp.entities.CategoriesEntities;
 import com.biddingapp.entities.ItemsEntities;
+import com.biddingapp.entities.UserEntity;
 import com.fortech.exception.BiddingOperationsException;
 
 
@@ -18,10 +19,12 @@ public interface BiddingRepository {
 	
 	public void updateBid(BiddingEntities bid);
 	
-	public BiddingEntities findBidsByUser();
-	
 	public List<ItemsEntities> findBidsByCategory(CategoriesEntities category) throws BiddingOperationsException;
 	
 	public List<ItemsEntities> findBidsByCategoryId(int categoryId) throws BiddingOperationsException;
+
+	public BiddingEntities findBidByItemUser(int userId, int itemId) throws BiddingOperationsException;
+	
+	public BiddingEntities findbidById(int id);
 	
 }

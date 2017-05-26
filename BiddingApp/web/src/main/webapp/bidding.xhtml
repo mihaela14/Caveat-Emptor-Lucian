@@ -95,11 +95,10 @@
 			<br />
 			<ol id="breadcrumb" class="breadcrumb" />
 
-			<h:form id="modal-form">
-				<b:modal id="amodal2" title="#{bidding.itemForModal.name}"
-					styleClass="modalPseudoClass2" closable="true"
-					close-on-escape="true" backdrop="false">
+			<b:modal id="amodal2" title="" styleClass="modalPseudoClass2"
+				closable="true" close-on-escape="true" backdrop="false">
 
+				<h:form id="modal-form">
 					<div class="row">
 						<div class="col-md-3">
 							<h:graphicImage value="#{bidding.itemForModal.image}"
@@ -119,7 +118,7 @@
 					</div>
 					<br />
 
-					<div class="modal-forms">
+					<div id="modal-box" class="modal-forms">
 						<h:outputLabel class="info-label" value="Best bid:" />
 						<h:inputText class="form-control info-text"
 							style="background: #f9fdff;"
@@ -152,16 +151,19 @@
 
 						<h:outputLabel class="info-label" value="Your Bid:" />
 						<h:inputText class="form-control info-text"
-							value="#{bidding.biddingDTO.bidValue}">
+							a:placeholder="No previous bids on this item"
+							value="#{bidding.biddingDTO.bidValue}"
+							rendered="#{not bidding.hasBid}">
 							<f:ajax execute="@this" />
 						</h:inputText>
+						<h:outputText class="form-control info-text"
+							value="#{bidding.biddingDTO.bidValue}"
+							rendered="#{bidding.hasBid}">
+						</h:outputText>
 						<br /> <br />
 
-						<h:outputText value="#{bidding.itemForModal.id}">
-						</h:outputText>
-
-						<h:outputText value="#{bidding.itemForModal.sellerId}">
-						</h:outputText>
+						<h:inputHidden value="#{bidding.itemForModal.id}" />
+						<h:inputHidden value="#{bidding.itemForModal.sellerId}" />
 					</div>
 
 
@@ -169,18 +171,21 @@
 						<b:buttonGroup>
 							<b:commandButton look="info" value="Submit"
 								action="#{bidding.submitBid}" />
-							<b:commandButton look="info" value="Remove" action="#{bidding.removeBid}"/>
-							<b:commandButton look="info" value="Edit" />
+							<b:commandButton look="info" value="Remove"
+								action="#{bidding.removeBid}" rendered="#{bidding.hasBid}" />
+							<b:commandButton look="info" value="Edit"
+								action="#{bidding.editBid}" rendered="#{bidding.hasBid}">
+								<f:ajax execute="@this" render="@form" />
+							</b:commandButton>
 							<b:commandButton look="info" value="Discard" />
 						</b:buttonGroup>
 					</div>
-
-					<f:facet name="footer">
-						<b:button value="Close" dismiss="modal" />
-						<b:button value="Ok" look="info" dismiss="modal" />
-					</f:facet>
-				</b:modal>
-			</h:form>
+				</h:form>
+				<f:facet name="footer">
+					<b:button value="Close" dismiss="modal" />
+					<b:button value="Ok" look="info" dismiss="modal" />
+				</f:facet>
+			</b:modal>
 
 			<h:form id="biddingItems-form">
 				<b:dataTable id="bidItems-table" value="#{bidding.DTOList}"
@@ -215,7 +220,7 @@
 							iconAwesome="fa-search-plus" look="warning" ajax="true"
 							update=":modal-form"
 							oncomplete="$('.modalPseudoClass2').modal();return false;"
-							size="md">
+							size="md" action="#{bidding.initialHasBid}">
 							<f:setPropertyActionListener value="#{rows}"
 								target="#{bidding.itemForModal}" />
 						</b:commandButton>

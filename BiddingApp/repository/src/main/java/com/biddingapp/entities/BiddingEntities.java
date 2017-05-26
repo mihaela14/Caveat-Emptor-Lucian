@@ -11,14 +11,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.biddingapp.queries.BiddingQueries;
 import com.biddingapp.queries.ItemsQueries;
 
 @Entity
-@NamedQuery(name="findBidsByCategory", query= ItemsQueries.FIND_ITEM_BY_CATEGORY)
+@NamedQueries({
+	@NamedQuery(name="findBidsByCategory", query= ItemsQueries.FIND_ITEM_BY_CATEGORY),
+	@NamedQuery(name="findBidByItemUser", query= BiddingQueries.FIND_BID_BY_ITEM_USER),
+	@NamedQuery(name="findBidById", query= BiddingQueries.FIND_BID_BY_ID)
+})
 @Table(name="bidding")
 public class BiddingEntities implements Serializable{
 	private static final long serialVersionUID = 1215211368970850173L;
@@ -27,22 +33,22 @@ public class BiddingEntities implements Serializable{
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@OneToOne(cascade= CascadeType.PERSIST, fetch = FetchType.EAGER)
+
+	@OneToOne(cascade= CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private UserEntity userId;
-	
-	@OneToOne(cascade= CascadeType.PERSIST, fetch = FetchType.EAGER)
+
+	@OneToOne(cascade= CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name="item_id")
 	private ItemsEntities itemId;
-	
+
 	@Column(name="value")
 	private Float bidValue;
-	
+
 	@Column(name="date")
 	private Timestamp date;
 
-	
+
 	public int getId() {
 		return id;
 	}

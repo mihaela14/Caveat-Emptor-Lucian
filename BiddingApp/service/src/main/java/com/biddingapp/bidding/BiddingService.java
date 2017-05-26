@@ -21,46 +21,73 @@ public class BiddingService {
 
 	@EJB
 	BiddingRepository biddingRepository;
-	
+
 	@EJB
 	CategoriesRepository categoryRepository;
-	
+
 	@EJB
 	ItemsRepository itemsRepository;
-	
+
 	@EJB
 	UserRepository userRepository;
-	
-	
+
+
 	public List<ItemsEntities> getItems(int categoryId) throws BiddingOperationsException{
 		return biddingRepository.findBidsByCategoryId(categoryId);
 	}
-	
-	
+
+
 	public CategoriesEntities getCategory(int id){
 		return categoryRepository.findCategorybyId(id);
 	}
-	
-	
-	public void remove(int id) throws CategoriesDetailsException{
-		categoryRepository.removeCategory(id);
+
+	public BiddingEntities getEntityWithUserItem(BiddingEntities bid){
+		try {
+			return biddingRepository.findBidByItemUser(bid.getUserId().getId(), bid.getItemId().getId());
+		} catch (BiddingOperationsException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
-	
+
+
+	public void remove(BiddingEntities bid){
+		BiddingEntities dataBid = getEntityWithUserItem(bid);	
+		if(dataBid != null){
+			biddingRepository.removeBidbyEntity(dataBid);
+		}
+	}
+
+
 	public void bid(BiddingEntities bid){
-		biddingRepository.addBid(bid);
+		BiddingEntities dataBid= getEntityWithUserItem(bid);
+		if(dataBid != null){
+			bid.setId(dataBid.getId());
+			biddingRepository.updateBid(bid);
+		}else{
+			biddingRepository.addBid(bid);
+		}
 	}
+
+	public boolean isBidExistent(BiddingEntities bid){
+		BiddingEntities dataBid= getEntityWithUserItem(bid);
+		if(dataBid != null){
+			return true;
+		}
+		return false;
+	}
+
 	
 	public ItemsEntities getItemsbyId(int id){
 		return itemsRepository.findItemById(id);
 	}
-	
-	
+
+
 	public UserEntity getUserbyId(int id){
 		return userRepository.findUserbyID(id);
 	}
-	
-	
+
+
 	public BiddingRepository getBiddingRepository() {
 		return biddingRepository;
 	}

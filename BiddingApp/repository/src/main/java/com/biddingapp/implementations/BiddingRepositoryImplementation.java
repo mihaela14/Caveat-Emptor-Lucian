@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import com.biddingapp.entities.BiddingEntities;
 import com.biddingapp.entities.CategoriesEntities;
@@ -23,60 +24,69 @@ public class BiddingRepositoryImplementation implements BiddingRepository{
 	@PersistenceContext(unitName = PERSISTENCE_UNIT_NAME)
 	private EntityManager entityManager;
 
-	
+
 	@Override
 	public void addBid(BiddingEntities bid) {
 		entityManager.persist(bid);
 	}
 
-	
+
 	@Override
 	public void removeBidById(int id) {
 		BiddingEntities bid = entityManager.find(BiddingEntities.class, id);
 		entityManager.remove(bid);
 	}
 
-	
+
 	@Override
 	public void removeBidbyEntity(BiddingEntities bid) {
-		entityManager.remove(bid);
+		entityManager.remove(entityManager.merge(bid));
 	}
 
-	
+
 	@Override
 	public void updateBid(BiddingEntities bid) {
 		entityManager.merge(bid);
 	}
-	
 
-	@Override
-	public BiddingEntities findBidsByUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ItemsEntities> findBidsByCategory(CategoriesEntities category) throws BiddingOperationsException {
 		try{
-		return entityManager.createNamedQuery("findItemByCategory").setParameter("category", category).getResultList();
+			return entityManager.createNamedQuery("findItemByCategory").setParameter("category", category).getResultList();
 		}catch(PersistenceException pe){
 			throw new BiddingOperationsException("An exception happended getting bids for category: "+ category.getName());
+		}
+	}
+
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<ItemsEntities> findBidsByCategoryId(int category) throws BiddingOperationsException {
+		try{
+			return entityManager.createNamedQuery("findItemByCategory").setParameter("category", category).getResultList();
+		}catch(PersistenceException pe){			
+			throw new BiddingOperationsException("An exception happended getting bids for category with id: "+ category);
+		}
+	}
+
+
+	@Override
+	public BiddingEntities findBidByItemUser(int userId, int itemId) throws BiddingOperationsException {
+		try{
+			return (BiddingEntities) getEntityManager().createNamedQuery("findBidByItemUser").setParameter("userId", userId).setParameter("itemId", itemId).getSingleResult();
+		}catch(PersistenceException pe){
+			throw new BiddingOperationsException("An excepiton happened getting the bid for the item id"+ itemId + "and user id" + userId);
 		}
 	}
 	
 	
 	@Override
-	@SuppressWarnings("unchecked")
-	public List<ItemsEntities> findBidsByCategoryId(int category) throws BiddingOperationsException {
-		try{
-		return entityManager.createNamedQuery("findItemByCategory").setParameter("category", category).getResultList();
-		}catch(PersistenceException pe){			
-			throw new BiddingOperationsException("An exception happended getting bids for category with id: "+ category);
-		}
+	public BiddingEntities findbidById(int id) {
+		return entityManager.find(BiddingEntities.class, id);
 	}
-	
+
 
 	public EntityManager getEntityManager() {
 		return entityManager;

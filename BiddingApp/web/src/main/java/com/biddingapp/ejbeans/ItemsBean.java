@@ -152,6 +152,7 @@ public class ItemsBean {
 		itemEntity.setCategory(itemsService.getCategory(categoryId));
 		itemEntity.setSellerId(itemsService.getSellerIdByUsername(userDetails.getAccountName()));
 		itemEntity.setDescription(itemDto.getDescription());
+		itemEntity.setImage(itemDto.getImage());
 
 		return itemEntity;
 	}
