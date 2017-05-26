@@ -68,6 +68,7 @@ public class BiddingService {
 			biddingRepository.addBid(bid);
 		}
 	}
+	
 
 	public boolean isBidExistent(BiddingEntities bid){
 		BiddingEntities dataBid= getEntityWithUserItem(bid);

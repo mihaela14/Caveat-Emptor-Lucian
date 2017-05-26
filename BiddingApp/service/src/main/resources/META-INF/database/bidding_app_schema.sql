@@ -24,14 +24,16 @@ DROP TABLE IF EXISTS `bidding`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bidding` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `item_id` int(11) DEFAULT NULL,
   `value` float NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `item_bid_fk` FOREIGN KEY (`id`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `user_bid_fk` FOREIGN KEY (`id`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `item_bid_fk_idx` (`item_id`),
+  KEY `user_bid_fk` (`user_id`),
+  CONSTRAINT `item_bid_fk` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `user_bid_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +42,7 @@ CREATE TABLE `bidding` (
 
 LOCK TABLES `bidding` WRITE;
 /*!40000 ALTER TABLE `bidding` DISABLE KEYS */;
+INSERT INTO `bidding` VALUES (14,11,20,750,'2017-05-26 09:29:11'),(15,11,51,300,'2017-05-26 09:34:04'),(16,11,47,250,'2017-05-26 10:29:28');
 /*!40000 ALTER TABLE `bidding` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +62,7 @@ CREATE TABLE `categories` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `categories_fk_idx` (`parent_id`),
   CONSTRAINT `categories_fk` FOREIGN KEY (`parent_id`) REFERENCES `categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +71,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'root','description',NULL),(2,'Desktop PC','description',1),(3,'PC components','description',1),(4,'Motherboards','description',3),(5,'CPU\'s','description',3),(6,'AMD','description update',5),(7,'Intel','description',5),(8,'Storage','description',3),(9,'RAM','description',3),(10,'Laptops','description',1),(11,'Accesorries','accesories description',1),(73,'Consoles','consoles description',1),(75,'Xbox One','Xbox one console',73),(76,'PS4','Playstation 4',73);
+INSERT INTO `categories` VALUES (1,'root','description',NULL),(2,'Desktop PC','description',1),(3,'PC components','description',1),(4,'Motherboards','description',3),(5,'CPU\'s','description',3),(6,'AMD','description update',5),(7,'Intel','description',5),(8,'Storage','description',3),(9,'RAM','description',3),(10,'Laptops','description',1),(11,'Accesorries','accesories description',1),(73,'Consoles','consoles description',1),(75,'Xbox One','Xbox one console',73),(76,'PS4','Playstation 4',73),(77,'Nitendo','consoles description',73),(78,'GPU\'s','description',3),(79,'AMD Radeon','description',78);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +94,8 @@ CREATE TABLE `items` (
   `status` enum('OPEN','CLOSED','ABANDONED','NOT YET OPENED') NOT NULL,
   `seller_id` int(11) DEFAULT NULL,
   `winner_id` int(11) DEFAULT NULL,
-  `description` varchar(100) DEFAULT NULL,
+  `description` varchar(500) DEFAULT 'resources\\img\\no_image.png',
+  `image` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `category_fk_idx` (`category_id`),
   KEY `user_fk_idx` (`seller_id`),
@@ -100,7 +104,7 @@ CREATE TABLE `items` (
   CONSTRAINT `category_fk` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `seller_fk` FOREIGN KEY (`seller_id`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `winner_fk` FOREIGN KEY (`winner_id`) REFERENCES `users` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,7 +113,7 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-INSERT INTO `items` VALUES (1,'Intel i3 7100',5,110,100,2,'2017-05-22 15:05:55','2017-05-22 15:05:55','OPEN',11,NULL,'Description: Intel HD Graphics 630   Socket: FCLGA1151'),(3,'Intel i3 7300',7,100,0,0,'2017-05-22 15:05:55','2017-05-22 15:05:55','OPEN',11,NULL,''),(18,'Intel i3 9561',5,300,0,0,'2017-05-22 13:43:58','2017-05-22 13:43:58','OPEN',11,NULL,NULL),(20,'Intel Core i7-4930K',5,800,0,0,'2017-05-22 13:43:58','2017-05-22 13:43:58','OPEN',11,NULL,NULL),(21,'AMD FX-9590',5,200,0,0,'2017-05-22 13:43:59','2017-05-22 13:43:59','OPEN',11,NULL,NULL),(22,'AMD FX-8150 ',5,340,0,0,'2017-05-22 13:43:59','2017-05-22 13:43:59','ABANDONED',11,NULL,NULL),(43,'AMD Phenom II X6',8,400,0,0,'2017-05-22 13:43:59','2017-05-22 13:43:59','OPEN',11,NULL,NULL),(44,'AMD Opteron 6234',5,200,0,0,'2017-05-22 13:43:59','2017-05-22 13:43:59','NOT YET OPENED',11,NULL,NULL),(45,'Intel Core i7-4930K ',5,1300,0,0,'2017-05-22 13:43:59','2017-05-22 13:43:59','CLOSED',11,NULL,NULL),(46,'Intel Core i3-2310M',5,1200,0,0,'2017-05-22 13:43:59','2017-05-22 13:43:59','NOT YET OPENED',11,NULL,NULL),(47,'AMD Phenom II X3 B75',7,350,0,0,'2017-05-22 13:43:59','2017-05-22 13:43:59','NOT YET OPENED',11,NULL,NULL),(48,'XBOX ONE 500GB',75,250,0,0,'2017-05-22 13:43:59','2017-05-22 13:43:59','NOT YET OPENED',11,NULL,NULL);
+INSERT INTO `items` VALUES (1,'Intel i3 7100',5,110,100,2,'2017-05-26 07:56:28','2017-05-26 07:56:28','OPEN',11,NULL,NULL,'resources\\img\\intel_i3_7100.jpg'),(3,'Intel i3 7300',7,100,0,0,'2017-05-26 08:01:49','2017-05-26 08:01:49','OPEN',11,NULL,NULL,'resources\\img\\missing.png'),(18,'Intel i3 9561',5,300,0,0,'2017-05-26 08:01:49','2017-05-26 08:01:49','OPEN',11,NULL,NULL,'resources\\img\\missing.png'),(20,'Intel Core i7-4930K',5,800,0,0,'2017-05-26 08:11:12','2017-05-26 08:11:12','OPEN',11,NULL,'Socket: LGA2011, Clockspeed: 3.4 GHz, Turbo Speed: 3.9 GHz, No of Cores: 6 , Typical TDP: 130 W','resources/img/i7-4930K.jpg'),(21,'AMD FX-9590',5,200,0,0,'2017-05-26 07:49:21','2017-05-26 07:49:21','OPEN',11,NULL,NULL,'resources\\img\\AMD_FX-9590.jpg'),(22,'AMD FX-8150 ',5,340,0,0,'2017-05-26 08:01:49','2017-05-26 08:01:49','ABANDONED',11,NULL,NULL,'resources\\img\\missing.png'),(43,'AMD Phenom II X6',8,400,0,0,'2017-05-26 08:01:49','2017-05-26 08:01:49','OPEN',11,NULL,NULL,'resources\\img\\missing.png'),(44,'AMD Opteron 6234',5,200,0,0,'2017-05-26 08:01:49','2017-05-26 08:01:49','NOT YET OPENED',11,NULL,NULL,'resources\\img\\missing.png'),(45,'Intel Core i7-4960X ',5,1300,0,0,'2017-05-26 08:11:12','2017-05-26 08:11:12','CLOSED',11,NULL,'Socket: LGA2011,Clockspeed: 3.6 GHz, Turbo Speed: 4.0 GHz, No of Cores: 6 (2 logical cores per physical), Typical TDP: 130 W','resources\\img\\missing.png'),(46,'Intel Core i3-2310M',5,1200,0,0,'2017-05-26 08:01:49','2017-05-26 08:01:49','NOT YET OPENED',11,NULL,NULL,'resources\\img\\missing.png'),(47,'AMD Phenom II X3 B75',7,350,0,0,'2017-05-26 08:01:49','2017-05-26 08:01:49','NOT YET OPENED',11,NULL,NULL,'resources\\img\\missing.png'),(48,'XBOX ONE 500GB',75,250,0,0,'2017-05-26 08:11:12','2017-05-26 08:11:12','NOT YET OPENED',11,NULL,'Includes Xbox One console, wireless controller, 500GB hard drive, chat headset and HDMI cable.','resources\\img\\xbox_one.jpg'),(49,'Asus ROG STRIX GTX 1080 O8G GAMING',78,700,0,0,'2017-05-26 07:56:28','2017-05-26 07:56:28','CLOSED',11,NULL,NULL,'resources\\img\\Asus_ROG_STRIX_GTX_1080_O8G.jpg'),(50,'AMD Radeon HD 7970 PCIE 3G GDDR5',79,260,0,0,'2017-05-26 08:01:49','2017-05-26 08:01:49','CLOSED',11,NULL,'Play the latest PC games supporting DirectX 11.1\nWork and Productivity Application\nVideo playback and editing\nHD video playback and editing\nGCN Architecture','resources\\img\\missing.png'),(51,'Sony PlayStation4 1TB',76,300,0,0,'2017-05-26 08:11:12','2017-05-26 08:11:12','CLOSED',11,NULL,'Features powerful graphics and speed, deeply integrated social capabilities, connected gaming, intelligent personalization, innovative second-screen features and more.\n\nThe substantial 1TB hard drive lets you store several blockbuster games, plenty of apps, indie titles, recorded game footage and more.','resources\\img\\ps4.jpg');
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,4 +187,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-24  9:49:06
+-- Dump completed on 2017-05-26 17:36:27
