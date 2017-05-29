@@ -1,7 +1,6 @@
 package com.biddingapp.ejbeans;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +18,6 @@ import com.fortech.dto.BiddingDTO;
 import com.fortech.dto.CategoriesDTO;
 import com.fortech.dto.ItemsDTO;
 import com.fortech.exception.BiddingOperationsException;
-import com.fortech.exception.CategoriesDetailsException;
-import com.fortech.utils.Constants;
 
 @ManagedBean(name = "bidding")
 @ViewScoped
@@ -36,7 +33,7 @@ public class BiddingBean {
 
 	private CategoriesDTO categoriesDTO;
 
-	private List<ItemsDTO> DTOList;
+	private List<ItemsDTO> ItemsDTOList;
 
 	private List<ItemsEntities> itemsList;
 
@@ -44,16 +41,18 @@ public class BiddingBean {
 
 	private ItemsDTO itemForModal;
 
-	private Timestamp timestamp;
-
 	private boolean hasBid = true;
 
+	private BiddingEntities bid;
+
+	
 	@PostConstruct
 	public void init() {
 		biddingDTO = new BiddingDTO();
 		categoriesDTO = new CategoriesDTO();
 	}
 
+	
 	public String getCategoryName() {
 		if (categoryId != 0) {
 			return biddingService.getCategory(categoryId).getName();
@@ -62,6 +61,7 @@ public class BiddingBean {
 		}
 	}
 
+	
 	public String getCategoryDescription() {
 		if (categoryId != 0) {
 			return biddingService.getCategory(categoryId).getDescription();
@@ -70,89 +70,93 @@ public class BiddingBean {
 		}
 	}
 
+	
 	public void getItemTablerows() {
 		itemsList = new ArrayList<>();
-		DTOList = populateChildrenList(categoryId);
+		ItemsDTOList = populateChildrenList(categoryId);
 	}
 
+	
 	public List<ItemsDTO> populateChildrenList(int id) {
 		try {
 			CategoriesEntities currentCategory = categoryService.getCategory(id);
 			List<CategoriesEntities> children = currentCategory.getChildren();
-			DTOList = new ArrayList<>();
-
+			ItemsDTOList = new ArrayList<>();
 			itemsList.addAll(biddingService.getItems(id));
 
 			if (children.isEmpty()) {
 				for (ItemsEntities item : itemsList) {
 
 					ItemsDTO itemDTO = getTableDto(item);
-					DTOList.add(itemDTO);
+					ItemsDTOList.add(itemDTO);
 				}
-				return DTOList;
+				return ItemsDTOList;
 			} else {
 				for (CategoriesEntities child : children) {
 					populateChildrenList(child.getId());
 				}
 			}
-			return DTOList;
-
+			return ItemsDTOList;
 		} catch (BiddingOperationsException boe) {
 			boe.printStackTrace();
 			return null;
 		}
-
 	}
+
 
 	public void populateBid() {
 		biddingDTO.setItemId(itemForModal.getId());
 		biddingDTO.setUserId(itemForModal.getSellerId());
-		biddingDTO.setDate(new Timestamp(System.currentTimeMillis()));
-
 	}
 
+
 	public void submitBid() {
-		populateBid();
 		biddingService.bid(getBiddingEntity(biddingDTO));
 		hasBid = true;
 	}
 
+
 	public void removeBid() {
-		populateBid();
 		biddingService.remove(getBiddingEntity(biddingDTO));
 		hasBid = false;
 	}
 
+
 	public void editBid() {
 		hasBid = false;
+		biddingDTO.setBidValue(null);
 	}
 
+
 	public void initialHasBid() {
+		
 		populateBid();
 		BiddingEntities bid = biddingService.getEntityWithUserItem(getBiddingEntity(biddingDTO));
 		if (bid != null) {
+			setDateValuetoBid(bid);
 			hasBid = true;
 		} else {
 			hasBid = false;
+			biddingDTO.setBidValue(null);
 		}
 	}
 
+
+	public void setDateValuetoBid(BiddingEntities bid){
+		biddingDTO.setBidValue(bid.getBidValue());
+		biddingDTO.setDate(bid.getDate());
+	}
+
+
 	public BiddingEntities getBiddingEntity(BiddingDTO dto) {
 		BiddingEntities bid = new BiddingEntities();
-		bid.setBidValue(biddingDTO.getBidValue());
+		bid.setBidValue(dto.getBidValue());
 		bid.setItemId(biddingService.getItemsbyId(dto.getItemId()));
 		bid.setUserId(biddingService.getUserbyId(dto.getUserId()));
-		bid.setDate(biddingDTO.getDate());
+		bid.setDate((new Timestamp(System.currentTimeMillis())));
 		return bid;
 	}
 
-	public void getIdForUser(int id) {
-		biddingDTO.setUserId(id);
-	}
-
-	public void getIdForItem(int id) {
-		biddingDTO.setItemId(id);
-	}
 
 	private ItemsDTO getTableDto(ItemsEntities item) {
 		ItemsDTO createDto = new ItemsDTO();
@@ -180,10 +184,20 @@ public class BiddingBean {
 		return createDto;
 	}
 
+
+	public void getIdForUser(int id) {
+		biddingDTO.setUserId(id);
+	}
+
+
+	public void getIdForItem(int id) {
+		biddingDTO.setItemId(id);
+	}
+
+
 	public BiddingService getBiddingService() {
 		return biddingService;
 	}
-
 	public void setBiddingService(BiddingService biddingService) {
 		this.biddingService = biddingService;
 	}
@@ -191,17 +205,22 @@ public class BiddingBean {
 	public BiddingDTO getBiddingDTO() {
 		return biddingDTO;
 	}
-
 	public void setBiddingDTO(BiddingDTO biddingDTO) {
 		this.biddingDTO = biddingDTO;
 	}
-
-	public List<ItemsDTO> getDTOList() {
-		return DTOList;
+	
+	public CategoriesService getCategoryService() {
+		return categoryService;
+	}
+	public void setCategoryService(CategoriesService categoryService) {
+		this.categoryService = categoryService;
 	}
 
-	public void setDTOList(List<ItemsDTO> dTOList) {
-		DTOList = dTOList;
+	public List<ItemsDTO> getItemsDTOList() {
+		return ItemsDTOList;
+	}
+	public void setItemsDTOList(List<ItemsDTO> itemsDTOList) {
+		ItemsDTOList = itemsDTOList;
 	}
 
 	public List<ItemsEntities> getItemsList() {
@@ -211,7 +230,6 @@ public class BiddingBean {
 	public void setItemsList(List<ItemsEntities> itemsList) {
 		this.itemsList = itemsList;
 	}
-
 	public int getCategoryId() {
 		return categoryId;
 	}
@@ -219,7 +237,6 @@ public class BiddingBean {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
-
 	public CategoriesDTO getCategoriesDTO() {
 		return categoriesDTO;
 	}
@@ -227,7 +244,6 @@ public class BiddingBean {
 	public void setCategoriesDTO(CategoriesDTO categoriesDTO) {
 		this.categoriesDTO = categoriesDTO;
 	}
-
 	public ItemsDTO getItemForModal() {
 		return itemForModal;
 	}
@@ -239,8 +255,14 @@ public class BiddingBean {
 	public boolean isHasBid() {
 		return hasBid;
 	}
-
 	public void setHasBid(boolean hasBid) {
 		this.hasBid = hasBid;
+	}
+
+	public BiddingEntities getBid() {
+		return bid;
+	}
+	public void setBid(BiddingEntities bid) {
+		this.bid = bid;
 	}
 }

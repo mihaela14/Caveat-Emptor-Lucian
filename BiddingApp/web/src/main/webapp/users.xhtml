@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<style>
+.users-body {
+	position: relative;
+	margin-left: 3%;
+	width: 73%;
+}
+</style>
+</h:head>
+<h:body>
+	<b:dataTable var="rows" value="#{userBean.userDTOList}">
+		<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+			<f:facet name="header">Name</f:facet>
+			<h:outputText value="#{rows.name}">
+			</h:outputText>
+		</b:dataTableColumn>
+		<b:dataTableColumn>
+			<f:facet name="header">Account</f:facet>
+			<h:outputText value="#{rows.accountName}">
+			</h:outputText>
+		</b:dataTableColumn>
+		<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+			<f:facet name="header">Email</f:facet>
+			<h:outputText value="#{rows.email}">
+			</h:outputText>
+		</b:dataTableColumn>
+		<b:dataTableColumn>
+			<f:facet name="header">Items Placed</f:facet>
+			<h:outputText value="#{rows.itemsPlaced}">
+			</h:outputText>
+		</b:dataTableColumn>
+		<b:dataTableColumn>
+			<f:facet name="header">Items Sold</f:facet>
+			<h:outputText value="#{rows.itemsSold}">
+			</h:outputText>
+		</b:dataTableColumn>
+		<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+			<f:facet name="header">Items Bought</f:facet>
+			<h:outputText value="#{rows.itemsBought}">
+			</h:outputText>
+		</b:dataTableColumn>
+		<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+			<f:facet name="header">Is Admin ?</f:facet>
+			<h:outputText value="#{rows.admin}">
+			</h:outputText>
+		</b:dataTableColumn>
+		<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+			<f:facet name="header">Is Enabled ?</f:facet>
+			<h:outputText value="#{rows.enabled}">
+			</h:outputText>
+		</b:dataTableColumn>
+		<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+			<f:facet name="header">Close account</f:facet>
+			<h:commandButton class="btn btn-info" value="Disable it" />
+		</b:dataTableColumn>
+		</b:dataTable>
+</h:body>
+</html>

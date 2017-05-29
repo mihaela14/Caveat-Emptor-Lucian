@@ -14,7 +14,6 @@ import com.biddingapp.repositories.CategoriesRepository;
 import com.biddingapp.repositories.ItemsRepository;
 import com.biddingapp.repositories.UserRepository;
 import com.fortech.exception.BiddingOperationsException;
-import com.fortech.exception.CategoriesDetailsException;
 
 @Stateless
 public class BiddingService {
@@ -45,7 +44,6 @@ public class BiddingService {
 		try {
 			return biddingRepository.findBidByItemUser(bid.getUserId().getId(), bid.getItemId().getId());
 		} catch (BiddingOperationsException e) {
-			e.printStackTrace();
 			return null;
 		}
 	}

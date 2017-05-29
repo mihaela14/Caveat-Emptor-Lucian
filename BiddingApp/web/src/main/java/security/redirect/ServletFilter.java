@@ -1,4 +1,4 @@
-package redirect.service;
+package security.redirect;
 
 import java.io.IOException;
 

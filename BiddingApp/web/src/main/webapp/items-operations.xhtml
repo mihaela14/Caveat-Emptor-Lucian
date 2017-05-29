@@ -81,7 +81,7 @@
 
 			<h:commandButton id="contactbtn" class="btn btn-info" value="Submit"
 				action="#{items.addItem}" data-dismiss="modal">
-				<f:ajax execute="@form" render="items-table" />
+				<f:ajax execute="@form" render=":items-table :item-form" />
 			</h:commandButton>
 			<div class="clearfix">
 				<h:message for="registerItemName" style="color:red; width: 100%;"

@@ -16,7 +16,8 @@ import com.biddingapp.queries.UserQueries;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="findAllUsersWithName", query= UserQueries.FIND_BY_USERNAME),
-	@NamedQuery(name="findAllUsersWithEmail", query= UserQueries.FIND_BY_EMAIL)
+	@NamedQuery(name="findAllUsersWithEmail", query= UserQueries.FIND_BY_EMAIL),
+	@NamedQuery(name="findAllUsers", query= UserQueries.FIND_ALL_USERS)
 }) 
 @Table(name="users")
 

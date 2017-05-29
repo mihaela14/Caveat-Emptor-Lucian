@@ -81,7 +81,9 @@
 	<h:body>
 		<div class="container">
 			<div class="row top-buttons">
-				<div class="col-md-2 create-button"></div>
+				<div class="col-md-2 bidding-image">
+					<img src="resources\img\bidding.png" style="width: 48%;"/>
+				</div>
 
 				<div class="col-md-4" id="search-box">
 					<div class="form-group" id="btnSearch">
@@ -95,14 +97,15 @@
 			<br />
 			<ol id="breadcrumb" class="breadcrumb" />
 
-			<b:modal id="amodal2" title="" styleClass="modalPseudoClass2"
-				closable="true" close-on-escape="true" backdrop="false">
+			<b:modal id="amodal2" title="#{bidding.itemForModal.name}"
+				styleClass="modalPseudoClass2" closable="true"
+				close-on-escape="true" backdrop="false">
 
 				<h:form id="modal-form">
 					<div class="row">
 						<div class="col-md-3">
 							<h:graphicImage value="#{bidding.itemForModal.image}"
-								style="width: 140%; height: 30%; position: relative; margin-left: -12%;" />
+								style="width: 133%; height: 30%; position: relative; margin-left: -11%;" />
 
 						</div>
 						<div class="col-md-9" style="margin-top: 1%;">
@@ -151,7 +154,7 @@
 
 						<h:outputLabel class="info-label" value="Your Bid:" />
 						<h:inputText class="form-control info-text"
-							a:placeholder="No previous bids on this item"
+							a:placeholder="Place a bid on this item"
 							value="#{bidding.biddingDTO.bidValue}"
 							rendered="#{not bidding.hasBid}">
 							<f:ajax execute="@this" />
@@ -159,6 +162,16 @@
 						<h:outputText class="form-control info-text"
 							value="#{bidding.biddingDTO.bidValue}"
 							rendered="#{bidding.hasBid}">
+						</h:outputText>
+						<h:outputText class="form-control info-text"
+							value="#{bidding.biddingDTO.bidValue}"
+							rendered="#{bidding.hasBid}">
+						</h:outputText>
+						<br />
+						<h:outputLabel rendered="#{bidding.hasBid}" class="info-label"
+							value="Bid Date:" />
+						<h:outputText class="form-control info-text"
+							value="#{bidding.biddingDTO.date}" rendered="#{bidding.hasBid}">
 						</h:outputText>
 						<br /> <br />
 
@@ -188,7 +201,7 @@
 			</b:modal>
 
 			<h:form id="biddingItems-form">
-				<b:dataTable id="bidItems-table" value="#{bidding.DTOList}"
+				<b:dataTable id="bidItems-table" value="#{bidding.itemsDTOList}"
 					var="rows" responsive="">
 					<b:dataTableColumn value="#{rows.name}">
 						<f:facet name="header">Name</f:facet>
@@ -218,7 +231,7 @@
 						<f:facet name="header">Details</f:facet>
 						<b:commandButton class="open-biddingModal"
 							iconAwesome="fa-search-plus" look="warning" ajax="true"
-							update=":modal-form"
+							update=":amodal2 :modal-form"
 							oncomplete="$('.modalPseudoClass2').modal();return false;"
 							size="md" action="#{bidding.initialHasBid}">
 							<f:setPropertyActionListener value="#{rows}"
