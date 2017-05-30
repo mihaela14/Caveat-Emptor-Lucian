@@ -18,6 +18,7 @@ import com.biddingapp.items.ItemsService;
 import com.biddingapp.items.utilities.ItemTableSorting;
 import com.fortech.dto.ItemsDTO;
 import com.fortech.exception.AccountDetailsException;
+import com.fortech.exception.BiddingOperationsException;
 import com.fortech.exception.ItemsDetailsException;
 import com.fortech.utils.ItemStatus;
 
@@ -50,7 +51,7 @@ public class ItemsBean {
 		item.setEditable(true);
 		return null;
 	}
-	
+
 	public String cancelAction(ItemsDTO item){
 		item.setEditable(false);
 		return null;
@@ -76,8 +77,6 @@ public class ItemsBean {
 		itemEntity.setName(items.getName());
 		itemEntity.setPrice(items.getPrice());
 		itemEntity.setCategory(itemsService.getCategory(items.getCategoryId()));
-		itemEntity.setBestBid(items.getBestBid());
-		itemEntity.setBids(items.getBids());
 		itemEntity.setOpeningDate(opening);
 		itemEntity.setClosingDate(closing);
 		itemEntity.setStatus(items.getStatus());
@@ -109,14 +108,34 @@ public class ItemsBean {
 
 		String opening= item.getOpeningDate().toString() ;
 		String closing= item.getClosingDate().toString();
+		int totalBids=0;
+		float bestBid=0.0f;
+
+
+		try{
+			totalBids = itemsService.getTotalBids(item.getId());
+		} catch (BiddingOperationsException boe) {
+			totalBids=0;
+			boe.printStackTrace();
+		}
+
+
+		if(totalBids>0){
+			try {
+				bestBid= itemsService.getMaxBid(item.getId());
+			} catch (BiddingOperationsException e) {
+				e.printStackTrace();
+			}
+		}
+
 
 		createDto.setId(item.getId());
 		createDto.setName(item.getName());
 		createDto.setCategoryName(item.getCategory().getName());
 		createDto.setCategoryId(item.getCategory().getId());
 		createDto.setPrice(item.getPrice());
-		createDto.setBestBid(item.getBestBid());
-		createDto.setBids(item.getBids());
+		createDto.setBestBid(bestBid);
+		createDto.setBids(totalBids);
 		createDto.setOpeningDate(opening);
 		createDto.setClosingDate(closing);
 		createDto.setStatus(item.getStatus());
@@ -157,10 +176,12 @@ public class ItemsBean {
 		return itemEntity;
 	}
 
+
 	public void addItem(){
 		itemsService.createItem(getDto());
 		init();
 	}
+
 
 	public Timestamp stringToTimestamp(String datetime){
 
@@ -174,8 +195,8 @@ public class ItemsBean {
 		}
 		return null;
 	}
-	
-	
+
+
 	public Timestamp stringToTimestampUpdater(String datetime){
 
 		try {

@@ -14,6 +14,7 @@ import com.biddingapp.categories.CategoriesService;
 import com.biddingapp.entities.BiddingEntities;
 import com.biddingapp.entities.CategoriesEntities;
 import com.biddingapp.entities.ItemsEntities;
+import com.biddingapp.items.ItemsService;
 import com.fortech.dto.BiddingDTO;
 import com.fortech.dto.CategoriesDTO;
 import com.fortech.dto.ItemsDTO;
@@ -28,6 +29,9 @@ public class BiddingBean {
 
 	@EJB
 	private CategoriesService categoryService;
+	
+	@EJB
+	private ItemsService itemsService;
 
 	private BiddingDTO biddingDTO;
 
@@ -163,6 +167,23 @@ public class BiddingBean {
 
 		String opening = item.getOpeningDate().toString();
 		String closing = item.getClosingDate().toString();
+		int totalBids=0;
+		float bestBid=0.0f;
+		
+		try{
+			totalBids = getItemsService().getTotalBids(item.getId());
+		} catch (BiddingOperationsException boe) {
+			totalBids=0;
+			boe.printStackTrace();
+		}
+
+		if(totalBids>0){
+			try {
+				bestBid= getItemsService().getMaxBid(item.getId());
+			} catch (BiddingOperationsException e) {
+				e.printStackTrace();
+			}
+		}
 
 		createDto.setId(item.getId());
 		createDto.setName(item.getName());
@@ -170,8 +191,8 @@ public class BiddingBean {
 		createDto.setCategoryId(item.getCategory().getId());
 		createDto.setDescription(item.getDescription());
 		createDto.setPrice(item.getPrice());
-		createDto.setBestBid(item.getBestBid());
-		createDto.setBids(item.getBids());
+		createDto.setBestBid(bestBid);
+		createDto.setBids(totalBids);
 		createDto.setOpeningDate(opening);
 		createDto.setClosingDate(closing);
 		createDto.setStatus(item.getStatus());
@@ -264,5 +285,15 @@ public class BiddingBean {
 	}
 	public void setBid(BiddingEntities bid) {
 		this.bid = bid;
+	}
+
+
+	public ItemsService getItemsService() {
+		return itemsService;
+	}
+
+
+	public void setItemsService(ItemsService itemsService) {
+		this.itemsService = itemsService;
 	}
 }

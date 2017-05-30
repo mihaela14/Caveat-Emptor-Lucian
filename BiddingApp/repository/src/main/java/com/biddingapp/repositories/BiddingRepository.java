@@ -5,7 +5,6 @@ import java.util.List;
 import com.biddingapp.entities.BiddingEntities;
 import com.biddingapp.entities.CategoriesEntities;
 import com.biddingapp.entities.ItemsEntities;
-import com.biddingapp.entities.UserEntity;
 import com.fortech.exception.BiddingOperationsException;
 
 
@@ -26,5 +25,9 @@ public interface BiddingRepository {
 	public BiddingEntities findBidByItemUser(int userId, int itemId) throws BiddingOperationsException;
 	
 	public BiddingEntities findbidById(int id);
+	
+	public Long getBidsNumber(int itemId) throws BiddingOperationsException;
+	
+	public Float findMaxBid(int itemId) throws BiddingOperationsException;
 	
 }

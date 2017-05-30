@@ -77,14 +77,35 @@ public class BiddingRepositoryImplementation implements BiddingRepository{
 		try{
 			return (BiddingEntities) getEntityManager().createNamedQuery("findBidByItemUser").setParameter("userId", userId).setParameter("itemId", itemId).getSingleResult();
 		}catch(PersistenceException pe){
-			throw new BiddingOperationsException("An excepiton happened getting the bid for the item id"+ itemId + "and user id" + userId);
+			throw new BiddingOperationsException("An excepiton happened getting the bid for the item id:"+ itemId + "and user id" + userId);
 		}
 	}
-	
-	
+
+
 	@Override
 	public BiddingEntities findbidById(int id) {
 		return entityManager.find(BiddingEntities.class, id);
+	}
+
+
+	@Override
+	public Long getBidsNumber(int itemId) throws BiddingOperationsException {
+		try{
+			return (Long) getEntityManager().createNamedQuery("countBidsByItem").setParameter("itemId", itemId).getSingleResult();
+		}catch(PersistenceException pe){
+			throw new BiddingOperationsException("An exception happened trying to count the bids for the item id:" + itemId);
+		}
+	}
+
+
+	@Override
+	public Float findMaxBid(int itemId) throws BiddingOperationsException {
+		try{
+			Query query= entityManager.createNamedQuery("maxBidByItem").setParameter("itemId", itemId);
+			return (Float)query.getSingleResult();
+		}catch(PersistenceException pe){
+			throw new BiddingOperationsException("An exception happened trying to get the max result for the item id"+ itemId);
+		}
 	}
 
 

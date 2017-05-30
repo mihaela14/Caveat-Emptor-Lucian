@@ -41,12 +41,6 @@ public class ItemsEntities implements Serializable{
 	@Column
 	private float price;
 
-	@Column(name="best_bid")
-	private float bestBid;
-
-	@Column
-	private int bids;
-
 	@Column(name="opening_date")
 	private Timestamp openingDate;
 
@@ -93,18 +87,6 @@ public class ItemsEntities implements Serializable{
 	}
 	public void setPrice(float price) {
 		this.price = price;
-	}
-	public float getBestBid() {
-		return bestBid;
-	}
-	public void setBestBid(float bestBid) {
-		this.bestBid = bestBid;
-	}
-	public int getBids() {
-		return bids;
-	}
-	public void setBids(int bids) {
-		this.bids = bids;
 	}
 	public Timestamp getOpeningDate() {
 		return openingDate;
