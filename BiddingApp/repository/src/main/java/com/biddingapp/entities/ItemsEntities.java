@@ -19,7 +19,10 @@ import com.biddingapp.queries.ItemsQueries;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="findItemByUser", query= ItemsQueries.FIND_ITEM_BY_USER),
-	@NamedQuery(name="findItemByCategory", query= ItemsQueries.FIND_ITEM_BY_CATEGORY)
+	@NamedQuery(name="findItemByCategory", query= ItemsQueries.FIND_ITEM_BY_CATEGORY),
+	@NamedQuery(name="findItemsCountByUser", query= ItemsQueries.FIND_ITEMS_COUNT_BY_USER),
+	@NamedQuery(name="findItemsCountByWinner", query= ItemsQueries.FIND_ITEMS_COUNT_BY_WINNER),
+	@NamedQuery(name="findItemsCountSoldByUser", query= ItemsQueries.FIND_ITEMS_COUNT_SOLD_BY_USER)
 })
 @Table(name= "items")
 public class ItemsEntities implements Serializable{

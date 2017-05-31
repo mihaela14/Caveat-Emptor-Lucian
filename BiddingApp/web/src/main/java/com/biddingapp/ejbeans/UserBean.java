@@ -14,8 +14,10 @@ import org.apache.openjpa.util.UserException;
 import com.biddingapp.entities.UserEntity;
 import com.biddingapp.register.RegisterValidation;
 import com.biddingapp.users.UserDetailsService;
+import com.fortech.dto.UserDTO;
 import com.fortech.dto.UsersDetailsDTO;
 import com.fortech.exception.AccountDetailsException;
+import com.fortech.exception.UserDetailsException;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
@@ -53,6 +55,17 @@ public class UserBean {
 	}
 	
 	
+	public void disableUser(int userId){
+		UserEntity userEntity= new UserEntity();		
+		userEntity= userDetailsService.findUser(userId);
+		userEntity.setStatus(false);	
+		userDetailsService.updateUser(userEntity);
+		init();	
+	}
+
+	
+	
+	
 	public List<UsersDetailsDTO> populateUserDTOList(){
 		try {
 			userList= userDetailsService.getAllUsers();
@@ -63,8 +76,8 @@ public class UserBean {
 				userDTOList.add(UsersDetailsDTO);
 			}
 			return userDTOList;
-		} catch (UserException ue) {
-			ue.printStackTrace();
+		} catch (UserDetailsException ude) {
+			ude.printStackTrace();
 			return null;
 		}
 	}
@@ -84,6 +97,10 @@ public class UserBean {
 		}
 
 		createDto.setEnabled(user.getStatus());
+		createDto.setId(user.getId());
+		createDto.setItemsPlaced(userDetailsService.getCountOfItemsPlaced(user.getId()));
+		createDto.setItemsSold(userDetailsService.getCountOfItemsSold(user.getId()));	
+		createDto.setItemsBought(userDetailsService.getCountofItemsBought(user.getId()));
 		return createDto;
 	}
 
@@ -115,22 +132,15 @@ public class UserBean {
 	public void setUserList(List<UserEntity> userList) {
 		this.userList = userList;
 	}
-
-
 	public List<UsersDetailsDTO> getUserDTOList() {
 		return userDTOList;
 	}
-
 	public void setUserDTOList(List<UsersDetailsDTO> userDTOList) {
 		this.userDTOList = userDTOList;
 	}
-
-
 	public boolean isLoggedUserAuthorized() {
 		return isLoggedUserAuthorized;
 	}
-
-
 	public void setLoggedUserAuthorized(boolean isLoggedUserAuthorized) {
 		this.isLoggedUserAuthorized = isLoggedUserAuthorized;
 	}

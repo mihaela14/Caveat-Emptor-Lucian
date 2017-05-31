@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+</h:head>
+<h:body>
+	<h:form>
+		<div class="row details-fields" style="	margin-left: -28%; margin-right: 9%;">
+			<div class="col-md-6">
+				<b:panel look="info" title="Account details" collapsible="false">
+					<b:listLinks>
+						<img src="resources/img/cartman.png" class="img-rounded" style="width: 28%; margin-bottom: 3%;"/>
+						<br />
+						<h:outputLabel  value="First Name:"/>
+						<h:outputText value="#{account.user.firstName}" />
+						<br />
+						<h:outputLabel value="Last Name:" />
+						<h:outputText value="#{account.user.lastName}" />
+						<br />
+						<h:outputLabel value="Email:" />
+						<h:outputText value="#{account.user.email}" />
+						<br />
+						<h:commandButton class="btn btn-info" value="Edit account info" />
+
+
+					</b:listLinks>
+				</b:panel>
+			</div>
+			<div class="col-md-6">
+				<b:panel look="info" title="Shipping Details" collapsible="false">
+					<b:listLinks>
+
+						<h:outputLabel value="Adress:" />
+						<h:outputText value="#{account.accountDto.adress}" />
+						<br />
+						<h:outputLabel value="Zipcode:" />
+						<h:outputText value="#{account.accountDto.zipcode}" />
+						<br />
+						<h:outputLabel value="City:" />
+						<h:outputText value="#{account.accountDto.city}" />
+						<br />
+						<h:outputLabel value="Phone number:" />
+						<h:outputText value="#{account.accountDto.phone}" />
+						<br />
+						<h:commandButton class="btn btn-info" value="Edit shipping adress" />
+
+
+					</b:listLinks>
+				</b:panel>
+			</div>
+		</div>
+	</h:form>
+</h:body>
+</html>

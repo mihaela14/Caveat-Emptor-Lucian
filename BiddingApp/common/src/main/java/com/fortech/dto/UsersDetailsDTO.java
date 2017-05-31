@@ -1,6 +1,8 @@
 package com.fortech.dto;
 
 public class UsersDetailsDTO {
+	
+	private int id;
 
 	private String name;
 
@@ -73,5 +75,11 @@ public class UsersDetailsDTO {
 	}
 	public void setItemsBought(int itemsBought) {
 		this.itemsBought = itemsBought;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }
