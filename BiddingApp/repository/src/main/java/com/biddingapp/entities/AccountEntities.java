@@ -10,14 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.biddingapp.queries.AccountQueries;
-import com.biddingapp.queries.BiddingQueries;
-import com.biddingapp.queries.ItemsQueries;
 
 @Entity
 @NamedQuery(name="findAccountByUser", query= AccountQueries.FIND_ACCOUNT_BY_USER)
@@ -81,12 +78,11 @@ public class AccountEntities implements Serializable{
 	public void setCity(String city) {
 		this.city = city;
 	}
-
 	public int getPhone() {
 		return phone;
 	}
 	public void setPhone(int phone) {
-		phone = phone;
+		this.phone = phone;
 	}
 
 }

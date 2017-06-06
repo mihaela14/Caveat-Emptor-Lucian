@@ -13,13 +13,13 @@ import com.fortech.exception.AccountDetailsException;
 @Stateless
 @Remote(AccountRepository.class)
 public class AccountRepositoryImplementation implements AccountRepository{
-	
+
 	private static final String PERSISTENCE_UNIT_NAME = "BiddingApp";
 
 	@PersistenceContext(unitName = PERSISTENCE_UNIT_NAME)
 	private EntityManager entityManager;
 
-	
+
 	@Override
 	public AccountEntities findAccountForUser(int userId) throws AccountDetailsException {
 		try{
@@ -28,8 +28,16 @@ public class AccountRepositoryImplementation implements AccountRepository{
 			throw new AccountDetailsException("An error happenet getting account details for user with the id: "+ userId);
 		}
 	}
-	
-	
+
+
+	@Override
+	public void updateAccount(AccountEntities account) {
+		if(account != null){
+			getEntityManager().merge(account);	
+		}
+	}
+
+
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}

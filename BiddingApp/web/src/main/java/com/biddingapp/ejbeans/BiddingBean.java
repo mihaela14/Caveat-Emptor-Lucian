@@ -128,6 +128,7 @@ public class BiddingBean {
 
 	public void editBid() {
 		hasBid = false;
+		biddingDTO.setPreviousBid(biddingDTO.getBidValue());
 		biddingDTO.setBidValue(null);
 	}
 

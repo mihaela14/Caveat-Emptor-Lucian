@@ -11,6 +11,8 @@ public class BiddingDTO {
 	private Float bidValue;
 
 	private Timestamp date;
+	
+	private Float previousBid;
 
 	
 	public int getUserId() {
@@ -36,6 +38,12 @@ public class BiddingDTO {
 	}
 	public void setDate(Timestamp date) {
 		this.date = date;
+	}
+	public Float getPreviousBid() {
+		return previousBid;
+	}
+	public void setPreviousBid(Float previousBid) {
+		this.previousBid = previousBid;
 	}
 
 }

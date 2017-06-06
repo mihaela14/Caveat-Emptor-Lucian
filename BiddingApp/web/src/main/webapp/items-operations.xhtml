@@ -41,14 +41,14 @@
 			<h:outputLabel value="Price: " />
 			<h:inputText id="registerPrice" class="form-control item-input"
 				value="#{items.itemDto.price}" required="true"
-				requiredMessage="*Please enter a name for the item">
+				requiredMessage="*Please enter a price for the item">
 			</h:inputText>
 			<br />
 
 			<h:outputLabel value="Select a category: " />
 			<h:inputText id="itemCategory" class="form-control item-input"
 				value="#{items.itemDto.categoryName}" readonly="true"
-				required="true" requiredMessage="*Please enter a name for the item">
+				required="true" requiredMessage="*Please select a category for the item">
 			</h:inputText>
 			<br />
 
@@ -58,12 +58,12 @@
 						<h:outputLabel value="Opening Date:" />
 						<b:dateTimePicker id="opening"
 							value="#{items.itemDto.openingDate}" ajax="true" required="true"
-							requiredMessage="*Please enter a name for the item" />
+							requiredMessage="*Please select a opening date for the item" />
 						<br />
 						<h:outputLabel id="closing" value="Closing Date:" />
 						<b:dateTimePicker value="#{items.itemDto.closingDate}" ajax="true"
 							required="true"
-							requiredMessage="*Please enter a name for the item" />
+							requiredMessage="*Please select a closing date for the item" />
 					</div>
 				</b:form>
 			</b:container>
@@ -71,7 +71,7 @@
 			<h:outputLabel value="Description " />
 			<h:inputTextarea id="itemDescrition" class="form-control item-input"
 				value="#{items.itemDto.description}" required="true"
-				requiredMessage="*Please enter a name for the item">
+				requiredMessage="*Please enter a description for the item">
 			</h:inputTextarea>
 			<br />
 
@@ -83,6 +83,7 @@
 				action="#{items.addItem}" data-dismiss="modal">
 				<f:ajax execute="@form" render=":items-table :item-form" />
 			</h:commandButton>
+			
 			<div class="clearfix">
 				<h:message for="registerItemName" style="color:red; width: 100%;"
 					class="left" />

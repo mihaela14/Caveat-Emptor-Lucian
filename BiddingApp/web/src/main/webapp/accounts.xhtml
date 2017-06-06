@@ -9,50 +9,149 @@
 </h:head>
 <h:body>
 	<h:form>
-		<div class="row details-fields" style="	margin-left: -28%; margin-right: 9%;">
-			<div class="col-md-6">
-				<b:panel look="info" title="Account details" collapsible="false">
-					<b:listLinks>
-						<img src="resources/img/cartman.png" class="img-rounded" style="width: 28%; margin-bottom: 3%;"/>
-						<br />
-						<h:outputLabel  value="First Name:"/>
-						<h:outputText value="#{account.user.firstName}" />
-						<br />
-						<h:outputLabel value="Last Name:" />
-						<h:outputText value="#{account.user.lastName}" />
-						<br />
-						<h:outputLabel value="Email:" />
-						<h:outputText value="#{account.user.email}" />
-						<br />
-						<h:commandButton class="btn btn-info" value="Edit account info" />
+		<div class="row details-fields"
+			style="margin-left: -28%; margin-right: 9%;">
 
-
-					</b:listLinks>
+			<div class="col-md-3">
+				<b:panel look="info" title="#{account.user.accountName}"
+					collapsible="false">
+					<h:graphicImage style="width: 77%; margin-left: 12%;"
+						value="resources/img/cartman.png" class="img-rounded" />
 				</b:panel>
 			</div>
-			<div class="col-md-6">
-				<b:panel look="info" title="Shipping Details" collapsible="false">
-					<b:listLinks>
 
-						<h:outputLabel value="Adress:" />
-						<h:outputText value="#{account.accountDto.adress}" />
+			<div class="col-md-9">
+				<b:panel look="info" title="Account details" collapsible="false">
+
+					<br />
+					<h:outputLabel class="info-label" value="First Name:" />
+					<h:outputText class="info-text" value="#{account.user.firstName}"
+						rendered="#{not account.accountDetailsEditable}" />
+					<h:inputText class="form-control info-input"
+						value="#{account.user.firstName}"
+						rendered="#{account.accountDetailsEditable}" />
+					<br />
+
+					<h:outputLabel class="info-label" value="Last Name:" />
+					<h:outputText class="info-text" value="#{account.user.lastName}"
+						rendered="#{not account.accountDetailsEditable}" />
+					<h:inputText class="form-control info-input"
+						value="#{account.user.lastName}"
+						rendered="#{account.accountDetailsEditable}" />
+					<br />
+
+					<h:outputLabel class="info-label" value="Email:" />
+					<h:outputText class="info-text" value="#{account.user.email}"
+						rendered="#{not account.accountDetailsEditable}" />
+					<h:inputText id="change-email" class="form-control info-input"
+						value="#{account.user.email}"
+						rendered="#{account.accountDetailsEditable}" required="true"
+						requiredMessage="*Please enter an email adress"
+						validator="#{account.isNewEmailValid}" />
+					<ui:fragment rendered="#{account.accountDetailsEditable}">
 						<br />
-						<h:outputLabel value="Zipcode:" />
-						<h:outputText value="#{account.accountDto.zipcode}" />
+					</ui:fragment>
+
+					<h:outputLabel id="confirm-password" class="info-label"
+						value="Current Password:"
+						rendered="#{account.accountDetailsEditable}" />
+					<h:inputSecret class="form-control info-input"
+						value="#{account.currentPassword}"
+						rendered="#{account.accountDetailsEditable}"
+						validator="#{account.isOldPasswordValid}" required="true"
+						requiredMessage="*Please input your current password" />
+					<br />
+
+					<h:outputLabel class="info-label" value="New Password:"
+						rendered="#{account.accountDetailsEditable}" />
+					<h:inputSecret class="form-control info-input"
+						value="#{account.user.password}"
+						rendered="#{account.accountDetailsEditable}" required="true"
+						requiredMessage="*New password cannotbe null" />
+					<ui:fragment rendered="#{account.accountDetailsEditable}">
 						<br />
-						<h:outputLabel value="City:" />
-						<h:outputText value="#{account.accountDto.city}" />
-						<br />
-						<h:outputLabel value="Phone number:" />
-						<h:outputText value="#{account.accountDto.phone}" />
-						<br />
-						<h:commandButton class="btn btn-info" value="Edit shipping adress" />
+					</ui:fragment>
 
 
-					</b:listLinks>
+					<b:buttonGroup>
+						<h:commandButton class="btn btn-info" value="Edit account info"
+							rendered="#{not account.accountDetailsEditable}"
+							action="#{account.getAccountEditStatus()}" />
+						<h:commandButton class="btn btn-info" value="Save Changes"
+							rendered="#{account.accountDetailsEditable}"
+							action="#{account.submitAccountChanges()}" />
+						<h:commandButton class="btn btn-warning" value="Cancel"
+							rendered="#{account.accountDetailsEditable}"
+							action="#{account.getAccountEditStatus()}" immediate="true" />
+					</b:buttonGroup>
+
+					<h:message for="change-email" style="color:red;" class="left" />
+					<h:message for="confirm-password" style="color:red;" class="left" />
 				</b:panel>
 			</div>
 		</div>
+
+		<div class="row"
+			style="position: relative; margin-left: -27%; margin-right: 10%;">
+			<b:panel look="info" title="Shipping Details" collapsible="false">
+
+				<h:outputLabel value="Adress:" />
+				<h:outputText class="info-text" value="#{account.accountDto.adress}"
+					rendered="#{not account.shippingEditable}" />
+				<h:inputText class="form-control info-input"
+					value="#{account.accountDto.adress}"
+					rendered="#{account.shippingEditable}" />
+				<br />
+				<h:outputLabel value="Zipcode:" />
+				<h:outputText class="info-text"
+					value="#{account.accountDto.zipcode}"
+					rendered="#{not account.shippingEditable}" />
+				<h:inputText class="form-control info-input"
+					value="#{account.accountDto.zipcode}"
+					rendered="#{account.shippingEditable}" />
+				<br />
+				<h:outputLabel value="City:" />
+				<h:outputText class="info-text" value="#{account.accountDto.city}"
+					rendered="#{not account.shippingEditable}" />
+				<h:inputText class="form-control info-input"
+					value="#{account.accountDto.city}"
+					rendered="#{account.shippingEditable}" />
+				<br />
+				<h:outputLabel value="Phone number:" />
+				<h:outputText class="info-text" value="#{account.accountDto.phone}"
+					rendered="#{not account.shippingEditable}" />
+				<h:inputText class="form-control info-input"
+					value="#{account.accountDto.phone}"
+					rendered="#{account.shippingEditable}" required="true"
+					requiredMessage="*Phone Number cannot be null"
+					validator="#{account.isPhoneNumberValid}" />
+				<br />
+
+				<b:buttonGroup>
+					<h:commandButton class="btn btn-info" value="Edit shipping adress"
+						rendered="#{not account.shippingEditable}"
+						action="#{account.getShippingEditStatus()}" />
+					<h:commandButton class="btn btn-info" value="Save Changes"
+						rendered="#{account.shippingEditable}"
+						action="#{account.submitShippingChanges()}" />
+					<h:commandButton class="btn btn-warning" value="Cancel"
+						rendered="#{account.shippingEditable}"
+						action="#{account.getShippingEditStatus()}" immediate="true" />
+				</b:buttonGroup>
+
+			</b:panel>
+		</div>
 	</h:form>
+	<style>
+.info-input {
+	width: 86%;
+	margin-top: -32px;
+	margin-left: 14%;
+}
+
+.info-text {
+	margin-left: 1%;
+}
+</style>
 </h:body>
 </html>

@@ -37,6 +37,11 @@ public class AccountService {
 			return null;
 		}
 	}
+	
+	
+	public UserEntity getUserForAccount(int userId){
+		return userRepository.findUserbyID(userId);
+	}
 
 
 	public AccountRepository getAccountRepository() {
@@ -50,5 +55,15 @@ public class AccountService {
 	}
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
+	}
+
+
+	public void updateUser(UserEntity user) {
+		userRepository.updateUser(user);
+	}
+
+
+	public void updateAccount(AccountEntities account) {
+		accountRepository.updateAccount(account);
 	}
 }

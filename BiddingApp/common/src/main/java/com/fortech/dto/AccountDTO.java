@@ -49,13 +49,10 @@ public class AccountDTO {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
 	public int getPhone() {
 		return phone;
 	}
 	public void setPhone(int phone) {
 		this.phone = phone;
 	}
-	
-	
 }

@@ -64,27 +64,27 @@ public class RegisterValidation {
 
 
 	public boolean activateUserByKey(String key) throws AccountDetailsException {
-		
-			RegistrationEntities findUserbyFK = userRepository.getUserByActivationKey(key);
 
-			if (findUserbyFK != null) {
-				findUserbyFK.getUserid().setStatus(true);
-				userRepository.updateUser(findUserbyFK.getUserid());
-				userRepository.removeRegistration(findUserbyFK.getId());
-				return true;
-			}
+		RegistrationEntities findUserbyFK = userRepository.getUserByActivationKey(key);
+
+		if (findUserbyFK != null) {
+			findUserbyFK.getUserid().setStatus(true);
+			userRepository.updateUser(findUserbyFK.getUserid());
+			userRepository.removeRegistration(findUserbyFK.getId());
+			return true;
+		}
 		return false;
 	}
 
 
 
 	public boolean isDuplicateUsername(String accountName) throws AccountDetailsException{
-			userRepository.findAllUsersWithName(accountName);
-			return true;			
+		userRepository.findAllUsersWithName(accountName);
+		return true;			
 	}
-	
+
 	public boolean isDuplicateEmail(String email) throws AccountDetailsException{
 		userRepository.findAllUsersByEmail(email);
 		return true;			
-}
+	}
 }
