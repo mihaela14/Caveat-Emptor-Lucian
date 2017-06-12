@@ -66,6 +66,18 @@ public class CategoriesService {
 
 		CategoriesEntities category= populate(categoriesdto);
 
+		CategoriesEntities root= categoriesRepository.findCategorybyId(1);
+		category.setParent(root);
+		categoriesRepository.addCategory(category);
+
+		categoriesdto= null;
+	}
+
+
+	public void createChild(CategoriesDTO categoriesdto, int id) {
+
+		CategoriesEntities category= populate(categoriesdto);
+
 		if(id==0){
 			CategoriesEntities root= categoriesRepository.findCategorybyId(1);
 			category.setParent(root);
@@ -83,6 +95,7 @@ public class CategoriesService {
 		categoriesdto= null;
 	}
 
+
 	public CategoriesEntities populate(CategoriesDTO categoriesdto){
 		CategoriesEntities categoriesEntities = new CategoriesEntities();
 
@@ -91,8 +104,8 @@ public class CategoriesService {
 
 		return categoriesEntities;
 	}
-	
-	
+
+
 	public CategoriesEntities getCategory(int id){
 		return categoriesRepository.findCategorybyId(id);
 	}

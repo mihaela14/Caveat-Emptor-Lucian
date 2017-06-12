@@ -10,7 +10,7 @@
 <h:body>
 	<ui:composition>
 		<ui:include src="/templates/header-imports.xhtml" />
-		<form method="post">
+		<h:form method="post">
 			<div class="nav-header">
 				<div class="navbar">
 					<b:navBar brand="Caveat Emptor" brandHref="items-page.xhtml">
@@ -20,13 +20,14 @@
 							<b:navLink value="Categories" href="main-page.xhtml"></b:navLink>
 							<b:navLink value="Users" href="users-page.xhtml"></b:navLink>
 							<b:navLink value="Account" href="account-page.xhtml"></b:navLink>
-							<b:navLink value="Log out" action="#{logout.logout}"></b:navLink>
-							
+
 						</b:navbarLinks>
+						<h:commandLink value="Log out" action="#{logout.logout}"
+							style="color: #777; float: right; margin-top: 15px; margin-right: -13%;"></h:commandLink>
 					</b:navBar>
 				</div>
 			</div>
-		</form>
+		</h:form>
 
 		<style>
 .nav-header {

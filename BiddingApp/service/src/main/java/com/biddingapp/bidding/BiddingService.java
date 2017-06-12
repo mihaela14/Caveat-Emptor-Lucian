@@ -13,6 +13,7 @@ import com.biddingapp.repositories.BiddingRepository;
 import com.biddingapp.repositories.CategoriesRepository;
 import com.biddingapp.repositories.ItemsRepository;
 import com.biddingapp.repositories.UserRepository;
+import com.fortech.exception.AccountDetailsException;
 import com.fortech.exception.BiddingOperationsException;
 
 @Stateless
@@ -66,7 +67,7 @@ public class BiddingService {
 			biddingRepository.addBid(bid);
 		}
 	}
-	
+
 
 	public boolean isBidExistent(BiddingEntities bid){
 		BiddingEntities dataBid= getEntityWithUserItem(bid);
@@ -76,7 +77,15 @@ public class BiddingService {
 		return false;
 	}
 
-	
+
+	public List<BiddingEntities> getBidsByUsername(String accountName) throws AccountDetailsException, BiddingOperationsException{
+			UserEntity user= new UserEntity();
+			user= userRepository.findAllUsersWithName(accountName);
+			return biddingRepository.findBidsByUser(user);
+
+	}
+
+
 	public ItemsEntities getItemsbyId(int id){
 		return itemsRepository.findItemById(id);
 	}

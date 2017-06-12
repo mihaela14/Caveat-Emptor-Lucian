@@ -35,6 +35,7 @@
 	width: 50%; /* Could be more or less, depending on screen size */
 	position: relative;
 	top: -20%;
+	margin-left: 18%;
 }
 
 /* The Close Button */
@@ -62,20 +63,26 @@
 
 	<div class="row">
 		<div class="col-md-2">
-			<!-- Trigger/Open The Modal -->
-			<button class="btn btn-info" id="myBtn">Add a new item</button>
+			<h:form>
+				<div class="dropdown">
+					<button class="btn btn-info dropdown-toggle" type="button"
+						data-toggle="dropdown">
+						Items to: <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><h:commandLink action="#{items.changeToBuy()}"
+								value="Buy" style="background:orange;" /></li>
+						<li><h:commandLink action="#{items.changeToSell()}"
+								value="Sell" /></li>
+					</ul>
+				</div>
+			</h:form>
+
 		</div>
-		<div class="col-md-1">
-			<div class="dropdown">
-				<button class="btn btn-info dropdown-toggle" type="button"
-					data-toggle="dropdown">
-					Items to: <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="#">Sell</a></li>
-					<li><a href="#">Buy</a></li>
-				</ul>
-			</div>
+		<div class="col-md-1" style="margin-left: -10%">
+			<!-- Trigger/Open The Modal -->
+			<h:button class="btn btn-info" id="myBtn"
+				rendered="#{not items.itemToBuyOrSale}" value="Add a new item" />
 		</div>
 	</div>
 	<br />
@@ -111,7 +118,37 @@
 	<h:form id="items-table">
 		<div class="table-items">
 			<b:dataTable class="table table-condensed" var="rows"
-				value="#{items.DTOList}">
+				value="#{items.buyItemsDTOList}" rendered="#{items.itemToBuyOrSale}">
+
+				<b:dataTableColumn>
+					<f:facet name="header">Name</f:facet>
+				#{rows.name}
+			</b:dataTableColumn>
+
+				<b:dataTableColumn>
+					<f:facet name="header">Price</f:facet>
+				#{rows.price}
+			</b:dataTableColumn>
+
+				<b:dataTableColumn>
+					<f:facet name="header">Bid Value</f:facet>
+				#{rows.bidValue}
+			</b:dataTableColumn>
+
+				<b:dataTableColumn>
+					<f:facet name="header">Bid Date</f:facet>
+				#{rows.bidDate}
+			</b:dataTableColumn>
+
+				<b:dataTableColumn>
+					<f:facet name="header">Status</f:facet>
+				#{rows.status}
+			</b:dataTableColumn>
+
+			</b:dataTable>
+
+			<b:dataTable class="table table-condensed" var="rows"
+				value="#{items.DTOList}" rendered="#{not items.itemToBuyOrSale}">
 
 				<b:dataTableColumn>
 					<f:facet name="header">Name</f:facet>
@@ -153,19 +190,12 @@
 
 				<b:dataTableColumn>
 					<f:facet name="header">Opening Date</f:facet>
-					<b:dateTimePicker value="#{rows.openingDate}"
-						rendered="#{rows.editable}"/>
-					<h:outputText value="#{rows.openingDate}"
-						rendered="#{not rows.editable}" />
+					<h:outputText value="#{rows.openingDate}" />
 				</b:dataTableColumn>
 
 				<b:dataTableColumn>
 					<f:facet name="header">Closing Date</f:facet>
-					<b:dateTimePicker value="#{rows.closingDate}"
-						rendered="#{rows.editable}"/>
-					<h:outputText value="#{rows.closingDate}"
-						rendered="#{not rows.editable}">
-					</h:outputText>
+					<h:outputText value="#{rows.closingDate}" />
 				</b:dataTableColumn>
 
 				<b:dataTableColumn>
@@ -190,6 +220,7 @@
 				<b:dataTableColumn>
 					<f:facet name="header">Edit item</f:facet>
 					<h:commandButton id="editButton" class="btn btn-info" value="Edit"
+						disabled="#{items.editDisabled(rows.status)}"
 						rendered="#{not rows.editable}" action="#{items.editAction(rows)}">
 						<f:ajax execute="@this" render="@form" />
 					</h:commandButton>
@@ -203,7 +234,7 @@
 				</b:dataTableColumn>
 			</b:dataTable>
 			<h:commandButton class="btn btn-info" value="Save Changes"
-				action="#{items.saveAction}">
+				action="#{items.saveAction}" rendered="#{not items.itemToBuyOrSale}">
 				<f:ajax execute="@this" render="@form" />
 			</h:commandButton>
 

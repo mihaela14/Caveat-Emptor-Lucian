@@ -16,7 +16,7 @@
 </h:head>
 <h:body>
 	<h:form id="userTable-form">
-		<b:panel look="info" title="Users" collapsible="false">
+		<b:panel look="info" title="" collapsible="false">
 			<b:dataTable id="users-table" var="rows"
 				value="#{userBean.userDTOList}">
 				<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
@@ -65,6 +65,11 @@
 					<h:commandButton class="btn btn-info" value="Disable it"
 						action="#{userBean.disableUser(rows.id)}"
 						rendered="#{rows.enabled and not rows.admin}">
+						<f:ajax execute="@this" render="@form" />
+					</h:commandButton>
+					<h:commandButton class="btn btn-warning" value="Enable it"
+						action="#{userBean.enableUser(rows.id)}"
+						rendered="#{not rows.enabled and not rows.admin}">
 						<f:ajax execute="@this" render="@form" />
 					</h:commandButton>
 				</b:dataTableColumn>

@@ -63,7 +63,7 @@
 			<div class="row top-buttons">
 				<div class="col-md-2 create-button">
 					<h:commandButton type="submit" onclick="createCategory()"
-						value="Create a
+						value="Clear
 						category" class="btn btn-info"></h:commandButton>
 				</div>
 
@@ -77,7 +77,7 @@
 				</div>
 			</div>
 			<br />
-			<ol id="breadcrumb" class="breadcrumb" />
+			<ol id="breadcrumb" class="breadcrumb" style="background:#fff7ef;"/>
 
 			<h:form id="categories-form">
 				<h:outputLabel value="Name:" class="login-label" name="name" />
@@ -99,15 +99,21 @@
 
 				<div class="row">
 					<br />
-					<div class="col-md-1">
+					<div class="col-md-2">
 						<h:commandButton id="contactbtn" class="btn btn-info"
-							name="save-btn" value="Submit"
-							action="#{categoriesOperation.addCategory}">
+							name="save-btn" value="Create a category"
+							action="#{categoriesOperation.addCategory}" style="width: 82%;">
 						</h:commandButton>
 					</div>
-					<div class="col-md">
+					<div class="col-md-2">
+						<h:commandButton id="childcontactbtn" class="btn btn-info"
+							name="save-btn" value="Add subcategory"
+							action="#{categoriesOperation.addChild}" style="width: 80%; margin-left: -35%;">
+						</h:commandButton>
+					</div>
+					<div class="col-md-1">
 						<h:commandButton class="btn btn-info" id="remove-button"
-							action="#{categoriesOperation.removeCategory}" value="Remove">
+							action="#{categoriesOperation.removeCategory}" value="Remove" style="margin-left:-175%;">
 						</h:commandButton>
 					</div>
 					<br />

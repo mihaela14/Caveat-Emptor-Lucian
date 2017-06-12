@@ -64,6 +64,13 @@ public class UserBean {
 	}
 
 	
+	public void enableUser(int userId){
+		UserEntity userEntity= new UserEntity();		
+		userEntity= userDetailsService.findUser(userId);
+		userEntity.setStatus(true);	
+		userDetailsService.updateUser(userEntity);
+		init();	
+	}
 	
 	
 	public List<UsersDetailsDTO> populateUserDTOList(){

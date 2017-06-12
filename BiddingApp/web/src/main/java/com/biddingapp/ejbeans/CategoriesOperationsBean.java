@@ -61,6 +61,12 @@ public class CategoriesOperationsBean {
 		return "main-page"+ "?faces-redirect=true&amp;includeViewParams=true";
 	}
 	
+	public String addChild(){
+		CategoriesDTO dto= getDto();
+		categoriesService.createChild(dto, id);
+		return "main-page"+ "?faces-redirect=true&amp;includeViewParams=true";
+	}
+	
 	
 	public CategoriesDTO getDto() {
 		CategoriesDTO createDto= new CategoriesDTO();

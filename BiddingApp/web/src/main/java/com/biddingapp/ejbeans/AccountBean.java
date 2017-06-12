@@ -138,7 +138,7 @@ public class AccountBean {
 			String currentPassword= value.toString();
 
 			if(!currentPassword.equals(userDto.getPassword())){
-				FacesMessage message= new FacesMessage("*Password does not match");
+				FacesMessage message= new FacesMessage("Password does not match");
 				throw new ValidatorException(message);
 			}
 		}
@@ -154,11 +154,11 @@ public class AccountBean {
 				FacesMessage message= new FacesMessage("*Email is not valid");
 				throw new ValidatorException(message);
 			}else if(getRegisterValidation().isDuplicateEmail(email) && !email.equals(userDto.getEmail())){
-				FacesMessage message= new FacesMessage("*Email already exists");
+				FacesMessage message= new FacesMessage("Email already exists");
 				throw new ValidatorException(message);
 			}
 		}catch(AccountDetailsException ade){
-			FacesMessage message= new FacesMessage("*Email is not valid");
+			FacesMessage message= new FacesMessage("Email is not valid");
 		}
 	}
 	
@@ -166,8 +166,8 @@ public class AccountBean {
 	public void isPhoneNumberValid(FacesContext context, UIComponent componentToValidate, Object value){
 			String phone= value.toString();
 			
-			if(phone.length()!=10){
-				FacesMessage message= new FacesMessage("*Phone Number must be 10");
+			if(phone.length()!=9){
+				FacesMessage message= new FacesMessage("Phone Number must be 9");
 				throw new ValidatorException(message);
 			}
 	}

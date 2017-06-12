@@ -6,20 +6,29 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
+import com.biddingapp.bidding.BiddingService;
+import com.biddingapp.entities.BiddingEntities;
 import com.biddingapp.entities.ItemsEntities;
 import com.biddingapp.items.ItemsService;
 import com.biddingapp.items.utilities.ItemTableSorting;
+import com.fortech.dto.BidItemsDTO;
 import com.fortech.dto.ItemsDTO;
 import com.fortech.exception.AccountDetailsException;
 import com.fortech.exception.BiddingOperationsException;
 import com.fortech.exception.ItemsDetailsException;
+import com.fortech.utils.Constants;
 import com.fortech.utils.ItemStatus;
 
 @ManagedBean(name ="items")
@@ -28,6 +37,9 @@ public class ItemsBean {
 
 	@EJB
 	private ItemsService itemsService;
+
+	@EJB
+	private BiddingService biddingService;
 
 	@ManagedProperty(value = "#{login}")
 	private UserLoginBean userDetails;
@@ -38,19 +50,38 @@ public class ItemsBean {
 
 	private List<ItemsDTO> DTOList;
 
+	private List<BidItemsDTO> buyItemsDTOList;
+
 	private int categoryId;
+
+	private boolean itemToBuyOrSale;
 
 
 	@PostConstruct
 	public void init() {
 		itemDto = new ItemsDTO();
 		DTOList= populateDTOList();
+		setBuyItemsDTOList(populateItemsToBuyDTOList());
 	}
+
 
 	public String editAction(ItemsDTO item){
 		item.setEditable(true);
 		return null;
 	}
+
+
+	public void changeToBuy(){
+		itemToBuyOrSale=true;
+		init();
+	}
+
+
+	public void changeToSell(){
+		itemToBuyOrSale=false;
+		init();
+	}
+
 
 	public String cancelAction(ItemsDTO item){
 		item.setEditable(false);
@@ -75,7 +106,10 @@ public class ItemsBean {
 
 		itemEntity.setId(items.getId());
 		itemEntity.setName(items.getName());
-		itemEntity.setPrice(items.getPrice());
+		
+		Float price= Float.parseFloat(String.format("%.2f",items.getPrice()));
+		itemEntity.setPrice(price);
+		
 		itemEntity.setCategory(itemsService.getCategory(items.getCategoryId()));
 		itemEntity.setOpeningDate(opening);
 		itemEntity.setClosingDate(closing);
@@ -102,6 +136,43 @@ public class ItemsBean {
 		}
 	}
 
+
+	public List<BidItemsDTO> populateItemsToBuyDTOList(){
+		List<BiddingEntities> bids= new ArrayList<>();
+
+		try {
+			bids= biddingService.getBidsByUsername(userDetails.getAccountName());
+			buyItemsDTOList= new ArrayList<>();
+
+			for (BiddingEntities bid : bids) {
+				BidItemsDTO bidItemsDTO = getItemsToBuyTableDto(bid);
+				buyItemsDTOList.add(bidItemsDTO);
+			}
+			return getBuyItemsDTOList();
+
+		} catch (AccountDetailsException | BiddingOperationsException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
+	private BidItemsDTO getItemsToBuyTableDto(BiddingEntities bid) {
+		BidItemsDTO biddingDto= new BidItemsDTO();
+
+		biddingDto.setBidValue(bid.getBidValue());
+		biddingDto.setBidDate(bid.getDate());
+
+		ItemsEntities item= new ItemsEntities();
+		item= biddingService.getItemsbyId(bid.getItemId().getId());
+
+		biddingDto.setName(item.getName());
+		biddingDto.setClosingDate(item.getClosingDate());
+		biddingDto.setPrice(item.getPrice());
+		biddingDto.setStatus(item.getStatus());
+
+		return biddingDto;
+	}
 
 	public ItemsDTO getTableDto(ItemsEntities item){
 		ItemsDTO createDto= new ItemsDTO();
@@ -157,7 +228,10 @@ public class ItemsBean {
 		Timestamp currentTimespamp= getCurentTimestamp();
 
 		itemEntity.setName(itemDto.getName());
-		itemEntity.setPrice(itemDto.getPrice());		
+		
+		Float price= Float.parseFloat(String.format("%.2f",itemDto.getPrice()));
+		itemEntity.setPrice(price);
+		
 		itemEntity.setOpeningDate(opening);
 		itemEntity.setClosingDate(closing);
 
@@ -223,70 +297,106 @@ public class ItemsBean {
 		return null;
 	}
 
-	public void sortByName(){
-		ItemTableSorting.sortTableByName(DTOList);
-	}
 
-	public void sortByOpeningDate(){
-		ItemTableSorting.sortbyOpeningDate(DTOList);
-	}
 
-	public void sortByClosingDate(){
-		ItemTableSorting.sortbyClosingDate(DTOList);
-	}
+	public void IsPriceValid(FacesContext context, UIComponent componentToValidate, Object value){
+		Float price= (Float)value;
 
-	public void sortByStatus(){
-		ItemTableSorting.sortByStatus(DTOList);
-	}
-
-	public void sortByCategory(){
-		ItemTableSorting.sortByCategory(DTOList);
-	}
-
-	public void sortByPrice(){
-		ItemTableSorting.sortByPrice(DTOList);
+		if(price<=0){
+			FacesMessage message= new FacesMessage("*Price cannot be less than 0");
+			throw new ValidatorException(message);
+		}
 	}
 
 
-	public ItemsService getItemsService() {
-		return itemsService;
-	}
-	public void setItemsService(ItemsService itemsService) {
-		this.itemsService = itemsService;
-	}
-
-	public ItemsDTO getItemDto() {
-		return itemDto;
-	}
-	public void setItemDto(ItemsDTO itemDto) {
-		this.itemDto = itemDto;
+	public boolean editDisabled(String status){
+		if(status.equals("CLOSED")){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
-	public UserLoginBean getUserDetails() {
-		return userDetails;
-	}
-	public void setUserDetails(UserLoginBean userDetails) {
-		this.userDetails = userDetails;
-	}
+		public void sortByName(){
+			ItemTableSorting.sortTableByName(DTOList);
+		}
 
-	public List<ItemsEntities> getItemsList() {
-		return itemsList;
-	}
-	public void setItemsList(List<ItemsEntities> itemsList) {
-		this.itemsList = itemsList;
-	}
+		public void sortByOpeningDate(){
+			ItemTableSorting.sortbyOpeningDate(DTOList);
+		}
 
-	public int getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
+		public void sortByClosingDate(){
+			ItemTableSorting.sortbyClosingDate(DTOList);
+		}
 
-	public List<ItemsDTO> getDTOList() {
-		return DTOList;
+		public void sortByStatus(){
+			ItemTableSorting.sortByStatus(DTOList);
+		}
+
+		public void sortByCategory(){
+			ItemTableSorting.sortByCategory(DTOList);
+		}
+
+		public void sortByPrice(){
+			ItemTableSorting.sortByPrice(DTOList);
+		}
+
+
+		public ItemsService getItemsService() {
+			return itemsService;
+		}
+		public void setItemsService(ItemsService itemsService) {
+			this.itemsService = itemsService;
+		}
+
+		public ItemsDTO getItemDto() {
+			return itemDto;
+		}
+		public void setItemDto(ItemsDTO itemDto) {
+			this.itemDto = itemDto;
+		}
+
+		public UserLoginBean getUserDetails() {
+			return userDetails;
+		}
+		public void setUserDetails(UserLoginBean userDetails) {
+			this.userDetails = userDetails;
+		}
+
+		public List<ItemsEntities> getItemsList() {
+			return itemsList;
+		}
+		public void setItemsList(List<ItemsEntities> itemsList) {
+			this.itemsList = itemsList;
+		}
+
+		public int getCategoryId() {
+			return categoryId;
+		}
+		public void setCategoryId(int categoryId) {
+			this.categoryId = categoryId;
+		}
+
+		public List<ItemsDTO> getDTOList() {
+			return DTOList;
+		}
+		public void setDTOList(List<ItemsDTO> dTOList) {
+			DTOList = dTOList;
+		}
+
+		public List<BidItemsDTO> getBuyItemsDTOList() {
+			return buyItemsDTOList;
+		}
+
+		public void setBuyItemsDTOList(List<BidItemsDTO> buyItemsDTOList) {
+			this.buyItemsDTOList = buyItemsDTOList;
+		}
+
+		public boolean isItemToBuyOrSale() {
+			return itemToBuyOrSale;
+		}
+
+		public void setItemToBuyOrSale(boolean itemToBuyOrSale) {
+			this.itemToBuyOrSale = itemToBuyOrSale;
+		}
 	}
-	public void setDTOList(List<ItemsDTO> dTOList) {
-		DTOList = dTOList;
-	}
-}

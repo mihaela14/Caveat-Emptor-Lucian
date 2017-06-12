@@ -23,54 +23,62 @@
 			<div class="col-md-9">
 				<b:panel look="info" title="Account details" collapsible="false">
 
-					<br />
-					<h:outputLabel class="info-label" value="First Name:" />
-					<h:outputText class="info-text" value="#{account.user.firstName}"
-						rendered="#{not account.accountDetailsEditable}" />
-					<h:inputText class="form-control info-input"
-						value="#{account.user.firstName}"
-						rendered="#{account.accountDetailsEditable}" />
-					<br />
+					<div class="row">
+						<div class="col-md-6">
+							<br />
+							<h:outputLabel class="info-label" value="First Name:" />
+							<h:outputText class="info-text" value="#{account.user.firstName}"
+								rendered="#{not account.accountDetailsEditable}" />
+							<h:inputText class="form-control info-input-adress"
+								id="first-name-input" value="#{account.user.firstName}"
+								rendered="#{account.accountDetailsEditable}" />
+							<br />
 
-					<h:outputLabel class="info-label" value="Last Name:" />
-					<h:outputText class="info-text" value="#{account.user.lastName}"
-						rendered="#{not account.accountDetailsEditable}" />
-					<h:inputText class="form-control info-input"
-						value="#{account.user.lastName}"
-						rendered="#{account.accountDetailsEditable}" />
-					<br />
+							<h:outputLabel class="info-label" value="Last Name:" />
+							<h:outputText class="info-text" value="#{account.user.lastName}"
+								rendered="#{not account.accountDetailsEditable}" />
+							<h:inputText class="form-control info-input-adress"
+								id="last-name-input" value="#{account.user.lastName}"
+								rendered="#{account.accountDetailsEditable}" />
+							<br />
 
-					<h:outputLabel class="info-label" value="Email:" />
-					<h:outputText class="info-text" value="#{account.user.email}"
-						rendered="#{not account.accountDetailsEditable}" />
-					<h:inputText id="change-email" class="form-control info-input"
-						value="#{account.user.email}"
-						rendered="#{account.accountDetailsEditable}" required="true"
-						requiredMessage="*Please enter an email adress"
-						validator="#{account.isNewEmailValid}" />
-					<ui:fragment rendered="#{account.accountDetailsEditable}">
-						<br />
-					</ui:fragment>
+							<h:outputLabel class="info-label" value="Email:" />
+							<h:outputText class="info-text" value="#{account.user.email}"
+								rendered="#{not account.accountDetailsEditable}" />
+							<h:inputText id="change-email"
+								class="form-control info-input-adress"
+								value="#{account.user.email}"
+								rendered="#{account.accountDetailsEditable}" required="true"
+								requiredMessage="*Please enter an email adress"
+								validator="#{account.isNewEmailValid}" />
+							<ui:fragment rendered="#{account.accountDetailsEditable}">
+								<br />
+							</ui:fragment>
+						</div>
 
-					<h:outputLabel id="confirm-password" class="info-label"
-						value="Current Password:"
-						rendered="#{account.accountDetailsEditable}" />
-					<h:inputSecret class="form-control info-input"
-						value="#{account.currentPassword}"
-						rendered="#{account.accountDetailsEditable}"
-						validator="#{account.isOldPasswordValid}" required="true"
-						requiredMessage="*Please input your current password" />
-					<br />
+						<div class="col-md-6">
+							<br />
+							<h:outputLabel id="confirm-password" class="info-label"
+								value="Current Password:"
+								rendered="#{account.accountDetailsEditable}" />
+							<h:inputSecret class="form-control info-input-passwords"
+								id="confirm-input" value="#{account.currentPassword}"
+								rendered="#{account.accountDetailsEditable}"
+								validator="#{account.isOldPasswordValid}" required="true"
+								requiredMessage="*Please input your current password" />
+							<br />
 
-					<h:outputLabel class="info-label" value="New Password:"
-						rendered="#{account.accountDetailsEditable}" />
-					<h:inputSecret class="form-control info-input"
-						value="#{account.user.password}"
-						rendered="#{account.accountDetailsEditable}" required="true"
-						requiredMessage="*New password cannotbe null" />
-					<ui:fragment rendered="#{account.accountDetailsEditable}">
-						<br />
-					</ui:fragment>
+							<h:outputLabel class="info-label" value="New Password:"
+								rendered="#{account.accountDetailsEditable}" />
+							<h:inputSecret class="form-control info-input-passwords"
+								id="password-input" value="#{account.user.password}"
+								rendered="#{account.accountDetailsEditable}" required="true"
+								requiredMessage="*New password cannot be null" />
+							<ui:fragment rendered="#{account.accountDetailsEditable}">
+								<br />
+							</ui:fragment>
+						</div>
+					</div>
 
 
 					<b:buttonGroup>
@@ -84,9 +92,19 @@
 							rendered="#{account.accountDetailsEditable}"
 							action="#{account.getAccountEditStatus()}" immediate="true" />
 					</b:buttonGroup>
+					<br />
 
-					<h:message for="change-email" style="color:red;" class="left" />
-					<h:message for="confirm-password" style="color:red;" class="left" />
+					<h:message for="password-input" class="shipping-messages"
+						style="color:red" />
+					<h:message for="confirm-input" class="shipping-messages"
+						style="color:red" />
+					<h:message for="change-email" class="shipping-messages"
+						style="color:red" />
+					<h:message for="first-name-input" class="shipping-messages"
+						style="color:red" />
+					<h:message for="last-name-input" class="shipping-messages"
+						style="color:red" />
+
 				</b:panel>
 			</div>
 		</div>
@@ -98,30 +116,34 @@
 				<h:outputLabel value="Adress:" />
 				<h:outputText class="info-text" value="#{account.accountDto.adress}"
 					rendered="#{not account.shippingEditable}" />
-				<h:inputText class="form-control info-input"
+				<h:inputText class="form-control info-input-shipping"
 					value="#{account.accountDto.adress}"
-					rendered="#{account.shippingEditable}" />
+					rendered="#{account.shippingEditable}" required="true"
+					requiredMessage="*Adress is required" />
 				<br />
 				<h:outputLabel value="Zipcode:" />
 				<h:outputText class="info-text"
 					value="#{account.accountDto.zipcode}"
 					rendered="#{not account.shippingEditable}" />
-				<h:inputText class="form-control info-input"
+				<h:inputText class="form-control info-input-shipping"
 					value="#{account.accountDto.zipcode}"
-					rendered="#{account.shippingEditable}" />
+					rendered="#{account.shippingEditable}" required="true"
+					requiredMessage="*Zipcode is required" />
 				<br />
 				<h:outputLabel value="City:" />
 				<h:outputText class="info-text" value="#{account.accountDto.city}"
 					rendered="#{not account.shippingEditable}" />
-				<h:inputText class="form-control info-input"
+				<h:inputText class="form-control info-input-shipping"
+					id="city-input" required="true"
+					requiredMessage="*City field is required"
 					value="#{account.accountDto.city}"
 					rendered="#{account.shippingEditable}" />
 				<br />
 				<h:outputLabel value="Phone number:" />
 				<h:outputText class="info-text" value="#{account.accountDto.phone}"
 					rendered="#{not account.shippingEditable}" />
-				<h:inputText class="form-control info-input"
-					value="#{account.accountDto.phone}"
+				<h:inputText class="form-control info-input-shipping"
+					id="phone-input" value="#{account.accountDto.phone}"
 					rendered="#{account.shippingEditable}" required="true"
 					requiredMessage="*Phone Number cannot be null"
 					validator="#{account.isPhoneNumberValid}" />
@@ -139,18 +161,40 @@
 						action="#{account.getShippingEditStatus()}" immediate="true" />
 				</b:buttonGroup>
 
+				<h:message for="phone-input" class="shipping-messages"
+					style="color:red" errorClass="true" />
+				<h:message for="city-input" class="shipping-messages"
+					style="color:red" />
+
 			</b:panel>
 		</div>
 	</h:form>
 	<style>
-.info-input {
+.info-input-shipping {
 	width: 86%;
 	margin-top: -32px;
 	margin-left: 14%;
 }
 
+.info-input-adress {
+	width: 85%;
+	margin-top: -32px;
+	margin-left: 18%;
+}
+
+.info-input-passwords {
+	width: 71%;
+	margin-top: -32px;
+	margin-left: 29%;
+}
+
 .info-text {
 	margin-left: 1%;
+}
+
+.shipping-messages {
+	width: 100%;
+	float: left;
 }
 </style>
 </h:body>

@@ -6,8 +6,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import com.biddingapp.bidding.BiddingService;
 import com.biddingapp.categories.CategoriesService;
@@ -115,7 +119,13 @@ public class BiddingBean {
 
 
 	public void submitBid() {
-		biddingService.bid(getBiddingEntity(biddingDTO));
+		BiddingEntities bidEntity= new BiddingEntities();
+		bidEntity= getBiddingEntity(biddingDTO);
+		
+		Float valueOfBid= Float.parseFloat(String.format("%.2f",bidEntity.getBidValue()));		
+		bidEntity.setBidValue(valueOfBid);
+		
+		biddingService.bid(bidEntity);
 		hasBid = true;
 	}
 
@@ -204,6 +214,16 @@ public class BiddingBean {
 			createDto.setWinner(item.getWinnerId().getAccountName());
 		}
 		return createDto;
+	}	
+	
+
+	public void IsBidValid(FacesContext context, UIComponent componentToValidate, Object value){
+		Float bid= (Float)value;
+
+		if(bid<=0){
+			FacesMessage message= new FacesMessage("*Bid cannot be less or equal to 0");
+			throw new ValidatorException(message);
+		}
 	}
 
 

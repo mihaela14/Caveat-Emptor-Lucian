@@ -24,6 +24,7 @@ import com.biddingapp.queries.ItemsQueries;
 	@NamedQuery(name="findBidsByCategory", query= ItemsQueries.FIND_ITEM_BY_CATEGORY),
 	@NamedQuery(name="findBidByItemUser", query= BiddingQueries.FIND_BID_BY_ITEM_USER),
 	@NamedQuery(name="findBidById", query= BiddingQueries.FIND_BID_BY_ID),
+	@NamedQuery(name="findBidsByUser", query= BiddingQueries.FIND_BIDS_BY_USER),
 	@NamedQuery(name="countBidsByItem", query= BiddingQueries.COUNT_BID),
 	@NamedQuery(name="maxBidByItem", query= BiddingQueries.MAX_BID)
 })
