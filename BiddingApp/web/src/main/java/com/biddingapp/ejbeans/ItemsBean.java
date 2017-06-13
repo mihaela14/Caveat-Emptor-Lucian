@@ -303,7 +303,17 @@ public class ItemsBean {
 		Float price= (Float)value;
 
 		if(price<=0){
-			FacesMessage message= new FacesMessage("*Price cannot be less than 0");
+			FacesMessage message= new FacesMessage("Price cannot be less than 0");
+			throw new ValidatorException(message);
+		}
+	}
+	
+	
+	public void isCategoryValid(FacesContext context, UIComponent componentToValidate, Object value){
+		int category= (int) value;
+		
+		if(category < 1){
+			FacesMessage message= new FacesMessage("Please select a category");
 			throw new ValidatorException(message);
 		}
 	}
