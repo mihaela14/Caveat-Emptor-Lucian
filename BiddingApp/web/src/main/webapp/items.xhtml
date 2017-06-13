@@ -57,6 +57,17 @@
 	margin-left: 3%;
 	width: 74%;
 }
+
+.panel-heading {
+	padding-top: 5px;
+	padding-bottom: 6px;
+}
+.show {
+    background: orange;
+}
+.showWhite {
+    background: white;
+}
 </style>
 </h:head>
 <h:body>
@@ -69,11 +80,11 @@
 						data-toggle="dropdown">
 						Items to: <span class="caret"></span>
 					</button>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu" style="min-width: 46%">
 						<li><h:commandLink action="#{items.changeToBuy()}"
-								value="Buy" style="background:orange;" /></li>
+								value="Buy" disabled="#{items.itemToBuyOrSale}" styleClass="#{items.itemToBuyOrSale ? 'show' : 'showWhite'}" style="padding-left: 1%;"/></li>
 						<li><h:commandLink action="#{items.changeToSell()}"
-								value="Sell" /></li>
+								value="Sell" disabled="#{not items.itemToBuyOrSale}" styleClass="#{items.itemToBuyOrSale ? 'showWhite' : 'show'}" style="padding-left: 1%;"/></li>
 					</ul>
 				</div>
 			</h:form>
@@ -233,6 +244,7 @@
 
 				</b:dataTableColumn>
 			</b:dataTable>
+
 			<h:commandButton class="btn btn-info" value="Save Changes"
 				action="#{items.saveAction}" rendered="#{not items.itemToBuyOrSale}">
 				<f:ajax execute="@this" render="@form" />

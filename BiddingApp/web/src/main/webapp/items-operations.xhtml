@@ -48,8 +48,7 @@
 
 			<h:outputLabel value="Select a category: " />
 			<h:inputText id="itemCategory" class="form-control item-input"
-				value="#{items.itemDto.categoryName}" readonly="true"
-				required="true" requiredMessage="Please select a category for the item">
+				value="#{items.itemDto.categoryName}" readonly="true">
 			</h:inputText>
 			<br />
 
@@ -77,7 +76,7 @@
 			<br />
 
 			<h:inputHidden id="id-field" class="item-input"
-				value="#{items.categoryId}">
+				value="#{items.categoryId}" required="true" requiredMessage="Please select a category" validator="#{items.isCategoryValid}">
 			</h:inputHidden>
 
 			<h:commandButton id="contactbtn" class="btn btn-info" value="Submit"

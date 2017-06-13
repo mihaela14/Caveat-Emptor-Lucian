@@ -16,65 +16,63 @@
 </h:head>
 <h:body>
 	<h:form id="userTable-form">
-		<b:panel look="info" title="" collapsible="false">
-			<b:dataTable id="users-table" var="rows"
-				value="#{userBean.userDTOList}">
-				<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
-					<f:facet name="header">Name</f:facet>
-					<h:outputText value="#{rows.name}">
-					</h:outputText>
-				</b:dataTableColumn>
-				<b:dataTableColumn>
-					<f:facet name="header">Account</f:facet>
-					<h:outputText value="#{rows.accountName}">
-					</h:outputText>
-				</b:dataTableColumn>
-				<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
-					<f:facet name="header">Email</f:facet>
-					<h:outputText value="#{rows.email}">
-					</h:outputText>
-				</b:dataTableColumn>
-				<b:dataTableColumn>
-					<f:facet name="header">Items Placed</f:facet>
-					<h:outputText value="#{rows.itemsPlaced}">
-					</h:outputText>
-				</b:dataTableColumn>
-				<b:dataTableColumn>
-					<f:facet name="header">Items Sold</f:facet>
-					<h:outputText value="#{rows.itemsSold}">
-					</h:outputText>
-				</b:dataTableColumn>
-				<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
-					<f:facet name="header">Items Bought</f:facet>
-					<h:outputText value="#{rows.itemsBought}">
-					</h:outputText>
-				</b:dataTableColumn>
-				<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
-					<f:facet name="header">Is Admin ?</f:facet>
-					<h:outputText value="#{rows.admin}">
-					</h:outputText>
-				</b:dataTableColumn>
-				<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
-					<f:facet name="header">Is Enabled ?</f:facet>
-					<h:outputText value="#{rows.enabled}">
-					</h:outputText>
-				</b:dataTableColumn>
-				<b:dataTableColumn searchable="false"
-					rendered="#{userBean.loggedUserAuthorized}">
-					<f:facet name="header">Close account</f:facet>
-					<h:commandButton class="btn btn-info" value="Disable it"
-						action="#{userBean.disableUser(rows.id)}"
-						rendered="#{rows.enabled and not rows.admin}">
-						<f:ajax execute="@this" render="@form" />
-					</h:commandButton>
-					<h:commandButton class="btn btn-warning" value="Enable it"
-						action="#{userBean.enableUser(rows.id)}"
-						rendered="#{not rows.enabled and not rows.admin}">
-						<f:ajax execute="@this" render="@form" />
-					</h:commandButton>
-				</b:dataTableColumn>
-			</b:dataTable>
-		</b:panel>
+		<b:dataTable id="users-table" var="rows"
+			value="#{userBean.userDTOList}">
+			<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+				<f:facet name="header">Name</f:facet>
+				<h:outputText value="#{rows.name}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn>
+				<f:facet name="header">Account</f:facet>
+				<h:outputText value="#{rows.accountName}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+				<f:facet name="header">Email</f:facet>
+				<h:outputText value="#{rows.email}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn>
+				<f:facet name="header">Items Placed</f:facet>
+				<h:outputText value="#{rows.itemsPlaced}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn>
+				<f:facet name="header">Items Sold</f:facet>
+				<h:outputText value="#{rows.itemsSold}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+				<f:facet name="header">Items Bought</f:facet>
+				<h:outputText value="#{rows.itemsBought}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+				<f:facet name="header">Is Admin ?</f:facet>
+				<h:outputText value="#{rows.admin}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn rendered="#{userBean.loggedUserAuthorized}">
+				<f:facet name="header">Is Enabled ?</f:facet>
+				<h:outputText value="#{rows.enabled}">
+				</h:outputText>
+			</b:dataTableColumn>
+			<b:dataTableColumn searchable="false"
+				rendered="#{userBean.loggedUserAuthorized}">
+				<f:facet name="header">Close account</f:facet>
+				<h:commandButton class="btn btn-info" value="Disable it"
+					action="#{userBean.disableUser(rows.id)}"
+					rendered="#{rows.enabled and not rows.admin}">
+					<f:ajax execute="@this" render="@form" />
+				</h:commandButton>
+				<h:commandButton class="btn btn-warning" value="Enable it"
+					action="#{userBean.enableUser(rows.id)}"
+					rendered="#{not rows.enabled and not rows.admin}">
+					<f:ajax execute="@this" render="@form" />
+				</h:commandButton>
+			</b:dataTableColumn>
+		</b:dataTable>
 	</h:form>
 </h:body>
 </html>
