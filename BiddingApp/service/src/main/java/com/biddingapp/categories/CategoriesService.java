@@ -84,15 +84,19 @@ public class CategoriesService {
 			categoriesRepository.addCategory(category);
 		}else{
 			CategoriesEntities selected= categoriesRepository.findCategorybyId(id);
-			if(selected.getName().equals(categoriesdto.getName())){
-				selected.setDescription(categoriesdto.getDescription());
-				categoriesRepository.updateCategory(selected);
-			}else{
-				category.setParent(selected);
-				categoriesRepository.addCategory(category);
-			}
+			category.setParent(selected);
+			categoriesRepository.addCategory(category);
 		}
 		categoriesdto= null;
+	}
+
+
+	public void updateChild(CategoriesDTO categoriesdto, int id){
+
+		CategoriesEntities selected= categoriesRepository.findCategorybyId(id);
+		selected.setDescription(categoriesdto.getDescription());
+		selected.setName(categoriesdto.getName());
+		categoriesRepository.updateCategory(selected);
 	}
 
 

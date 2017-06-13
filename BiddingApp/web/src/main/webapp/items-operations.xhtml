@@ -58,12 +58,13 @@
 						<h:outputLabel value="Opening Date:" />
 						<b:dateTimePicker id="opening"
 							value="#{items.itemDto.openingDate}" ajax="true" required="true"
-							requiredMessage="Please select a opening date for the item" />
+							requiredMessage="Please select a opening date for the item" validator="#{items.isOpeningDateValid}"/>
 						<br />
+						
 						<h:outputLabel id="closing" value="Closing Date:" />
 						<b:dateTimePicker value="#{items.itemDto.closingDate}" ajax="true"
 							required="true"
-							requiredMessage="Please select a closing date for the item" />
+							requiredMessage="Please select a closing date for the item" validator="#{items.isClosingDateValid}"/>
 					</div>
 				</b:form>
 			</b:container>

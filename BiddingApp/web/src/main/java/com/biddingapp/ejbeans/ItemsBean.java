@@ -56,6 +56,8 @@ public class ItemsBean {
 
 	private boolean itemToBuyOrSale;
 
+	Timestamp openingDateValidator;
+
 
 	@PostConstruct
 	public void init() {
@@ -106,10 +108,10 @@ public class ItemsBean {
 
 		itemEntity.setId(items.getId());
 		itemEntity.setName(items.getName());
-		
+
 		Float price= Float.parseFloat(String.format("%.2f",items.getPrice()));
 		itemEntity.setPrice(price);
-		
+
 		itemEntity.setCategory(itemsService.getCategory(items.getCategoryId()));
 		itemEntity.setOpeningDate(opening);
 		itemEntity.setClosingDate(closing);
@@ -228,10 +230,10 @@ public class ItemsBean {
 		Timestamp currentTimespamp= getCurentTimestamp();
 
 		itemEntity.setName(itemDto.getName());
-		
+
 		Float price= Float.parseFloat(String.format("%.2f",itemDto.getPrice()));
 		itemEntity.setPrice(price);
-		
+
 		itemEntity.setOpeningDate(opening);
 		itemEntity.setClosingDate(closing);
 
@@ -307,13 +309,27 @@ public class ItemsBean {
 			throw new ValidatorException(message);
 		}
 	}
-	
-	
+
+
 	public void isCategoryValid(FacesContext context, UIComponent componentToValidate, Object value){
 		int category= (int) value;
-		
+
 		if(category < 1){
 			FacesMessage message= new FacesMessage("Please select a category");
+			throw new ValidatorException(message);
+		}
+	}
+
+
+	public void isOpeningDateValid(FacesContext context, UIComponent componentToValidate, Object value){
+		openingDateValidator= stringToTimestamp(value.toString());
+	}
+
+
+	public void isClosingDateValid(FacesContext context, UIComponent componentToValidate, Object value){
+		Timestamp closingDate= stringToTimestamp(value.toString());	
+		if(openingDateValidator.after(closingDate)){
+			FacesMessage message= new FacesMessage("Opening date cannot be after the closing date of the bid");
 			throw new ValidatorException(message);
 		}
 	}
@@ -327,86 +343,86 @@ public class ItemsBean {
 		}
 	}
 
-		public void sortByName(){
-			ItemTableSorting.sortTableByName(DTOList);
-		}
-
-		public void sortByOpeningDate(){
-			ItemTableSorting.sortbyOpeningDate(DTOList);
-		}
-
-		public void sortByClosingDate(){
-			ItemTableSorting.sortbyClosingDate(DTOList);
-		}
-
-		public void sortByStatus(){
-			ItemTableSorting.sortByStatus(DTOList);
-		}
-
-		public void sortByCategory(){
-			ItemTableSorting.sortByCategory(DTOList);
-		}
-
-		public void sortByPrice(){
-			ItemTableSorting.sortByPrice(DTOList);
-		}
-
-
-		public ItemsService getItemsService() {
-			return itemsService;
-		}
-		public void setItemsService(ItemsService itemsService) {
-			this.itemsService = itemsService;
-		}
-
-		public ItemsDTO getItemDto() {
-			return itemDto;
-		}
-		public void setItemDto(ItemsDTO itemDto) {
-			this.itemDto = itemDto;
-		}
-
-		public UserLoginBean getUserDetails() {
-			return userDetails;
-		}
-		public void setUserDetails(UserLoginBean userDetails) {
-			this.userDetails = userDetails;
-		}
-
-		public List<ItemsEntities> getItemsList() {
-			return itemsList;
-		}
-		public void setItemsList(List<ItemsEntities> itemsList) {
-			this.itemsList = itemsList;
-		}
-
-		public int getCategoryId() {
-			return categoryId;
-		}
-		public void setCategoryId(int categoryId) {
-			this.categoryId = categoryId;
-		}
-
-		public List<ItemsDTO> getDTOList() {
-			return DTOList;
-		}
-		public void setDTOList(List<ItemsDTO> dTOList) {
-			DTOList = dTOList;
-		}
-
-		public List<BidItemsDTO> getBuyItemsDTOList() {
-			return buyItemsDTOList;
-		}
-
-		public void setBuyItemsDTOList(List<BidItemsDTO> buyItemsDTOList) {
-			this.buyItemsDTOList = buyItemsDTOList;
-		}
-
-		public boolean isItemToBuyOrSale() {
-			return itemToBuyOrSale;
-		}
-
-		public void setItemToBuyOrSale(boolean itemToBuyOrSale) {
-			this.itemToBuyOrSale = itemToBuyOrSale;
-		}
+	public void sortByName(){
+		ItemTableSorting.sortTableByName(DTOList);
 	}
+
+	public void sortByOpeningDate(){
+		ItemTableSorting.sortbyOpeningDate(DTOList);
+	}
+
+	public void sortByClosingDate(){
+		ItemTableSorting.sortbyClosingDate(DTOList);
+	}
+
+	public void sortByStatus(){
+		ItemTableSorting.sortByStatus(DTOList);
+	}
+
+	public void sortByCategory(){
+		ItemTableSorting.sortByCategory(DTOList);
+	}
+
+	public void sortByPrice(){
+		ItemTableSorting.sortByPrice(DTOList);
+	}
+
+
+	public ItemsService getItemsService() {
+		return itemsService;
+	}
+	public void setItemsService(ItemsService itemsService) {
+		this.itemsService = itemsService;
+	}
+
+	public ItemsDTO getItemDto() {
+		return itemDto;
+	}
+	public void setItemDto(ItemsDTO itemDto) {
+		this.itemDto = itemDto;
+	}
+
+	public UserLoginBean getUserDetails() {
+		return userDetails;
+	}
+	public void setUserDetails(UserLoginBean userDetails) {
+		this.userDetails = userDetails;
+	}
+
+	public List<ItemsEntities> getItemsList() {
+		return itemsList;
+	}
+	public void setItemsList(List<ItemsEntities> itemsList) {
+		this.itemsList = itemsList;
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public List<ItemsDTO> getDTOList() {
+		return DTOList;
+	}
+	public void setDTOList(List<ItemsDTO> dTOList) {
+		DTOList = dTOList;
+	}
+
+	public List<BidItemsDTO> getBuyItemsDTOList() {
+		return buyItemsDTOList;
+	}
+
+	public void setBuyItemsDTOList(List<BidItemsDTO> buyItemsDTOList) {
+		this.buyItemsDTOList = buyItemsDTOList;
+	}
+
+	public boolean isItemToBuyOrSale() {
+		return itemToBuyOrSale;
+	}
+
+	public void setItemToBuyOrSale(boolean itemToBuyOrSale) {
+		this.itemToBuyOrSale = itemToBuyOrSale;
+	}
+}

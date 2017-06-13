@@ -116,8 +116,14 @@
 						</h:commandButton>
 					</div>
 					<div class="col-md-1">
+						<h:commandButton id="updatecontactbtn" class="btn btn-info"
+							name="save-btn" value="Update" style="width: 120%; margin-left: -175%;"
+							action="#{categoriesOperation.updateChild}">
+						</h:commandButton>
+					</div>
+					<div class="col-md-1">
 						<h:commandButton class="btn btn-info" id="remove-button"
-							action="#{categoriesOperation.removeCategory}" value="Remove" style="margin-left:-175%;">
+							action="#{categoriesOperation.removeCategory}" value="Remove" style="margin-left:-196%;">
 						</h:commandButton>
 					</div>
 					<br />

@@ -54,7 +54,11 @@
 		 function selectNode(nodeId) {
 			            var node = $('#tree').treeview('getNode', nodeId);
 			            $('#tree').treeview('selectNode', [ node, { silent: true } ]);
+			
 			 			document.getElementById('categories-form:remove-button').disabled= false;
+						document.getElementById('categories-form:updatecontactbtn').disabled= false;
+						document.getElementById('categories-form:childcontactbtn').disabled= false;
+						
 			            createBreadcrumb(node);
 			        }
 		 
@@ -86,7 +90,10 @@
 						document.getElementById('categories-form:category-name').value= name;
 			 			document.getElementById('categories-form:description').value= description;
 			 			document.getElementById('categories-form:id-field').value= id;
+			 			
 			 			document.getElementById('categories-form:remove-button').disabled= false;
+						document.getElementById('categories-form:updatecontactbtn').disabled= false;
+						document.getElementById('categories-form:childcontactbtn').disabled= false;
 			 			
 					 }
 
@@ -111,7 +118,10 @@
 						document.getElementById('categories-form:category-name').value = null;
 						document.getElementById('categories-form:description').value = null;
 						document.getElementById('categories-form:id-field').value= null;
+						
 						document.getElementById('categories-form:remove-button').disabled= true;
+						document.getElementById('categories-form:updatecontactbtn').disabled= true;
+						document.getElementById('categories-form:childcontactbtn').disabled= true;
 		}
 
 		
@@ -132,6 +142,8 @@
 			}});
 			$('#tree').treeview('collapseAll', { silent: true });
 			document.getElementById('categories-form:remove-button').disabled= true;
+			document.getElementById('categories-form:updatecontactbtn').disabled= true;
+			document.getElementById('categories-form:childcontactbtn').disabled= true;
 		});
 	
 	</script>
