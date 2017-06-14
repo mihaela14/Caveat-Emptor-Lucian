@@ -6,11 +6,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
 
 import com.biddingapp.account.AccountService;
 import com.biddingapp.entities.AccountEntities;
@@ -25,7 +25,7 @@ import com.fortech.utils.Constants;
 @SessionScoped
 public class AccountBean {
 
-	@ManagedProperty(value = "#{login}")
+	@Inject
 	private UserLoginBean loggedUserDetails;
 
 	@EJB

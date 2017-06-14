@@ -1,15 +1,19 @@
 package com.biddingapp.ejbeans;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 
 import com.biddingapp.login.LoginValidation;
 import com.fortech.exception.AccountDetailsException;
 
-@ManagedBean(name = "login")
+@Named(value="login")
 @SessionScoped
-public class UserLoginBean {
+public class UserLoginBean implements Serializable{
+
+	private static final long serialVersionUID = -1341006596838933518L;
 
 	@EJB
 	private LoginValidation loginValidation;
@@ -75,6 +79,6 @@ public class UserLoginBean {
 	}
 
 	public boolean isLoggedIn() {
-		return accountName != null ? true : false;
+		return getAccountName() != null ? true : false;
 	}
 }

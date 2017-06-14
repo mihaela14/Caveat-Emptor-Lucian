@@ -45,14 +45,14 @@ public class AuthorizationFilter implements Filter {
 				return;
 			}
 
-			if (user.getAccountName()!=null) {
+			if (!user.isLoggedIn()) {
 				if (!allowedPages) {
 					response.sendRedirect(request.getContextPath() + "/login.xhtml");
 					return;
 				}
 
 			} else {
-				if (allowedPages) {			
+				if (allowedPages) {	
 					return;			
 				}
 			}

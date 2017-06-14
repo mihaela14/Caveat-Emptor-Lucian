@@ -17,6 +17,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+import javax.inject.Inject;
 
 import com.biddingapp.bidding.BiddingService;
 import com.biddingapp.entities.BiddingEntities;
@@ -41,7 +42,7 @@ public class ItemsBean {
 	@EJB
 	private BiddingService biddingService;
 
-	@ManagedProperty(value = "#{login}")
+	@Inject
 	private UserLoginBean userDetails;
 
 	private ItemsDTO itemDto;
@@ -93,9 +94,12 @@ public class ItemsBean {
 
 	public String saveAction() {
 		for (ItemsDTO items : DTOList){
-			itemsService.updateItem(getUpdateEntity(items));
-			items.setEditable(false);
+			if(items.isEditable()){
+				itemsService.updateItem(getUpdateEntity(items));
+				items.setEditable(false);
+			}
 		}
+		init();
 		return null;
 
 	}
