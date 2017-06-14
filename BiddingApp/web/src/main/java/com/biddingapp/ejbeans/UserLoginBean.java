@@ -75,7 +75,6 @@ public class UserLoginBean {
 	}
 
 	public boolean isLoggedIn() {
-		// TODO Auto-generated method stub
-		return false;
+		return accountName != null ? true : false;
 	}
 }
