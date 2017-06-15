@@ -42,6 +42,15 @@ public class LoginValidation {
 	}
 
 
+	public boolean getUserAuthorization(String accountName) throws AccountDetailsException{
+		UserEntity user= userRepository.findAllUsersWithName(accountName);
+		if(user.getRoles().equals("ADMIN")){
+			return true;
+		}
+		return false;
+	}
+	
+	
 	public UserRepository getUserRepository() {
 		return userRepository;
 	}

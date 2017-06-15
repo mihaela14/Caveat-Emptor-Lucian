@@ -26,7 +26,8 @@ import com.biddingapp.queries.ItemsQueries;
 	@NamedQuery(name="findBidById", query= BiddingQueries.FIND_BID_BY_ID),
 	@NamedQuery(name="findBidsByUser", query= BiddingQueries.FIND_BIDS_BY_USER),
 	@NamedQuery(name="countBidsByItem", query= BiddingQueries.COUNT_BID),
-	@NamedQuery(name="maxBidByItem", query= BiddingQueries.MAX_BID)
+	@NamedQuery(name="maxBidByItem", query= BiddingQueries.MAX_BID),
+	@NamedQuery(name="findBidsByItem", query= BiddingQueries.FIND_BIDS_BY_ITEM)
 })
 @Table(name="bidding")
 public class BiddingEntities implements Serializable{

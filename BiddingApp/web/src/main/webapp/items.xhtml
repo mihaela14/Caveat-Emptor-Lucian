@@ -131,7 +131,7 @@
 			<b:dataTable class="table table-condensed" var="rows"
 				value="#{items.buyItemsDTOList}" rendered="#{items.itemToBuyOrSale}">
 
-				<b:dataTableColumn>
+				<b:dataTableColumn headerClass="name-col">
 					<f:facet name="header">Name</f:facet>
 				#{rows.name}
 			</b:dataTableColumn>
@@ -161,19 +161,19 @@
 			<b:dataTable class="table table-condensed" var="rows"
 				value="#{items.DTOList}" rendered="#{not items.itemToBuyOrSale}">
 
-				<b:dataTableColumn>
+				<b:dataTableColumn style="width:260px;">
 					<f:facet name="header">Name</f:facet>
-					<h:inputText class="form-control" id="name-input" value="#{rows.name}"
-						rendered="#{rows.editable}" required="true" requiredMessage="&#8226;Invalid Name">
+					<h:inputText class="form-control" id="name-input" style="width: 100%;" value="#{rows.name}"
+						rendered="#{rows.editable}" required="true" requiredMessage="Invalid Name">
 						<f:ajax execute="@this" />
 					</h:inputText>
 					<h:outputText value="#{rows.name}" rendered="#{not rows.editable}" />
 					<h:message for="name-input"/>
 				</b:dataTableColumn>
 
-				<b:dataTableColumn>
+				<b:dataTableColumn style="width:150px;">
 					<f:facet name="header">Category</f:facet>
-					<h:inputText class="form-control" value="#{rows.categoryName}" style="max-width: 80%;"
+					<h:inputText class="form-control" value="#{rows.categoryName}"
 						rendered="#{rows.editable}" readonly="true">
 						<f:ajax execute="@this" />
 					</h:inputText>
@@ -181,9 +181,9 @@
 						rendered="#{not rows.editable}" />
 				</b:dataTableColumn>
 
-				<b:dataTableColumn>
+				<b:dataTableColumn styleClass="price-col">
 					<f:facet name="header">Price</f:facet>
-					<h:inputText class="form-control" id="price-input" value="#{rows.price}" style="max-width: 60%;"
+					<h:inputText class="form-control" id="price-input" value="#{rows.price}"
 						rendered="#{rows.editable}" validator="#{items.IsPriceValid}">
 						<f:ajax execute="@this" />
 					</h:inputText>
@@ -196,22 +196,22 @@
 				#{rows.bestBid}
 			</b:dataTableColumn>
 
-				<b:dataTableColumn>
+				<b:dataTableColumn >
 					<f:facet name="header">Bids</f:facet>
 				#{rows.bids}
 			</b:dataTableColumn>
 
-				<b:dataTableColumn>
+				<b:dataTableColumn style="width: 150px;">
 					<f:facet name="header">Opening Date</f:facet>
 					<h:outputText value="#{rows.openingDate}" />
 				</b:dataTableColumn>
 
-				<b:dataTableColumn>
+				<b:dataTableColumn style="width: 150px;">
 					<f:facet name="header">Closing Date</f:facet>
 					<h:outputText value="#{rows.closingDate}" />
 				</b:dataTableColumn>
 
-				<b:dataTableColumn>
+				<b:dataTableColumn styleClass="status-col">
 					<f:facet name="header">Status</f:facet>
 					<h:selectOneMenu class="form-control status-dropdown"
 						value="#{rows.status}" rendered="#{rows.editable}">
@@ -225,12 +225,12 @@
 						rendered="#{not rows.editable}" />
 				</b:dataTableColumn>
 
-				<b:dataTableColumn>
+				<b:dataTableColumn styleClass="win-col">
 					<f:facet name="header">Winner</f:facet>
 				#{rows.winner}
 			</b:dataTableColumn>
 
-				<b:dataTableColumn>
+				<b:dataTableColumn styleClass="edit-col">
 					<f:facet name="header">Edit item</f:facet>
 					<h:commandButton id="editButton" class="btn btn-info" value="Edit"
 						disabled="#{items.editDisabled(rows.status)}"

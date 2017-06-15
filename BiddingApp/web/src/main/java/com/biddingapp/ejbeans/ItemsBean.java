@@ -308,7 +308,7 @@ public class ItemsBean {
 		Float price= (Float)value;
 
 		if(price<=0){
-			FacesMessage message= new FacesMessage("&#8226;Price cannot be less than 0");
+			FacesMessage message= new FacesMessage("Price cannot be less than 0");
 			throw new ValidatorException(message);
 		}
 	}
@@ -318,7 +318,7 @@ public class ItemsBean {
 		int category= (int) value;
 
 		if(category < 1){
-			FacesMessage message= new FacesMessage("&#8226;Please select a category");
+			FacesMessage message= new FacesMessage("Please select a category");
 			throw new ValidatorException(message);
 		}
 	}
@@ -332,7 +332,7 @@ public class ItemsBean {
 	public void isClosingDateValid(FacesContext context, UIComponent componentToValidate, Object value){
 		Timestamp closingDate= stringToTimestamp(value.toString());	
 		if(openingDateValidator.after(closingDate)){
-			FacesMessage message= new FacesMessage("&#8226;Opening date cannot be after the closing date of the bid");
+			FacesMessage message= new FacesMessage("Opening date cannot be after the closing date of the bid");
 			throw new ValidatorException(message);
 		}
 	}

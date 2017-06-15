@@ -51,11 +51,22 @@ public class ItemsRepositoryImplementation implements ItemsRepository{
 			throw new ItemsDetailsException("An exception happended getting items for the user: "+ user.getAccountName());
 		}
 	}
-	
-	
+
+
 	@Override
 	public ItemsEntities findItemById(int id) {
 		return entityManager.find(ItemsEntities.class, id);
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ItemsEntities> findItemsbyCategory(int category) throws ItemsDetailsException {
+		try{
+			return getEntityManager().createNamedQuery("findItemByCategory").setParameter("category", category).getResultList();
+		}catch(NoResultException nre){
+			throw new ItemsDetailsException("An exception happended getting items for the category with the id: "+ category);
+		}
 	}
 
 

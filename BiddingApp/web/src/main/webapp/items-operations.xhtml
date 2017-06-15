@@ -82,7 +82,7 @@
 
 			<h:commandButton id="contactbtn" class="btn btn-info" value="Submit"
 				action="#{items.addItem}" data-dismiss="modal">
-				<f:ajax execute="@form" render=":items-table :item-form" />
+				<f:ajax execute="@form" render=":items-table :item-form" immediate="true"/>
 			</h:commandButton>
 			
 			<div class="clearfix">

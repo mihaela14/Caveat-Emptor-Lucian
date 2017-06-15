@@ -166,7 +166,7 @@
 						<h:inputText class="form-control info-text" id="bid-input"
 							a:placeholder="Place a bid on this item"
 							value="#{bidding.biddingDTO.bidValue}"
-							rendered="#{not bidding.hasBid}"
+							rendered="#{not bidding.hasBid}" validator="#{bidding.IsBidValid}"
 							required="true" requiredMessage="Your Bid cannot be null">
 							<f:ajax execute="@this" />
 

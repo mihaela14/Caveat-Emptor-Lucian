@@ -1,3 +1,9 @@
+.hidden{
+	display: none;
+}
+.visible{
+	display: inline;
+}
 .form-signin {
 	max-width: 330px;
 	padding: 15px;

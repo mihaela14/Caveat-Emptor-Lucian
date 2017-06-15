@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import com.biddingapp.entities.BiddingEntities;
 import com.biddingapp.entities.CategoriesEntities;
 import com.biddingapp.entities.ItemsEntities;
 import com.biddingapp.entities.UserEntity;
@@ -21,36 +22,36 @@ public class ItemsService {
 
 	@EJB
 	ItemsRepository itemsRepository;
-	
+
 	@EJB
 	UserRepository userRepository;
-	
+
 	@EJB
 	CategoriesRepository categoriesRepository;
-	
+
 	@EJB
 	BiddingRepository biddingRepository;
-	
+
 
 	public List<ItemsEntities> getItemList(String accountName) throws AccountDetailsException, ItemsDetailsException {
 		UserEntity user = userRepository.findAllUsersWithName(accountName);
-		
+
 		return itemsRepository.findItemsbyUser(user);		
-	
+
 	}
-	
+
 	public void createItem(ItemsEntities itemsEntity){
 		itemsRepository.add(itemsEntity);
 	}
-	
+
 	public void updateItem(ItemsEntities itemsEntity){
 		itemsRepository.updateItem(itemsEntity);
 	}
-	
+
 	public CategoriesEntities getCategory(int categoryId) {
 		return categoriesRepository.findCategorybyId(categoryId);
 	}
-	
+
 	public UserEntity getSellerIdByUsername(String accountName){	
 		try {
 			return userRepository.findAllUsersWithName(accountName);
@@ -59,30 +60,44 @@ public class ItemsService {
 			return null;
 		}	
 	}
-	
-	
+
+
 	public int getTotalBids(int itemId) throws BiddingOperationsException{
 		return biddingRepository.getBidsNumber(itemId).intValue();
 	}
-	
-	
+
+
 	public Float getMaxBid(int itemId) throws BiddingOperationsException{
 		return biddingRepository.findMaxBid(itemId);
 	}
-	
-	
+
+
 	public UserEntity getUserUsingId(int id){
 		return userRepository.findUserbyID(id);
 	}
-	
-	
+
+
+
+	public void deleteItemsWithCategory(int id) throws ItemsDetailsException, BiddingOperationsException {
+		List<ItemsEntities> itemsList= itemsRepository.findItemsbyCategory(id);
+
+		for(ItemsEntities item: itemsList){
+			List <BiddingEntities> bids= biddingRepository.findBidsByItem(item);
+			for(BiddingEntities bid: bids){
+				biddingRepository.removeBidbyEntity(bid);
+			}
+			itemsRepository.remove(item.getId());
+		}
+	}
+
+
 	public ItemsRepository getItemsRepository() {
 		return itemsRepository;
 	}
 	public void setItemsRepository(ItemsRepository itemsRepository) {
 		this.itemsRepository = itemsRepository;
 	}
-	
+
 	public UserRepository getUserRepository() {
 		return userRepository;
 	}
@@ -101,5 +116,5 @@ public class ItemsService {
 	public void setBiddingRepository(BiddingRepository biddingRepository) {
 		this.biddingRepository = biddingRepository;
 	}
-	
+
 }

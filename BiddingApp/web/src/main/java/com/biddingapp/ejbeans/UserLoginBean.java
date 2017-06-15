@@ -21,11 +21,52 @@ public class UserLoginBean implements Serializable{
 	private String message = "Enter username and password";
 	private String accountName;
 	private String password;
+	private boolean isAdmin;
 
+
+
+	public LoginValidation getLoginValidation() {
+		return loginValidation;
+	}
+
+	public void setLoginValidation(LoginValidation loginValidation) {
+		this.loginValidation = loginValidation;
+	}
+
+	public String loginUser(){
+		
+		try{
+		boolean validUser = loginValidation.isValidUser(accountName);
+		boolean validPassword = loginValidation.isValidPassword(password, accountName);
+		isAdmin= loginValidation.getUserAuthorization(accountName);
+		
+		if (validUser && validPassword) {
+			if(loginValidation.isAccountActivated(accountName)){
+				message = "Successfully logged in";
+				return "items-page";
+			}else
+				message = "Your account is not activated";
+			return "notActivated";
+		} else {
+			message = "Invalid login";
+			return "login";
+		}
+		}catch(AccountDetailsException ade){
+			ade.setErrorMessage("Account details are not valid !");
+			message = "Invalid login";
+			return "login";
+		}
+	}
+	
+	
 	public String getAccountName() {
 		return accountName;
 	}
-
+	
+	public boolean isLoggedIn() {
+		return getAccountName() != null ? true : false;
+	}
+	
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
 	}
@@ -46,39 +87,11 @@ public class UserLoginBean implements Serializable{
 		this.message = message;
 	}
 
-	public LoginValidation getLoginValidation() {
-		return loginValidation;
+	public boolean isAdmin() {
+		return isAdmin;
 	}
 
-	public void setLoginValidation(LoginValidation loginValidation) {
-		this.loginValidation = loginValidation;
-	}
-
-	public String loginUser(){
-		
-		try{
-		boolean validUser = loginValidation.isValidUser(accountName);
-		boolean validPassword = loginValidation.isValidPassword(password, accountName);
-		
-		if (validUser && validPassword) {
-			if(loginValidation.isAccountActivated(accountName)){
-				message = "Successfully logged in";
-				return "items-page";
-			}else
-				message = "Your account is not activated";
-			return "notActivated";
-		} else {
-			message = "Invalid login";
-			return "login";
-		}
-		}catch(AccountDetailsException ade){
-			ade.setErrorMessage("Account details are not valid !");
-			message = "Invalid login";
-			return "login";
-		}
-	}
-
-	public boolean isLoggedIn() {
-		return getAccountName() != null ? true : false;
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

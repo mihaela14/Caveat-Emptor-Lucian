@@ -13,5 +13,6 @@ public interface ItemsRepository {
 	public void updateItem(ItemsEntities itemsEntities);
 	public List<ItemsEntities> findItemsbyUser(UserEntity user) throws ItemsDetailsException;
 	public ItemsEntities findItemById(int id);
+	public List<ItemsEntities> findItemsbyCategory(int id) throws ItemsDetailsException;
 
 }

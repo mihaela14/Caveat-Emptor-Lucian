@@ -85,6 +85,17 @@ public class BiddingRepositoryImplementation implements BiddingRepository{
 
 
 	@Override
+	@SuppressWarnings("unchecked")
+	public List<BiddingEntities> findBidsByItem(ItemsEntities itemId) throws BiddingOperationsException {
+		try{
+			return getEntityManager().createNamedQuery("findBidsByItem").setParameter("itemId", itemId).getResultList();
+		}catch(PersistenceException pe){			
+			throw new BiddingOperationsException("An exception happended getting bids for user with item id: "+ itemId.getId());
+		}
+	}
+	
+	
+	@Override
 	public BiddingEntities findBidByItemUser(int userId, int itemId) throws BiddingOperationsException {
 		try{
 			return (BiddingEntities) getEntityManager().createNamedQuery("findBidByItemUser").setParameter("userId", userId).setParameter("itemId", itemId).getSingleResult();

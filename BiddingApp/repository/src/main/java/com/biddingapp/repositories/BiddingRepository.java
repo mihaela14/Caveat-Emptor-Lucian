@@ -32,5 +32,7 @@ public interface BiddingRepository {
 	public Long getBidsNumber(int itemId) throws BiddingOperationsException;
 	
 	public Float findMaxBid(int itemId) throws BiddingOperationsException;
+
+	public List<BiddingEntities> findBidsByItem(ItemsEntities item) throws BiddingOperationsException;
 	
 }

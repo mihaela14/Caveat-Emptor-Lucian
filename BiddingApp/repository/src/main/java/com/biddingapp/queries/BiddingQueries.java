@@ -7,5 +7,6 @@ public class BiddingQueries {
 	public static final String FIND_BIDS_BY_USER= "SELECT b FROM BiddingEntities b WHERE b.userId = :userId";
 	public static final String COUNT_BID= "SELECT COUNT(b) FROM BiddingEntities b WHERE b.itemId.id = :itemId";
 	public static final String MAX_BID= "SELECT MAX(b.bidValue) FROM BiddingEntities b WHERE b.itemId.id = :itemId";
+	public static final String FIND_BIDS_BY_ITEM= "SELECT b FROM BiddingEntities b WHERE b.itemId = :itemId";
 
 }
