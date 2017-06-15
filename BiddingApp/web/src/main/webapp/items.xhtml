@@ -163,16 +163,17 @@
 
 				<b:dataTableColumn>
 					<f:facet name="header">Name</f:facet>
-					<h:inputText class="form-control" value="#{rows.name}"
-						rendered="#{rows.editable}">
+					<h:inputText class="form-control" id="name-input" value="#{rows.name}"
+						rendered="#{rows.editable}" required="true" requiredMessage="&#8226;Invalid Name">
 						<f:ajax execute="@this" />
 					</h:inputText>
 					<h:outputText value="#{rows.name}" rendered="#{not rows.editable}" />
+					<h:message for="name-input"/>
 				</b:dataTableColumn>
 
 				<b:dataTableColumn>
 					<f:facet name="header">Category</f:facet>
-					<h:inputText class="form-control" value="#{rows.categoryName}"
+					<h:inputText class="form-control" value="#{rows.categoryName}" style="max-width: 80%;"
 						rendered="#{rows.editable}" readonly="true">
 						<f:ajax execute="@this" />
 					</h:inputText>
@@ -182,11 +183,12 @@
 
 				<b:dataTableColumn>
 					<f:facet name="header">Price</f:facet>
-					<h:inputText class="form-control" value="#{rows.price}"
-						rendered="#{rows.editable}">
+					<h:inputText class="form-control" id="price-input" value="#{rows.price}" style="max-width: 60%;"
+						rendered="#{rows.editable}" validator="#{items.IsPriceValid}">
 						<f:ajax execute="@this" />
 					</h:inputText>
 					<h:outputText value="#{rows.price}" rendered="#{not rows.editable}" />
+					<h:message for="price-input"/>
 				</b:dataTableColumn>
 
 				<b:dataTableColumn>
@@ -236,9 +238,9 @@
 						<f:ajax execute="@this" render="@form" />
 					</h:commandButton>
 
-					<h:commandButton id="cancelButton" class="btn btn-info"
+					<h:commandButton id="cancelButton" class="btn btn-warning"
 						value="Cancel" rendered="#{rows.editable}"
-						action="#{items.cancelAction(rows)}">
+						action="#{items.cancelAction(rows)}" style="padding-left: 5%; padding-right: 5%;">
 						<f:ajax execute="@this" render="@form" />
 					</h:commandButton>
 

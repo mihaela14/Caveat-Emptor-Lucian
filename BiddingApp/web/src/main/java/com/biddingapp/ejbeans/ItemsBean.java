@@ -6,13 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -29,7 +27,6 @@ import com.fortech.dto.ItemsDTO;
 import com.fortech.exception.AccountDetailsException;
 import com.fortech.exception.BiddingOperationsException;
 import com.fortech.exception.ItemsDetailsException;
-import com.fortech.utils.Constants;
 import com.fortech.utils.ItemStatus;
 
 @ManagedBean(name ="items")
@@ -122,6 +119,8 @@ public class ItemsBean {
 		itemEntity.setStatus(items.getStatus());
 		itemEntity.setWinnerId(itemsService.getUserUsingId(items.getWinnerId()));
 		itemEntity.setSellerId(itemsService.getUserUsingId(items.getSellerId()));
+		itemEntity.setDescription(items.getDescription());
+		itemEntity.setImage(items.getImage());
 
 		return itemEntity;
 	}
@@ -309,7 +308,7 @@ public class ItemsBean {
 		Float price= (Float)value;
 
 		if(price<=0){
-			FacesMessage message= new FacesMessage("Price cannot be less than 0");
+			FacesMessage message= new FacesMessage("&#8226;Price cannot be less than 0");
 			throw new ValidatorException(message);
 		}
 	}
@@ -319,7 +318,7 @@ public class ItemsBean {
 		int category= (int) value;
 
 		if(category < 1){
-			FacesMessage message= new FacesMessage("Please select a category");
+			FacesMessage message= new FacesMessage("&#8226;Please select a category");
 			throw new ValidatorException(message);
 		}
 	}
@@ -333,7 +332,7 @@ public class ItemsBean {
 	public void isClosingDateValid(FacesContext context, UIComponent componentToValidate, Object value){
 		Timestamp closingDate= stringToTimestamp(value.toString());	
 		if(openingDateValidator.after(closingDate)){
-			FacesMessage message= new FacesMessage("Opening date cannot be after the closing date of the bid");
+			FacesMessage message= new FacesMessage("&#8226;Opening date cannot be after the closing date of the bid");
 			throw new ValidatorException(message);
 		}
 	}
@@ -346,6 +345,7 @@ public class ItemsBean {
 			return false;
 		}
 	}
+	
 
 	public void sortByName(){
 		ItemTableSorting.sortTableByName(DTOList);
