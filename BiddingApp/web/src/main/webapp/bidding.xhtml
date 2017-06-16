@@ -155,7 +155,8 @@
 						<h:outputLabel rendered="#{not bidding.hasBid}" class="info-label"
 							value="Previous Bid:" />
 						<h:outputText class="form-control info-text"
-							style="background: #f9fdff;" value="#{bidding.biddingDTO.previousBid}"
+							style="background: #f9fdff;"
+							value="#{bidding.biddingDTO.previousBid}"
 							rendered="#{not bidding.hasBid}">
 						</h:outputText>
 						<ui:fragment rendered="#{not bidding.hasBid}">
@@ -166,17 +167,21 @@
 						<h:inputText class="form-control info-text" id="bid-input"
 							a:placeholder="Place a bid on this item"
 							value="#{bidding.biddingDTO.bidValue}"
-							rendered="#{not bidding.hasBid}" validator="#{bidding.IsBidValid}"
-							required="true" requiredMessage="Your Bid cannot be null">
-							<f:ajax execute="@this" />
-
+							rendered="#{not bidding.hasBid}"
+							validator="#{bidding.IsBidValid}" required="true"
+							requiredMessage="Your Bid cannot be null">
 						</h:inputText>
+						<h:message for="bid-input" style="color:red;" />
+
 						<h:outputText class="form-control info-text"
-							style="background: #f9fdff;" value="#{bidding.biddingDTO.bidValue}"
+							style="background: #f9fdff;"
+							value="#{bidding.biddingDTO.bidValue}"
 							rendered="#{bidding.hasBid}">
 						</h:outputText>
+
 						<h:outputText class="form-control info-text"
-							style="background: #f9fdff;" value="#{bidding.biddingDTO.bidValue}"
+							style="background: #f9fdff;"
+							value="#{bidding.biddingDTO.bidValue}"
 							rendered="#{bidding.hasBid}">
 						</h:outputText>
 						<br />
@@ -184,21 +189,22 @@
 						<h:outputLabel rendered="#{bidding.hasBid}" class="info-label"
 							value="Bid Date:" />
 						<h:outputText class="form-control info-text"
-							style="background: #f9fdff;" value="#{bidding.biddingDTO.date}" rendered="#{bidding.hasBid}">
+							style="background: #f9fdff;" value="#{bidding.biddingDTO.date}"
+							rendered="#{bidding.hasBid}">
 						</h:outputText>
 						<br /> <br />
 
 						<h:inputHidden value="#{bidding.itemForModal.id}" />
 						<h:inputHidden value="#{bidding.itemForModal.sellerId}" />
-						
-						<h:message for="bid-input" style="color:red;"/>
 					</div>
 
 
 					<div class="row action-buttons">
 						<b:buttonGroup>
 							<b:commandButton look="info" value="Submit"
-								action="#{bidding.submitBid}" />
+								action="#{bidding.submitBid}">
+								<f:ajax execute="@form" render="@form biddingItems-form" />
+							</b:commandButton>
 							<b:commandButton look="info" value="Remove"
 								action="#{bidding.removeBid}" rendered="#{bidding.hasBid}" />
 							<b:commandButton look="info" value="Edit"

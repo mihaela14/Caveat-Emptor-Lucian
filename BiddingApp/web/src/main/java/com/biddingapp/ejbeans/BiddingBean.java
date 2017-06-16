@@ -33,7 +33,7 @@ public class BiddingBean {
 
 	@EJB
 	private CategoriesService categoryService;
-	
+
 	@EJB
 	private ItemsService itemsService;
 
@@ -52,15 +52,17 @@ public class BiddingBean {
 	private boolean hasBid = true;
 
 	private BiddingEntities bid;
-
 	
+	private String message;
+
+
 	@PostConstruct
 	public void init() {
 		biddingDTO = new BiddingDTO();
 		categoriesDTO = new CategoriesDTO();
 	}
 
-	
+
 	public String getCategoryName() {
 		if (categoryId != 0) {
 			return biddingService.getCategory(categoryId).getName();
@@ -69,7 +71,7 @@ public class BiddingBean {
 		}
 	}
 
-	
+
 	public String getCategoryDescription() {
 		if (categoryId != 0) {
 			return biddingService.getCategory(categoryId).getDescription();
@@ -78,13 +80,13 @@ public class BiddingBean {
 		}
 	}
 
-	
+
 	public void getItemTablerows() {
 		itemsList = new ArrayList<>();
 		ItemsDTOList = populateChildrenList(categoryId);
 	}
 
-	
+
 	public List<ItemsDTO> populateChildrenList(int id) {
 		try {
 			CategoriesEntities currentCategory = categoryService.getCategory(id);
@@ -120,12 +122,16 @@ public class BiddingBean {
 
 	public void submitBid() {
 		BiddingEntities bidEntity= new BiddingEntities();
-		bidEntity= getBiddingEntity(biddingDTO);
-		
-		Float valueOfBid= Float.parseFloat(String.format("%.2f",bidEntity.getBidValue()));		
-		bidEntity.setBidValue(valueOfBid);
-		
-		biddingService.bid(bidEntity);
+
+		try{
+			bidEntity= getBiddingEntity(biddingDTO);
+			Float valueOfBid= Float.parseFloat(String.format("%.2f",bidEntity.getBidValue()));		
+			bidEntity.setBidValue(valueOfBid);
+			biddingService.bid(bidEntity);
+			message="Your bid was placed";
+		}catch(NumberFormatException nfe){
+			message="Your bid is not valid";
+		}
 		hasBid = true;
 	}
 
@@ -144,7 +150,7 @@ public class BiddingBean {
 
 
 	public void initialHasBid() {
-		
+
 		populateBid();
 		BiddingEntities bid = biddingService.getEntityWithUserItem(getBiddingEntity(biddingDTO));
 		if (bid != null) {
@@ -180,7 +186,7 @@ public class BiddingBean {
 		String closing = item.getClosingDate().toString();
 		int totalBids=0;
 		float bestBid=0.0f;
-		
+
 		try{
 			totalBids = getItemsService().getTotalBids(item.getId());
 		} catch (BiddingOperationsException boe) {
@@ -215,7 +221,7 @@ public class BiddingBean {
 		}
 		return createDto;
 	}	
-	
+
 
 	public void IsBidValid(FacesContext context, UIComponent componentToValidate, Object value){
 		Float bid= (Float)value;
@@ -250,7 +256,7 @@ public class BiddingBean {
 	public void setBiddingDTO(BiddingDTO biddingDTO) {
 		this.biddingDTO = biddingDTO;
 	}
-	
+
 	public CategoriesService getCategoryService() {
 		return categoryService;
 	}
@@ -316,5 +322,15 @@ public class BiddingBean {
 
 	public void setItemsService(ItemsService itemsService) {
 		this.itemsService = itemsService;
+	}
+
+
+	public String getMessage() {
+		return message;
+	}
+
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }
